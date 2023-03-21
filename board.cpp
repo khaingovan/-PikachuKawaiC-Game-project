@@ -47,37 +47,37 @@ bool checkLShape(int **board, int y1, int x1, int y2, int x2){
 				if(board[y1][i] != -1)
 					return false;
 			}
-			for(int i = y1 + 1; i <= y2 - 1; i++){
+			for(int i = y1 + 1; i < y2 - 1; i++){
 				if(board[i][y2] != -1)
 					return false;
 			}
 		}
 		else if(x1 > x2 && y1 < y2){
-			for(int i = x1 - 1; i >= x2; i--){
+			for(int i = x1 - 1; i > x2; i--){
 				if(board[y1][i] != -1)
 					return false;
 			}
-			for(int i = y1 + 1; i <= y2; i++){
+			for(int i = y1 + 1; i < y2; i++){
 				if(board[i][y2] != -1)
 					return false;
 			}
 		}
 		else if(x1 < x2 && y1 > y2){
-			for(int i = x1 + 1; i <= x2; i++){
+			for(int i = x1 + 1; i < x2; i++){
 				if(board[y1][i] != -1)
 					return false;
 			}
-			for(int i = y1 - 1; i <= y2; i--){
+			for(int i = y1 - 1; i < y2; i--){
 				if(board[i][y2] != -1)
 					return false;
 			}
 		}
 		else if(x1 > x2 && y1 > y2){
-			for(int i = x1 - 1; i >= x2; i--){
+			for(int i = x1 - 1; i > x2; i--){
 				if(board[y1][i] != -1)
 					return false;
 			}
-			for(int i = y1 - 1; i <= y2; i--){
+			for(int i = y1 - 1; i < y2; i--){
 				if(board[i][y2] != -1)
 					return false;
 			}
@@ -85,7 +85,7 @@ bool checkLShape(int **board, int y1, int x1, int y2, int x2){
 	}
 	else{
 		if(x1 < x2 && y1 < y2){
-			for(int i = y1 + 1; i <= y2 - 1; i++){
+			for(int i = y1 + 1; i < y2 - 1; i++){
 				if(board[i][y2] != -1)
 					return false;
 			}
@@ -95,31 +95,31 @@ bool checkLShape(int **board, int y1, int x1, int y2, int x2){
 			}
 		}
 		else if(x1 > x2 && y1 < y2){
-			for(int i = y1 + 1; i <= y2; i++){
+			for(int i = y1 + 1; i < y2; i++){
 				if(board[i][y2] != -1)
 					return false;
 			}
-			for(int i = x1 - 1; i >= x2; i--){
+			for(int i = x1 - 1; i > x2; i--){
 				if(board[y1][i] != -1)
 					return false;
 			}
 		}
 		else if(x1 < x2 && y1 > y2){
-			for(int i = y1 - 1; i <= y2; i--){
+			for(int i = y1 - 1; i < y2; i--){
 				if(board[i][y2] != -1)
 					return false;
 			}
-			for(int i = x1 + 1; i <= x2; i++){
+			for(int i = x1 + 1; i < x2; i++){
 				if(board[y1][i] != -1)
 					return false;
 			}
 		}
 		else if(x1 > x2 && y1 > y2){
-			for(int i = y1 - 1; i <= y2; i--){
+			for(int i = y1 - 1; i < y2; i--){
 				if(board[i][y2] != -1)
 					return false;
 			}
-			for(int i = x1 - 1; i >= x2; i--){
+			for(int i = x1 - 1; i > x2; i--){
 				if(board[y1][i] != -1)
 					return false;
 			}

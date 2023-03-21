@@ -33,7 +33,7 @@ int main(){
 			board[i][j] = -1;
 	
 	srand(time(0));
-	int totalDifferentCharacter = + min(row*col - 12, 24); //mang cang nho thi cang can it ky tu
+	int totalDifferentCharacter = 2 + min(row*col - 12, 24); //mang cang nho thi cang can it ky tu
 	int characterBlock[totalDifferentCharacter];
 	int totalCharacter = row*col; //so luong ky tu con lai trong mang
 	for(int i = 0; i < totalDifferentCharacter; i++){
@@ -59,6 +59,8 @@ int main(){
 		if(totalCharacter == 0)
 			break;
 	}
+
+	cout << "Congratulate!";
 	
 	delete [] board;
 	for(int i = 0; i < col + 2; i++){
