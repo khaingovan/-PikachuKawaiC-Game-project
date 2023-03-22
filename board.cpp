@@ -47,7 +47,7 @@ bool checkLShape(int **board, int y1, int x1, int y2, int x2){
 				if(board[y1][i] != -1)
 					return false;
 			}
-			for(int i = y1 + 1; i < y2 - 1; i++){
+			for(int i = y1 + 1; i < y2; i++){
 				if(board[i][y2] != -1)
 					return false;
 			}
@@ -85,7 +85,7 @@ bool checkLShape(int **board, int y1, int x1, int y2, int x2){
 	}
 	else{
 		if(x1 < x2 && y1 < y2){
-			for(int i = y1 + 1; i < y2 - 1; i++){
+			for(int i = y1 + 1; i < y2; i++){
 				if(board[i][y2] != -1)
 					return false;
 			}
@@ -261,6 +261,20 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 	return false;
 }
 
+/*bool testingBoard(int **board, int row, int col, int chracterBlock[],int &totalChracter){
+	for(int i = 1; i <= row; i++){
+		for(int j = 1; j <= col; j++){
+			for(int m = 1; m <= row; m++){
+				for(int n = 1; n <=col; n++){
+					if(i != m && j != n);
+				}
+			}
+		}
+	}
+
+	return true;
+}*/
+
 void matching(int **board, int row, int col, int characterBlock[], int &totalCharacter){
 	int y1, x1, y2, x2;
 	cout << endl << "Input for matching: ";
@@ -287,4 +301,6 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 		board[y2][x2] = -1;
 	}
 }
+
+
 
