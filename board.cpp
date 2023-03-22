@@ -41,7 +41,7 @@ bool checkLineX(int **board, int y1, int y2, int x){ //check theo hang doc
 }
 
 bool checkLShape(int **board, int y1, int x1, int y2, int x2){
-	if(board[y1][x2] == -1){
+	/*if(board[y1][x2] == -1){
 		if(x1 < x2 && y1 < y2){
 			for(int i = x1 + 1; i < x2; i++){
 				if(board[y1][i] != -1)
@@ -123,6 +123,67 @@ bool checkLShape(int **board, int y1, int x1, int y2, int x2){
 				if(board[y1][i] != -1)
 					return false;
 			}
+		}
+	}*/
+
+	//	A	 ___________________	B
+	//		|					|
+	//		|					|
+	//		|					|
+	//		|					|
+	//		|					|
+	//	D	|___________________|	C
+
+	if( (y1 < y2 && x1 < x2) || (y1 > y2 && x1 > x2) ){
+		int Ay, Ax , Cy, Cx;
+		if(y1 < y2){
+			Ay = y1; Ax = x1; Cy = y2; Cx = x2;
+		}
+		else{
+			Ay = y2; Ax = x2; Cy = y1; Cx = x1;
+		}
+		
+		if(board[Ay][Cx] == -1){
+			for(int i = Ax + 1; i < Cx; i++)
+				if(board[Ay][i] != -1)
+					return false;
+			for(int i = Cy - 1; i > Ay; i--)
+				if(board[i][Cx] != -1)
+					return false;
+		}
+		else if(board[Cy][Ax] == -1){
+			for(int i = Cx - 1; i > Ax; i--)
+				if(board[Cy][i] != -1)
+					return false;
+			for(int i = Ay + 1; i < Cy; i++)
+				if(board[i][Ax] != -1)
+					return false;
+		}
+	}
+	else if( (y1 < y2 && x1 > x2) || (y1 > y2 && x1 < x2) ){
+		int By, Bx, Dy, Dx;
+		if(y1 < y2){
+			By = y1; Bx = x1; Dy = y2; Dx = x2;
+		}
+		else{
+			By = y2; Bx = x2; Dy = y1; Dx = x1;
+		}
+
+		if(board[By][Dx] == -1){
+			for(int i = Bx - 1; i > Dx; i--)
+				if(board[By][i] != -1)
+					return false;
+			for(int i = Dy - 1; i > Dx; i--)
+				if(board[i][Dx] != -1)
+					return false;
+		}
+		else if(board[Dy][Bx] == -1){
+			for(int i = Dx + 1; i < Bx; i++)
+				if(board[Dy][i] != -1)
+					return false;
+			for(int i = By + 1; i < Dy; i++)
+				if(board[i][Bx] != -1)
+					return false;
 		}
 	}
 	return true;
@@ -261,19 +322,73 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 	return false;
 }
 
-/*bool testingBoard(int **board, int row, int col, int chracterBlock[],int &totalChracter){
+bool isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2){
+	bool legalMatch = false;
+	if(y1 == y2 && x1 == x2)
+		return false;
+	if(board[y1][x1] == -1 || board[y2][x2]) 
+		return false;
+	if(board[y1][x1] != board[y2][x2])
+		return false;
+
+	if(y1 == y2){
+		legalMatch = checkLineY(board, x1, x2, y1);
+	}
+	else if(x1 == x2){
+		legalMatch = checkLineX(board, y1, y2, x1);
+	}
+	else if(board[y1][x2] == -1 || board[y2][x1] == -1){
+		legalMatch = checkLShape(board, y1, x1, y2, x2);
+	}
+	
+	// Xet U Shape va Z Shape sau khi nhung dang kia khong di dung
+	if(legalMatch == false)
+		legalMatch = checkUAndZShape(board, y1, x1, y2, x2, row, col);
+	return legalMatch;
+}
+
+bool testingBoard(int **board, int row, int col, int totalCharacter){
+	bool legalMatch = false;
+
+	if(totalCharacter == 0)
+		return true;
+
 	for(int i = 1; i <= row; i++){
 		for(int j = 1; j <= col; j++){
 			for(int m = 1; m <= row; m++){
-				for(int n = 1; n <=col; n++){
-					if(i != m && j != n);
+				for(int n = 1; n <= col; n++){
+					//i, j la toa do diem thu nhat board [i][j]
+					//m, n la toa do diem thu hai  board [m][n]
+
+					if(i != m || j != n){
+						// Neu thay diem dang xet la -1 thi bo qua
+						if(board[i][j] == -1 || board[m][n] == -1){
+							m = row + 5;
+							n = col + 5;
+						}
+
+						if(i == m)
+							legalMatch = checkLineY(board, j, n, m);
+						else if(j == n)
+							legalMatch = checkLineX(board, i, m, j);
+						else if(board[i][n] == -1 || board[m][j] == -1)
+							legalMatch = checkLShape(board, i, j, m, n);
+						
+						// Xet U Shape va Z Shape sau khi nhung dang kia khong di dung
+						if(legalMatch == false)
+							legalMatch = checkUAndZShape(board, i, j, m, n, row, col);
+
+						//
+						if(legalMatch)
+							return true;
+					};
 				}
 			}
 		}
 	}
 
-	return true;
-}*/
+	return false;
+}
 
 void matching(int **board, int row, int col, int characterBlock[], int &totalCharacter){
 	int y1, x1, y2, x2;
@@ -281,19 +396,19 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 	cin >> y1 >> x1 >> y2 >> x2;
 	bool legalMatch = false;
 	if( (board[y1][x1] == board[y2][x2]) && (x1 != x2 || y1 != y2) ){
-		if(y1 == y2){
+		if(y1 == y2)
 			legalMatch = checkLineY(board, x1, x2, y1);
-		}
-		else if(x1 == x2){
+		else if(x1 == x2)
 			legalMatch = checkLineX(board, y1, y2, x1);
-		}
-		else if(board[y1][x2] == -1 || board[y2][x1] == -1){
+		
+		else if(board[y1][x2] == -1 || board[y2][x1] == -1)
 			legalMatch = checkLShape(board, y1, x1, y2, x2);
-		}
-		if(legalMatch == false){
+		
+		// Xet U Shape va Z Shape sau khi nhung dang kia khong di dung
+		if(legalMatch == false)
 			legalMatch = checkUAndZShape(board, y1, x1, y2, x2, row, col);
-		}
 	}
+	//if( isLegalMatch(board, row, col, y1, x1, y2, x2) ){
 	if(legalMatch){
 		characterBlock[ board[y1][x1] ]--;
 		totalCharacter-=2;

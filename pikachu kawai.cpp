@@ -33,7 +33,7 @@ int main(){
 			board[i][j] = -1;
 	
 	srand(time(0));
-	int totalDifferentCharacter = 4 + min(row*col/2 - 6, 24); //mang cang nho thi cang can it ky tu
+	int totalDifferentCharacter = 4 + min(row*col/2 - 6, 22); //mang cang nho thi cang can it ky tu
 	int characterBlock[totalDifferentCharacter];
 	int totalCharacter = row*col; //so luong ky tu con lai trong mang
 	for(int i = 0; i < totalDifferentCharacter; i++){
@@ -55,8 +55,11 @@ int main(){
 	
 	while(true){
 		drawingBoard(board, row, col);
+		if( !testingBoard(board, row, col, totalCharacter) ){
+			cout << "Error." << endl;
+			break;
+		}
 		matching(board, row, col, characterBlock, totalCharacter);
-		//testingBoard(board, row, col, chracterBlock, totalChracter);
 		if(totalCharacter == 0)
 			break;
 	}
