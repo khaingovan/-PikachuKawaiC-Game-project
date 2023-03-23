@@ -21,11 +21,11 @@ int main(){
 		else
 			cout << "Invalid value, please try again: ";
 	}
-	//tao mang toan so -1
-	//vector<vector<int>> board(row + 2 , vector<int> (col + 2, -1));
+
+	//KHOI TAO MANG TOAN BO LA -1
 	int **board;
 	board = new int *[row + 2];
-	for(int i = 0; i < col + 2; i++){
+	for(int i = 0; i < row + 2; i++){
 		board[i] = new int [col + 2];
 	}
 	for(int i = 0; i < row + 2; i++)
@@ -33,13 +33,16 @@ int main(){
 			board[i][j] = -1;
 	
 	srand(time(0));
-	int totalDifferentCharacter = 4 + min(row*col/2 - 6, 22); //mang cang nho thi cang can it ky tu
+	//mang cang nho thi cang can it ky tu, cu the mang 4x4 co toi da 6 ky tu khac nhau
+	int totalDifferentCharacter = 4 + min((row*col)/2 - 6, 22);
 	int characterBlock[totalDifferentCharacter];
-	int totalCharacter = row*col; //so luong ky tu con lai trong mang
+	//so luong ky tu con lai trong mang, sau khi noi dung 2 ky tu thi bien nay tu giam di 2
+	int totalCharacter = row*col;
 	for(int i = 0; i < totalDifferentCharacter; i++){
 		characterBlock[i] = 0;
 	}
 	for(int count = 0; count < row*col;){
+		//thuat toan tim ra 2 toa do bat ky, neu chung khac nhau va chua co gia tri thi se duoc them gia tri ngau nhien vao
 		int y1 = rand()%row + 1;
 		int x1 = rand()%col + 1;
 		int y2 = rand()%row + 1;
@@ -49,10 +52,10 @@ int main(){
 			characterBlock[character]+=1;
 			board[y1][x1] = character;
 			board[y2][x2] = character;
+			//cu them duoc gia tri vao 2 toa do thi count tu +2, neu cham nguong so luong toa do cua bang choi thi vong for tu thoat ra
 			count+=2;
 		}
 	}
-	
 	while(true){
 		drawingBoard(board, row, col);
 		if( !testingBoard(board, row, col, totalCharacter) ){
@@ -60,8 +63,10 @@ int main(){
 			break;
 		}
 		matching(board, row, col, characterBlock, totalCharacter);
-		if(totalCharacter == 0)
+		if(totalCharacter == 0){
+			cout << "###" << endl;
 			break;
+		}
 	}
 
 	cout << "Congratulate!";

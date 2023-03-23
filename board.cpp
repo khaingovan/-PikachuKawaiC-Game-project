@@ -1,8 +1,8 @@
 #include "board.h"
 
 void drawingBoard(int **board, int row, int col){
-	for(int i = 1; i <= row; i++){
-		for(int j = 1; j <= col; j++){
+	for(int i = 0; i <= row + 1; i++){
+		for(int j = 0; j <= col + 1; j++){
 			if(board[i][j] == -1)
 				cout << "  ";
 			else
