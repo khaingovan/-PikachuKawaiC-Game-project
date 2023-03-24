@@ -261,7 +261,7 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 			}
 		}
 		
-		return key;
+		if(key) return true;
 	}
 	
 	for(int i = 0; i < col + 2; i++){ //check dang [, ], Z
@@ -317,7 +317,7 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 			}
 		}
 		
-		return key;
+		if(key) return true;
 	}
 	return false;
 }
