@@ -1,6 +1,6 @@
 #include "board.h"
 
-void drawingBoard(int **board, int row, int col){
+/*void drawingBoard(int **board, int row, int col){
 	for(int i = 0; i <= row + 1; i++){
 		for(int j = 0; j <= col + 1; j++){
 			if(board[i][j] == -1)
@@ -10,7 +10,7 @@ void drawingBoard(int **board, int row, int col){
 		}
 		cout << endl;
 	}
-}
+}*/
 
 bool checkLineY(int **board, int x1, int x2, int y){ //check theo hang ngang
 	if(x1 > x2){
@@ -261,7 +261,7 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 			}
 		}
 		
-		if(key) return true;
+		return key;
 	}
 	
 	for(int i = 0; i < col + 2; i++){ //check dang [, ], Z
@@ -317,7 +317,7 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 			}
 		}
 		
-		if(key) return true;
+		return key;
 	}
 	return false;
 }
@@ -360,7 +360,7 @@ bool testingBoard(int **board, int row, int col, int totalCharacter){
 					//i, j la toa do diem thu nhat board [i][j]
 					//m, n la toa do diem thu hai  board [m][n]
 
-					if(i != m || j != n){
+					if((i != m || j != n) && board[i][j] == board[m][n]){
 						// Neu thay diem dang xet la -1 thi bo qua
 						if(board[i][j] == -1 || board[m][n] == -1){
 							m = row + 5;
@@ -418,4 +418,10 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 }
 
 
+void deleteBoard(int **board, int col){
+	delete [] board;
+	for(int i = 0; i < col + 2; i++){
+		delete [] board[i];
+	}
+}
 

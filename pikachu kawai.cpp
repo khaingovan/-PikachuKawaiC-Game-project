@@ -1,5 +1,6 @@
 #include "header.h"
 #include "board.cpp"
+#include "showing.cpp"
 
 int main(){
 	int row, col;
@@ -71,10 +72,7 @@ int main(){
 
 	cout << "Congratulate!";
 	
-	delete [] board;
-	for(int i = 0; i < col + 2; i++){
-		delete [] board[i];
-	}
+	deleteBoard(board, col);
 	
 	return 0;
 }
