@@ -326,7 +326,7 @@ bool isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2)
 	bool legalMatch = false;
 	if(y1 == y2 && x1 == x2)
 		return false;
-	if(board[y1][x1] == -1 || board[y2][x2]) 
+	if(board[y1][x1] == -1 || board[y2][x2] == -1) 
 		return false;
 	if(board[y1][x1] != board[y2][x2])
 		return false;
@@ -360,7 +360,10 @@ bool testingBoard(int **board, int row, int col, int totalCharacter){
 					//i, j la toa do diem thu nhat board [i][j]
 					//m, n la toa do diem thu hai  board [m][n]
 
-					if((i != m || j != n) && board[i][j] == board[m][n]){
+					if( isLegalMatch(board, row, col, i, j, m, n) )
+						return true;
+
+					/*if((i != m || j != n) && board[i][j] == board[m][n]){
 						// Neu thay diem dang xet la -1 thi bo qua
 						if(board[i][j] == -1 || board[m][n] == -1){
 							m = row + 5;
@@ -381,7 +384,7 @@ bool testingBoard(int **board, int row, int col, int totalCharacter){
 						//
 						if(legalMatch)
 							return true;
-					};
+					}*/
 				}
 			}
 		}
@@ -394,8 +397,8 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 	int y1, x1, y2, x2;
 	cout << endl << "Input for matching: ";
 	cin >> y1 >> x1 >> y2 >> x2;
-	bool legalMatch = false;
-	if( (board[y1][x1] == board[y2][x2]) && (x1 != x2 || y1 != y2) ){
+	bool legalMatch = isLegalMatch(board, row, col, y1, x1, y2, x2);
+	/*if( (board[y1][x1] == board[y2][x2]) && (x1 != x2 || y1 != y2) ){
 		if(y1 == y2)
 			legalMatch = checkLineY(board, x1, x2, y1);
 		else if(x1 == x2)
@@ -407,8 +410,7 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 		// Xet U Shape va Z Shape sau khi nhung dang kia khong di dung
 		if(legalMatch == false)
 			legalMatch = checkUAndZShape(board, y1, x1, y2, x2, row, col);
-	}
-	//if( isLegalMatch(board, row, col, y1, x1, y2, x2) ){
+	}*/
 	if(legalMatch){
 		characterBlock[ board[y1][x1] ]--;
 		totalCharacter-=2;
