@@ -1,6 +1,6 @@
 #include "showing.h"
 
-void clearScreen(){
+void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515/
     HANDLE                     hStdOut;
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     DWORD                      count;
@@ -48,8 +48,6 @@ void drawingBoard(int **board, int row, int col){
 				cout << char(186) << " " << (char)(board[i/3][j] + (int)'A') << " " << char(186);
             else if(i%3 == 2)
 				cout << char(200) << char(205) << char(205) << char(205) << char(188);
-            else
-                cout << "     ";
 		}
 		cout << endl;
 	}
