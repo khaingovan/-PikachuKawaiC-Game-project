@@ -2,7 +2,9 @@
 //#include "OnlLib.h"
 int main()
 {
-    printMenu(4, 4, 1, 1, 0);
-   
+    int roundSelect = 1, Choice = 1, col = 0, line = 0 ;
+
+    generateMenu(line, col, roundSelect, Choice );
+    
     return 0;
-}
+} 
