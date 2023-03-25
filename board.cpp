@@ -393,10 +393,12 @@ bool testingBoard(int **board, int row, int col, int totalCharacter){
 	return false;
 }
 
-void matching(int **board, int row, int col, int characterBlock[], int &totalCharacter){
+void matching(int **board, int row, int col, int characterBlock[], int &totalCharacter, int totalDifferentCharacter){
 	int y1, x1, y2, x2;
 	cout << endl << "Input for matching: ";
 	cin >> y1 >> x1 >> y2 >> x2;
+	if(y1 == 1 && x1 == 1 && y2 == 1 && x2 == 1)
+		shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
 	bool legalMatch = isLegalMatch(board, row, col, y1, x1, y2, x2);
 	/*if( (board[y1][x1] == board[y2][x2]) && (x1 != x2 || y1 != y2) ){
 		if(y1 == y2)
@@ -419,6 +421,44 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 	}
 }
 
+//neu khong con nuoc di kha thi, bang se tu trao cac toa do
+void shuffleBoard(int **board, int row, int col, int characterBlock[], int totalCharacter, int totalDifferentCharacter){
+	srand(time(0));
+
+	int *a;
+	a = new int [totalDifferentCharacter];
+	for(int i = 0; i < totalDifferentCharacter; i++){
+		a[i] = characterBlock[i];
+	}
+	for(int i = 0; i < totalDifferentCharacter; i++)
+		cout << a[i] << endl;
+
+	for(int i = 1; i <= row; i++)
+		for(int j = 1; j <= col; j++)
+			if(board[i][j] != -1)
+				board[i][j] = -2;
+
+	for(int count = 0; count < totalCharacter;){
+		//thuat toan tim ra 2 toa do bat ky, neu chung khac nhau va chua co gia tri thi se duoc them gia tri ngau nhien vao
+		int y1 = rand()%row + 1;
+		int x1 = rand()%col + 1;
+		int y2 = rand()%row + 1;
+		int x2 = rand()%col + 1;
+		if( (y1 != y2 || x1 != x2) && board[y1][x1] == -2 && board[y2][x2] == -2){
+			int character = rand()%totalDifferentCharacter;
+			//thuat toan xao tron hoat dong dua tren cac ky tu con lai cua bang choi
+			if(a[character] > 0){
+				board[y1][x1] = character;
+				board[y2][x2] = character;
+				a[character]--;
+				//cu them duoc gia tri vao 2 toa do thi count tu +2, neu cham nguong so luong toa do cua bang choi thi vong for tu thoat ra
+				count+=2;
+			}
+		}
+	}
+
+	delete [] a;
+}
 
 void deleteBoard(int **board, int col){
 	delete [] board;
