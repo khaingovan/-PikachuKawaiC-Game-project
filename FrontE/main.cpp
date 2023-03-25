@@ -1,8 +1,12 @@
 #include "header.h"
+//#include "OnlLib.h"
 #include "Menu.cpp"
+#include "ClearScreen.cpp"
 int main()
 {
-    printMenu(4, 4, 1, 1, 0);
+    int roundSelect = 1, Choice = 1, col = 0, line = 0 ;
+
+    generateMenu(line, col, roundSelect, Choice );
    
     return 0;
-}
+} 

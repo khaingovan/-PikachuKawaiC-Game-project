@@ -5,6 +5,7 @@
 #include <cmath>
 #include <new>
 #include <windows.h>
+#include <conio.h>
 //#include <vector>
 
 using namespace std;
