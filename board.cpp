@@ -272,7 +272,7 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 			
 			//check canh ben cua [ 
 			for(int j = rowT + 1; j <= rowB - 1; j++){
-				if(board[i][j] != -1){
+				if(board[j][i] != -1){
 					key = false;
 					j = rowB;
 				}
@@ -395,11 +395,21 @@ bool testingBoard(int **board, int row, int col, int totalCharacter){
 
 void matching(int **board, int row, int col, int characterBlock[], int &totalCharacter, int totalDifferentCharacter){
 	int y1, x1, y2, x2;
+
+	//https://www.codespeedy.com/color-text-output-in-console-in-cpp
+	HANDLE coloring;
+    coloring = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	//15 la chu trang nen den
+    SetConsoleTextAttribute(coloring, 15);
 	cout << endl << "Input for matching: ";
 	cin >> y1 >> x1 >> y2 >> x2;
+
+	//cai nay chi de kiem tra chuc nang shuffle
 	if(y1 == 1 && x1 == 1 && y2 == 1 && x2 == 1)
 		shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
-	bool legalMatch = isLegalMatch(board, row, col, y1, x1, y2, x2);
+	
+	//bool legalMatch = isLegalMatch(board, row, col, y1, x1, y2, x2);
 	/*if( (board[y1][x1] == board[y2][x2]) && (x1 != x2 || y1 != y2) ){
 		if(y1 == y2)
 			legalMatch = checkLineY(board, x1, x2, y1);
@@ -413,7 +423,7 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 		if(legalMatch == false)
 			legalMatch = checkUAndZShape(board, y1, x1, y2, x2, row, col);
 	}*/
-	if(legalMatch){
+	if( isLegalMatch(board, row, col, y1, x1, y2, x2) ){
 		characterBlock[ board[y1][x1] ]--;
 		totalCharacter-=2;
 		board[y1][x1] = -1;

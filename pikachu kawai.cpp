@@ -26,24 +26,31 @@ void createBoard(int **board, int row, int col, int characterBlock[],int &totalC
 	}}
 
 int main(){
+	//https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
 	int row, col;
 	
-	cout << "Input number of rows (even number, 3<x<11): ";
+	//chu va nen mau mac dinh
+    cout << "\033[0m" << "Input number of rows (even number, 3<x<11): ";
 	while(true){
 		cin >> row;
 		if( row > 3 && row < 11 && row%2 == 0 )
 			break;
-		else
-			cout << "Invalid value, please try again: ";
+		else{
+			//[31m la chu do nen den
+			cout << "\033[31m" << "Invalid value, please try again: ";
+		}
 	}
 	
-	cout << "Input number of columns (even number, 3<x<15): ";
+	//chu va nen mau mac dinh
+    cout << "\033[0m" << "Input number of columns (even number, 3<x<15): ";
 	while(true){
 		cin >> col;
 		if( col > 3 && col < 15 && col%2 == 0 )
 			break;
-		else
-			cout << "Invalid value, please try again: ";
+		else{
+			//[31m la chu do nen den
+			cout << "\033[31m" << "Invalid value, please try again: ";
+		}
 	}
 
 	//KHOI TAO MANG TOAN BO LA -1
@@ -74,27 +81,38 @@ int main(){
 			shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
 		}*/
 		matching(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+
+		/*if(totalCharacter == 0 && level == 5)
+			break;*/
 		if(totalCharacter == 0){
-			cout << "Congratulate!" << endl;
-			cout << "Play level " << level + 1 << " ? (Y/N)";
-			while(cin >> yn){
-				if(yn == 'Y' || yn == 'y'){
-					level++;
-					createBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
-					break;
+			//chu va nen mau mac dinh
+    		cout << "\033[0m" << "Congratulate!" << endl;
+
+			if(level < 5){
+				cout << "Play level " << level + 1 << " ? (Y/N) ";
+
+				while(cin >> yn){
+					if(yn == 'Y' || yn == 'y'){
+						level++;
+						createBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+						break;
+					}
+					else if(yn == 'N' || yn == 'n'){
+						break;
+					}
+					else{
+						//[31m la chu do nen den
+						cout << "\033[31m" << "Invalid value, please try again: ";
+					}
 				}
-				else if(yn == 'N' || yn == 'n'){
-					break;
-				}
-				else
-					cout << endl << "Invalid value, please try again: ";
 			}
 		}
-		if(yn == 'N' || yn == 'n')
+		if(yn == 'N' || yn == 'n' || (totalCharacter == 0 && level == 5))
 			break;
 	}
 
-	cout << "Game ended!";
+	//chu va nen mau mac dinh
+    cout << "\033[0m" << "Game ended!";
 	
 	deleteBoard(board, col);
 	
