@@ -440,9 +440,7 @@ void shuffleBoard(int **board, int row, int col, int characterBlock[], int total
 	for(int i = 0; i < totalDifferentCharacter; i++){
 		a[i] = characterBlock[i];
 	}
-	for(int i = 0; i < totalDifferentCharacter; i++)
-		cout << a[i] << endl;
-
+	
 	for(int i = 1; i <= row; i++)
 		for(int j = 1; j <= col; j++)
 			if(board[i][j] != -1)

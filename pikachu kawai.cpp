@@ -75,11 +75,10 @@ int main(){
 	char yn;
 	while(true){
 		drawingBoard(board, row, col, level);
-		/*if( !testingBoard(board, row, col, totalCharacter) ){
-			/*cout << "Error." << endl;
-			break;
+		while( !testingBoard(board, row, col, totalCharacter) ){
 			shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
-		}*/
+			drawingBoard(board, row, col, level);
+		}
 		matching(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
 
 		/*if(totalCharacter == 0 && level == 5)

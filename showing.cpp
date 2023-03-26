@@ -143,11 +143,15 @@ void drawingBoard(int **board, int row, int col, int level){
 				cout << "     ";
 			else if(i%3 == 0)
 				cout << char(201) << char(205) << char(205) << char(205) << char(187);
-			else if(i%3 == 1)
+			else if(i%3 == 1 && board[i/3][j] < 26)
 				cout << char(186) << " " << (char)(board[i/3][j] + (int)'A') << " " << char(186);
+			else if(i%3 == 1 && board[i/3][j] >= 26)
+				cout << char(186) << " " << (char)(board[i/3][j] + (int)'a' - 26) << " " << char(186);
             else if(i%3 == 2)
 				cout << char(200) << char(205) << char(205) << char(205) << char(188);
 		}
 		cout << endl;
 	}
+
+    cout << endl << "\033[92m" << "Using arrow key.";
 }
