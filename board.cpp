@@ -396,12 +396,8 @@ bool testingBoard(int **board, int row, int col, int totalCharacter){
 void matching(int **board, int row, int col, int characterBlock[], int &totalCharacter, int totalDifferentCharacter){
 	int y1, x1, y2, x2;
 
-	//https://www.codespeedy.com/color-text-output-in-console-in-cpp
-	HANDLE coloring;
-    coloring = GetStdHandle(STD_OUTPUT_HANDLE);
-	
-	//15 la chu trang nen den
-    SetConsoleTextAttribute(coloring, 15);
+	//chu va nen mau mac dinh
+    cout << "\033[0m";
 	cout << endl << "Input for matching: ";
 	cin >> y1 >> x1 >> y2 >> x2;
 

@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cmath>
 #include <new>
+#include <fstream>
 #include <windows.h>
 //#include <vector>
 
