@@ -1,7 +1,10 @@
 #pragma once
 #include <windows.h>
+//This file INCLUDE all of function used to design screen
+void clearScreen();//using code from https://cplusplus.com/forum/articles/10515/
+void SET_COLOR(int color);// Source code from : https://www.phanxuanchanh.com/2021/01/08/lap-trinh-c-c-doi-mau-console/
 
-void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515/
+void clearScreen(){ 
     HANDLE                     hStdOut;
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     DWORD                      count;
@@ -35,4 +38,18 @@ void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515
 
     /* Move the cursor home */
     SetConsoleCursorPosition( hStdOut, homeCoords );
+}
+
+void SET_COLOR(int color)
+{
+	WORD wColor;
+     
+
+     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+     CONSOLE_SCREEN_BUFFER_INFO csbi;
+     if(GetConsoleScreenBufferInfo(hStdOut, &csbi))
+     {
+          wColor = (csbi.wAttributes & 0xF0) + (color & 0x0F);
+          SetConsoleTextAttribute(hStdOut, wColor);
+     }
 }

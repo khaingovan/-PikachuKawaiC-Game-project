@@ -6,6 +6,9 @@
 #include <new>
 #include <windows.h>
 #include <conio.h>
-//#include <vector>
+
+#include "FormatScreens.cpp"
+#include "Menu.cpp"
+#include <vector>
 
 using namespace std;

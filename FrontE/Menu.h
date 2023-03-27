@@ -1,8 +1,11 @@
 #pragma once
+#include <iostream>
+#include <conio.h>
+#include <iomanip>
 #include "ClearScreen.cpp"
 using namespace std;
 
-//M� ASCII c�c ph�m di?u khi?n t? b�n ph�m
+//Mã ASCII các phím điều khiển từ bàn phím
 #define KeyUp 72
 #define KeyDown 80
 #define KeyLeft 75
@@ -10,7 +13,14 @@ using namespace std;
 #define Space 32
 #define Esc 27
 
-void getEvents(int &line, int &col, int &roundSelect, int &Choice);
+    //Các hàm Liên quan đến menu
+// function get orders from keyboard 
+void getEvents(int &line, int &col, int &roundSelect, int &Choice); 
+// split up from printMenu, make it easy to change later
+void printCredit();
+// function show interactive screen 
 void printMenu(int roundSelect, int Choice);
+
+// exact menu
 void generateMenu(int &line, int &col, int &roundSelect, int &Choice);
 
