@@ -7,8 +7,8 @@
 #include <windows.h>
 #include <conio.h>
 
-#include "ClearScreen.cpp"
+#include "FormatScreens.cpp"
 #include "Menu.cpp"
-//#include <vector>
+#include <vector>
 
 using namespace std;

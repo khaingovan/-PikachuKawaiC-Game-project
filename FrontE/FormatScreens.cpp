@@ -1,6 +1,10 @@
 #pragma once
 #include <windows.h>
-void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515/
+//This file INCLUDE all of function used to design screen
+void clearScreen();//using code from https://cplusplus.com/forum/articles/10515/
+void SET_COLOR(int color);// Source code from : https://www.phanxuanchanh.com/2021/01/08/lap-trinh-c-c-doi-mau-console/
+
+void clearScreen(){ 
     HANDLE                     hStdOut;
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     DWORD                      count;
