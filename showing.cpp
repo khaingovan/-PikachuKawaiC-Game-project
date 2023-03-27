@@ -57,6 +57,21 @@ void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515
     White WHITE	                    Esc[97m	       Esc[107m	    F
 */
 
+/*
+    Use for void drawingLine (block in board)
+    0: line down
+    1: line up
+    2: line right
+    3: line left
+    4: 124: line |
+    5: 196: line -
+    6: 218: line down-right
+    7: 191: line down-left
+    8: 192: line up-right
+    9: 217: line up-left
+    
+    Use for void drawingLine
+*/
 
 void level2(int **board, int row, int col){ //cac toa do chuyen dong xuong
     for(int j = 1; j <= col; j++)
@@ -127,6 +142,8 @@ void drawingBackground(int **board, int row, int col, int i, int j){
     delete [] background;
 }
 
+void drawingLine(int **board, int row, int col, int level){}
+
 void drawingBoard(int **board, int row, int col, int level){
     clearScreen();
 
@@ -163,16 +180,24 @@ void drawingBoard(int **board, int row, int col, int level){
 
 	for(int i = 0; i <= (row + 1)*3; i++){
 		for(int j = 0; j <= col + 1; j++){
-			if(board[i/3][j] == -1)
-				cout << "     ";
-			else if(i%3 == 0)
-				cout << char(201) << char(205) << char(205) << char(205) << char(187);
-			else if(i%3 == 1 && board[i/3][j] < 26)
-				cout << char(186) << " " << (char)(board[i/3][j] + (int)'A') << " " << char(186);
-			else if(i%3 == 1 && board[i/3][j] >= 26)
-				cout << char(186) << " " << (char)(board[i/3][j] + (int)'a' - 26) << " " << char(186);
-            else if(i%3 == 2)
-				cout << char(200) << char(205) << char(205) << char(205) << char(188);
+            if(board[i/3][j] >= (int)'0' && board[i/3][j] <= (int)'9'){
+                //chu xanh la nen den
+                cout << "\033[92m";
+            }
+            else{
+                //chu va nen mau mac dinh
+                cout << "\033[0m";
+                if(board[i/3][j] == -1)
+                    cout << "     ";
+                else if(i%3 == 0)
+                    cout << char(201) << char(205) << char(205) << char(205) << char(187);
+                else if(i%3 == 1 && board[i/3][j] < 26)
+                    cout << char(186) << " " << (char)(board[i/3][j] + (int)'A') << " " << char(186);
+                else if(i%3 == 1 && board[i/3][j] >= 26)
+                    cout << char(186) << " " << (char)(board[i/3][j] + (int)'a' - 26) << " " << char(186);
+                else if(i%3 == 2)
+                    cout << char(200) << char(205) << char(205) << char(205) << char(188);
+            }
 		}
 		cout << endl;
 	}

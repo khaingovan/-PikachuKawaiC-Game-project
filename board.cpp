@@ -12,120 +12,57 @@
 	}
 }*/
 
-bool checkLineY(int **board, int x1, int x2, int y){ //check theo hang ngang
+void checkLineX(int **board, int x1, int x2, int y, int &matchShape){ //check theo hang ngang
+	matchShape = 0;
+
 	if(x1 > x2){
 		int key = x1;
 		x1 = x2;
 		x2 = key;
 	}
-	if(x2 - x1 == 1) return true;
-	for(int i = x1 + 1; i <= x2 - 1; i++){
-		if(board[y][i] != -1)
-			return false;
+	if(x2 - x1 == 1){
+		matchShape = 1;
+		for(int i = x1 + 1; i <= x2 - 1; i++)
+			if(board[y][i] != -1){
+				matchShape = 0;
+				i = 100;
+			}
 	}
-	return true;
+
+	if(matchShape != 0){
+		board[y][x1] = (int)'0';
+		for(int i = x1 + 1; i <= x2 - 1; i++)
+			board[y][i] = (int)'4';
+		board[y][x2] = (int)'1';
+	}
 }
 
-bool checkLineX(int **board, int y1, int y2, int x){ //check theo hang doc
+void checkLineY(int **board, int y1, int y2, int x, int &matchShape){ //check theo hang doc
+	matchShape = 0;
+
 	if(y1 > y2){
 		int key = y1;
 		y1 = y2;
 		y2 = key;
 	}
-	if(y2 - y1 == 1) return true;
-	for(int i = y1 + 1; i <= y2 - 1; i++){
-		if(board[i][x] != -1)
-			return false;
+	if(y2 - y1 == 1){
+		matchShape = 2;
+		for(int i = y1 + 1; i <= y2 - 1; i++)
+			if(board[i][x] != -1){
+				matchShape = 0;
+				i = 100;
+			}
 	}
-	return true;
+
+	if(matchShape != 0){
+		board[y1][x] = (int)'2';
+		for(int i = y1 + 1; i <= y2 - 1; i++)
+			board[i][x] = (int)'5';
+		board[y2][x] = (int)'3';
+	}
 }
 
 bool checkLShape(int **board, int y1, int x1, int y2, int x2){
-	/*if(board[y1][x2] == -1){
-		if(x1 < x2 && y1 < y2){
-			for(int i = x1 + 1; i < x2; i++){
-				if(board[y1][i] != -1)
-					return false;
-			}
-			for(int i = y1 + 1; i < y2; i++){
-				if(board[i][y2] != -1)
-					return false;
-			}
-		}
-		else if(x1 > x2 && y1 < y2){
-			for(int i = x1 - 1; i > x2; i--){
-				if(board[y1][i] != -1)
-					return false;
-			}
-			for(int i = y1 + 1; i < y2; i++){
-				if(board[i][y2] != -1)
-					return false;
-			}
-		}
-		else if(x1 < x2 && y1 > y2){
-			for(int i = x1 + 1; i < x2; i++){
-				if(board[y1][i] != -1)
-					return false;
-			}
-			for(int i = y1 - 1; i < y2; i--){
-				if(board[i][y2] != -1)
-					return false;
-			}
-		}
-		else if(x1 > x2 && y1 > y2){
-			for(int i = x1 - 1; i > x2; i--){
-				if(board[y1][i] != -1)
-					return false;
-			}
-			for(int i = y1 - 1; i < y2; i--){
-				if(board[i][y2] != -1)
-					return false;
-			}
-		}
-	}
-	else{
-		if(x1 < x2 && y1 < y2){
-			for(int i = y1 + 1; i < y2; i++){
-				if(board[i][y2] != -1)
-					return false;
-			}
-			for(int i = x1 + 1; i < x2; i++){
-				if(board[y1][i] != -1)
-					return false;
-			}
-		}
-		else if(x1 > x2 && y1 < y2){
-			for(int i = y1 + 1; i < y2; i++){
-				if(board[i][y2] != -1)
-					return false;
-			}
-			for(int i = x1 - 1; i > x2; i--){
-				if(board[y1][i] != -1)
-					return false;
-			}
-		}
-		else if(x1 < x2 && y1 > y2){
-			for(int i = y1 - 1; i < y2; i--){
-				if(board[i][y2] != -1)
-					return false;
-			}
-			for(int i = x1 + 1; i < x2; i++){
-				if(board[y1][i] != -1)
-					return false;
-			}
-		}
-		else if(x1 > x2 && y1 > y2){
-			for(int i = y1 - 1; i < y2; i--){
-				if(board[i][y2] != -1)
-					return false;
-			}
-			for(int i = x1 - 1; i > x2; i--){
-				if(board[y1][i] != -1)
-					return false;
-			}
-		}
-	}*/
-
 	//	A	 ___________________	B
 	//		|					|
 	//		|					|
@@ -324,6 +261,7 @@ bool checkUAndZShape(int **board, int y1, int x1, int y2, int x2, int row, int c
 
 bool isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2){
 	bool legalMatch = false;
+	int matchShape = 0;
 	if(y1 == y2 && x1 == x2)
 		return false;
 	if(board[y1][x1] == -1 || board[y2][x2] == -1) 
@@ -332,10 +270,14 @@ bool isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2)
 		return false;
 
 	if(y1 == y2){
-		legalMatch = checkLineY(board, x1, x2, y1);
+		checkLineX(board, x1, x2, y1, matchShape);
+		if(matchShape > 0)
+			legalMatch = true;
 	}
 	else if(x1 == x2){
-		legalMatch = checkLineX(board, y1, y2, x1);
+		checkLineY(board, y1, y2, x1, matchShape);
+		if(matchShape > 0)
+			legalMatch = true;
 	}
 	else if(board[y1][x2] == -1 || board[y2][x1] == -1){
 		legalMatch = checkLShape(board, y1, x1, y2, x2);
@@ -405,25 +347,15 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 	if(y1 == 1 && x1 == 1 && y2 == 1 && x2 == 1)
 		shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
 	
-	//bool legalMatch = isLegalMatch(board, row, col, y1, x1, y2, x2);
-	/*if( (board[y1][x1] == board[y2][x2]) && (x1 != x2 || y1 != y2) ){
-		if(y1 == y2)
-			legalMatch = checkLineY(board, x1, x2, y1);
-		else if(x1 == x2)
-			legalMatch = checkLineX(board, y1, y2, x1);
-		
-		else if(board[y1][x2] == -1 || board[y2][x1] == -1)
-			legalMatch = checkLShape(board, y1, x1, y2, x2);
-		
-		// Xet U Shape va Z Shape sau khi nhung dang kia khong di dung
-		if(legalMatch == false)
-			legalMatch = checkUAndZShape(board, y1, x1, y2, x2, row, col);
-	}*/
 	if( isLegalMatch(board, row, col, y1, x1, y2, x2) ){
 		characterBlock[ board[y1][x1] ]--;
 		totalCharacter-=2;
 		board[y1][x1] = -1;
 		board[y2][x2] = -1;
+		for(int i = 0; i < row + 2; i++)
+			for(int j = 0; j < col + 2; j++)
+				if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
+					board[i][j] = -1;
 	}
 }
 
