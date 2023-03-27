@@ -1,4 +1,30 @@
 #include "Menu.h"
+void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
+{
+    roundSelect = 1;
+    Choice = 1;
+
+    cout << "_|_|_|    _|  _|                            _|                 "<< endl;                                                                                                                                                                               
+    cout << "_|    _|      _|  _|      _|_|_|    _|_|_|  _|_|_|    _|     _| "<< endl;
+    cout << "_|_|_|    _|  _|_|      _|    _|  _|        _|    _|  _|     _| "<< endl;
+    cout << "_|        _|  _|  _|    _|    _|  _|        _|    _|  _|     _| "<< endl;
+    cout << "_|        _|  _|    _|    _|_|_|    _|_|_|  _|    _|    _|_|_|  \n\n";
+    cout << "\t Press Space to continue!!" << endl;
+    char button = getch();
+    if (button = Space)
+        clearScreen();
+
+    Sleep(500); // menu screen will stop in 500 millisecond
+    while (true)
+    {  
+        if (roundSelect == 5)   // out while loop
+            break;  
+        printMenu(roundSelect, Choice);
+        getEvents(line, col, roundSelect, Choice);
+        clearScreen();
+    }
+}
+
 void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 {
     char button = getch();
@@ -110,31 +136,6 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
         }
     }
 }
-void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
-{
-    roundSelect = 1;
-    Choice = 1;
-
-    cout << "_|_|_|    _|  _|                            _|                 "<< endl;                                                                                                                                                                               
-    cout << "_|    _|      _|  _|      _|_|_|    _|_|_|  _|_|_|    _|     _| "<< endl;
-    cout << "_|_|_|    _|  _|_|      _|    _|  _|        _|    _|  _|     _| "<< endl;
-    cout << "_|        _|  _|  _|    _|    _|  _|        _|    _|  _|     _| "<< endl;
-    cout << "_|        _|  _|    _|    _|_|_|    _|_|_|  _|    _|    _|_|_|  \n\n";
-    cout << "\t Press Space to continue!!" << endl;
-    char button = getch();
-    if (button = Space)
-        clearScreen();
-
-    Sleep(500);
-    while (true)
-    {  
-        if (roundSelect == 5)
-            break;
-        printMenu(roundSelect, Choice);
-        getEvents(line, col, roundSelect, Choice);
-        clearScreen();
-    }
-}
 
 void printMenu(int roundSelect, int Choice)
 {
@@ -198,10 +199,31 @@ void printMenu(int roundSelect, int Choice)
         }
         case 3:
         {
-            cout << "credit";
+            clearScreen();
+            printCredit();
             break;
         }
     }
 
+}
+void printCredit()
+{
+    SET_COLOR(6);
+    cout << "\t\t\t   ____                     _   _   _      \n"; 
+    cout << "\t\t\t  / ___|  _ __    ___    __| | (_) | |_    \n"; 
+    cout << "\t\t\t | |     | '__|  / _ `  / _` | | | | __|   \n"; 
+    cout << "\t\t\t | |___  | |    |  __/ | (_| | | | | |_ .   \n"; 
+    cout << "\t\t\t  `____| |_|     `___|  `__,_| |_| '__./   \n\n"; 
+
+    cout << "\t\t\t\t\t Pikachu Game \n";
+    cout << "\t\t\t Programming Technique's Course Project \n";
+    SET_COLOR(13);
+    cout << "\t\t\t Programmed and Designed by \n";
+    cout << "\t\t\t" << left << setw(30) << " Ngo Van Khai" << setfill(' ')  << "22127174 \n";
+    cout << "\t\t\t" << left << setw(30) << " Nguyen Quoc Tin" << setfill(' ')  << "22127416 \n";
+    
+    SET_COLOR(3);
+    cout << "\t\t This is our first game. Hope you have good experience\n";
+    cout << "\t\t\t\t\t Thank you!!";
 }
   
