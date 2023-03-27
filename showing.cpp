@@ -106,6 +106,27 @@ void level5(int **board, int row, int col){ //cac toa do chuyen qua phai
         }
 }
 
+void drawingBackground(int **board, int row, int col, int i, int j){
+    ofstream fout;
+    ifstream fin;
+
+    char *background;
+    background = new char [5];
+    fin.open("BackgroundArt\\art1.txt");
+    int count = 0;
+	while(count < 5){
+		fin.get( background[count] );
+		count++;
+	}
+    fin.close();
+
+    //ve background
+    for(int countI = 0; i < 5; i++)
+		cout << background[countI];
+    
+    delete [] background;
+}
+
 void drawingBoard(int **board, int row, int col, int level){
     clearScreen();
 
@@ -133,10 +154,13 @@ void drawingBoard(int **board, int row, int col, int level){
         level5(board, row, col);
         cout << "\033[97;41m";
     }
-    cout << "Level " << level << endl;
+    cout << "Level " << level;
     
     //chu va nen mau mac dinh
     cout << "\033[0m";
+
+    cout << "\t\t\tScore:" << endl;
+
 	for(int i = 0; i <= (row + 1)*3; i++){
 		for(int j = 0; j <= col + 1; j++){
 			if(board[i/3][j] == -1)
@@ -153,5 +177,6 @@ void drawingBoard(int **board, int row, int col, int level){
 		cout << endl;
 	}
 
+    //chu xanh la nen den
     cout << endl << "\033[92m" << "Using arrow key.";
 }
