@@ -30,7 +30,7 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
 void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 {
     char button = getch();
-    Beep (600, 50);
+    Beep (600, 50); //https://tuicocach.com/tao-am-thanh-bip-trong-c-c-voi-ham-beep/
     switch (roundSelect)
     {
         case 1: //first screen 
