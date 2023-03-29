@@ -23,7 +23,8 @@ void createBoard(int **board, int row, int col, int characterBlock[],int &totalC
 			//cu them duoc gia tri vao 2 toa do thi count tu +2, neu cham nguong so luong toa do cua bang choi thi vong for tu thoat ra
 			count+=2;
 		}
-	}}
+	}
+}
 
 int main(){
 	//https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
@@ -74,16 +75,28 @@ int main(){
 	
 	char yn;
 	while(true){
-		drawingBoard(board, row, col, level);
-		while( !testingBoard(board, row, col, totalCharacter) ){
+		int *pcharacterLost, characterLost = -3;
+		pcharacterLost = &characterLost;
+		drawingBoard(board, row, col, level, 1);
+		while( !testingBoard(board, row, col, totalCharacter, pcharacterLost) ){
 			shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
 			drawingBoard(board, row, col, level);
 		}
-		matching(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+		for(int i = 0; i < row + 2; i++)
+			for(int j = 0; j < col + 2; j++)
+				if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
+					board[i][j] = -1;
+		cout << endl;
+		for(int i = 0; i < totalDifferentCharacter; i++)
+			cout << characterBlock[i] << " ";
+		cout << endl << totalCharacter << endl;
+		matching(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter, level);
 
-		/*if(totalCharacter == 0 && level == 5)
-			break;*/
+		if(totalCharacter == 0 && level == 5)
+			break;
 		if(totalCharacter == 0){
+			drawingBoard(board, row, col, level);
+
 			//chu va nen mau mac dinh
     		cout << "\033[0m" << "Congratulate!" << endl;
 

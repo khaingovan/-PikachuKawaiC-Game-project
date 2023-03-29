@@ -57,21 +57,6 @@ void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515
     White WHITE	                    Esc[97m	       Esc[107m	    F
 */
 
-/*
-    Use for void drawingLine (block in board)
-    0: line down
-    1: line up
-    2: line right
-    3: line left
-    4: 124: line |
-    5: 196: line -
-    6: 218: line down-right
-    7: 191: line down-left
-    8: 192: line up-right
-    9: 217: line up-left
-    
-    Use for void drawingLine
-*/
 
 void level2(int **board, int row, int col){ //cac toa do chuyen dong xuong
     for(int j = 1; j <= col; j++)
@@ -121,7 +106,7 @@ void level5(int **board, int row, int col){ //cac toa do chuyen qua phai
         }
 }
 
-void drawingBackground(int **board, int row, int col, int i, int j){
+/*void drawingBackground(int **board, int row, int col, int i, int j){
     ofstream fout;
     ifstream fin;
 
@@ -140,11 +125,120 @@ void drawingBackground(int **board, int row, int col, int i, int j){
 		cout << background[countI];
     
     delete [] background;
+}*/
+
+/*
+    Use for void drawingLine (block in board)
+    0: line down
+    1: line up
+    2: line right
+    3: line left
+    4: 179: line |
+    5: 196: line -
+    6: 218: line down-right
+    7: 191: line down-left
+    8: 192: line up-right
+    9: 217: line up-left
+    
+    Use for void drawingLine
+*/
+
+void drawingLine(int **board, int i, int j){
+    //i can phai *3 de ve board
+
+    //line down
+    if(board[i/3][j] == (int)'0'){
+        if(i%3 == 0)
+            cout << (char)(201) << (char)(205) << (char)(205) << (char)(205) << (char)(187);
+        else if(i%3 == 1)
+            cout << (char)(186) << " "         << (char)(179) << " "         << (char)(186);
+        else if(i%3 == 2)
+            cout << (char)(200) << (char)(205) << (char)(179) << (char)(205) << (char)(188);
+    }
+    //line up
+    else if(board[i/3][j] == (int)'1'){
+        if(i%3 == 0)
+            cout << (char)(201) << (char)(205) << (char)(179) << (char)(205) << (char)(187);
+        else if(i%3 == 1)
+            cout << (char)(186) << " "         << (char)(179) << " "         << (char)(186);
+        else if(i%3 == 2)
+            cout << (char)(200) << (char)(205) << (char)(205) << (char)(205) << (char)(188);
+    }
+    //line right
+    else if(board[i/3][j] == (int)'2'){
+        if(i%3 == 0)
+            cout << (char)(201) << (char)(205) << (char)(205) << (char)(205) << (char)(187);
+        else if(i%3 == 1)
+            cout << (char)(186) << " "         << (char)(196) << (char)(196) << (char)(196);
+        else if(i%3 == 2)
+            cout << (char)(200) << (char)(205) << (char)(205) << (char)(205) << (char)(188);
+    }
+    //line left
+    else if(board[i/3][j] == (int)'3'){
+        if(i%3 == 0)
+            cout << (char)(201) << (char)(205) << (char)(205) << (char)(205) << (char)(187);
+        else if(i%3 == 1)
+            cout << (char)(196) << (char)(196) << (char)(196) << " "         << (char)(186);
+        else if(i%3 == 2)
+            cout << (char)(200) << (char)(205) << (char)(205) << (char)(205) << (char)(188);
+    }
+    //line |
+    else if(board[i/3][j] == (int)'4'){
+        if(i%3 == 0)
+            cout << " "         << " "         << (char)(179) << " "         << " "        ;
+        else if(i%3 == 1)
+            cout << " "         << " "         << (char)(179) << " "         << " "        ;
+        else if(i%3 == 2)
+            cout << " "         << " "         << (char)(179) << " "         << " "        ;
+    }
+    //line -
+    else if(board[i/3][j] == (int)'5'){
+        if(i%3 == 0)
+            cout << " "         << " "         << " "         << " "         << " "        ;
+        else if(i%3 == 1)
+            cout << (char)(196) << (char)(196) << (char)(196) << (char)(196) << (char)(196);
+        else if(i%3 == 2)
+            cout << " "         << " "         << " "         << " "         << " "        ;
+    }
+    //line down-right
+    else if(board[i/3][j] == (int)'6'){
+        if(i%3 == 0)
+            cout << " "         << " "         << " "         << " "         << " "        ;
+        else if(i%3 == 1)
+            cout << " "         << " "         << (char)(218) << (char)(196) << (char)(196);
+        else if(i%3 == 2)
+            cout << " "         << " "         << (char)(179) << " "         << " "        ;
+    }
+    //line down-left
+    else if(board[i/3][j] == (int)'7'){
+        if(i%3 == 0)
+            cout << " "         << " "         << " "         << " "         << " "        ;
+        else if(i%3 == 1)
+            cout << (char)(196) << (char)(196) << (char)(191) << " "         << " "        ;
+        else if(i%3 == 2)
+            cout << " "         << " "         << (char)(179) << " "         << " "        ;
+    }
+    //line up-right
+    else if(board[i/3][j] == (int)'8'){
+        if(i%3 == 0)
+            cout << " "         << " "         << (char)(179) << " "         << " "        ;
+        else if(i%3 == 1)
+            cout << " "         << " "         << (char)(192) << (char)(196) << (char)(196);
+        else if(i%3 == 2)
+            cout << " "         << " "         << " "         << " "         << " "        ;
+    }
+    //9: 217: line up-left
+    else if(board[i/3][j] == (int)'9'){
+        if(i%3 == 0)
+            cout << " "         << " "         << (char)(179) << " "         << " "        ;
+        else if(i%3 == 1)
+            cout << (char)(196) << (char)(196) << (char)(217) << " "         << " "        ;
+        else if(i%3 == 2)
+            cout << " "         << " "         << " "         << " "         << " "        ;
+    }
 }
 
-void drawingLine(int **board, int row, int col, int level){}
-
-void drawingBoard(int **board, int row, int col, int level){
+void drawingBoard(int **board, int row, int col, int &level, bool draw){
     clearScreen();
 
     if(level == 1){
@@ -153,23 +247,31 @@ void drawingBoard(int **board, int row, int col, int level){
     }
     else if(level == 2){
         //chu trang sang nen do
-        level2(board, row, col);
         cout << "\033[97;41m";
+
+        if(draw)
+            level2(board, row, col);
     }
     else if(level == 3){
         //chu trang sang nen do
-        level3(board, row, col);
         cout << "\033[97;41m";
+        
+        if(draw)
+            level3(board, row, col);
     }
     else if(level == 4){
         //chu trang sang nen do
-        level4(board, row, col);
         cout << "\033[97;41m";
+        
+        if(draw)
+            level4(board, row, col);
     }
     else if(level == 5){
         //chu trang sang nen do
-        level5(board, row, col);
         cout << "\033[97;41m";
+        
+        if(draw)
+            level2(board, row, col);
     }
     cout << "Level " << level;
     
@@ -178,25 +280,26 @@ void drawingBoard(int **board, int row, int col, int level){
 
     cout << "\t\t\tScore:" << endl;
 
-	for(int i = 0; i <= (row + 1)*3; i++){
-		for(int j = 0; j <= col + 1; j++){
+	for(int i = 0; i < (row + 2)*3; i++){
+		for(int j = 0; j < col + 2; j++){
             if(board[i/3][j] >= (int)'0' && board[i/3][j] <= (int)'9'){
                 //chu xanh la nen den
                 cout << "\033[92m";
+                drawingLine(board, i, j);
             }
             else{
                 //chu va nen mau mac dinh
                 cout << "\033[0m";
                 if(board[i/3][j] == -1)
-                    cout << "     ";
+                    cout << "#####";
                 else if(i%3 == 0)
-                    cout << char(201) << char(205) << char(205) << char(205) << char(187);
+                    cout << (char)(201) << (char)(205) << (char)(205)                           << (char)(205) << (char)(187);
                 else if(i%3 == 1 && board[i/3][j] < 26)
-                    cout << char(186) << " " << (char)(board[i/3][j] + (int)'A') << " " << char(186);
+                    cout << (char)(186) << " "         << (char)(board[i/3][j] + (int)'A')      << " "         << (char)(186);
                 else if(i%3 == 1 && board[i/3][j] >= 26)
-                    cout << char(186) << " " << (char)(board[i/3][j] + (int)'a' - 26) << " " << char(186);
+                    cout << (char)(186) << " "         << (char)(board[i/3][j] + (int)'a' - 26) << " "         << (char)(186);
                 else if(i%3 == 2)
-                    cout << char(200) << char(205) << char(205) << char(205) << char(188);
+                    cout << (char)(200) << (char)(205) << (char)(205)                           << (char)(205) << (char)(188);
             }
 		}
 		cout << endl;
