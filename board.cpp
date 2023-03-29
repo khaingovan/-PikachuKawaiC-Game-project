@@ -562,4 +562,3 @@ void deleteBoard(int **board, int col){
 		delete [] board[i];
 	}
 }
-
