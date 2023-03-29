@@ -4,6 +4,7 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
     roundSelect = 1;
     Choice = 1;
 
+    SET_COLOR(6);
     cout << "_|_|_|    _|  _|                            _|                 "<< endl;                                                                                                                                                                               
     cout << "_|    _|      _|  _|      _|_|_|    _|_|_|  _|_|_|    _|     _| "<< endl;
     cout << "_|_|_|    _|  _|_|      _|    _|  _|        _|    _|  _|     _| "<< endl;
@@ -15,9 +16,10 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
         clearScreen();
 
     Sleep(500); // menu screen will stop in 500 millisecond
+    SET_COLOR(7);
     while (true)
     {  
-        if (roundSelect == 5)   // out while loop
+        if (roundSelect == -1)   // out while loop
             break;  
         printMenu(roundSelect, Choice);
         getEvents(line, col, roundSelect, Choice);
@@ -28,27 +30,28 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
 void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 {
     char button = getch();
+    Beep (600, 50); //https://tuicocach.com/tao-am-thanh-bip-trong-c-c-voi-ham-beep/
     switch (roundSelect)
     {
-        case 1:
+        case 1: //first screen 
         {
             switch(button)
             {
-                case KeyUp:
+                case KeyUp: //point to upper choice
                 {
                     Choice--;
                     if (Choice == 0)
-                        Choice = 3;
+                        Choice = 4;
                     break;                  
                 }
-                case KeyDown:
+                case KeyDown:   //point to below choice
                 {
                     Choice++;
-                    if (Choice == 4)
+                    if (Choice == 5)
                         Choice = 1;
                     break;
                 }
-                case Space:
+                case Space: //to select
                 {
                     if (Choice == 1)
                     {
@@ -57,9 +60,13 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
                     }
                     else if (Choice == 2)
                     {
+                        roundSelect = 4; // LeaderBoard
+                    }
+                    else if (Choice == 3)
+                    {
                         roundSelect = 3; //Credit
                     }
-                    else if (Choice == 3)     // Quit
+                    else if (Choice == 4)     // Quit
                         exit(0);
                     break;
                 }
@@ -71,7 +78,7 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
             }
         break;
         }
-        case 2:
+        case 2:     //Screen where choose difficult
         {
             switch(button)
             {
@@ -97,21 +104,21 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
                         {
                             line = 4;
                             col = 4;
-                            roundSelect = 5;        
+                            roundSelect = -1;        
                             break;
                         }
                         case (2):
                         {
                             line = 6;
                             col = 6;
-                            roundSelect = 5;
+                            roundSelect = -1;
                             break;
                         }
                         case (3):
                         {
                             line = 10;
                             col = 10;
-                            roundSelect = 5;
+                            roundSelect = -1;
                             break;
                         }
                     }
@@ -125,7 +132,7 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
             }
         break;
         }
-        case 3:
+        case 3: case 4:
         {
             if (button == Esc)
             {
@@ -146,20 +153,30 @@ void printMenu(int roundSelect, int Choice)
         {
             if (Choice == 1)
             {
-                cout << "\t\t <<Play>>" << endl;
+                cout << "\t\t<<Play>>" << endl;
+                cout << "\t\t  LeaderBoard" << endl;
                 cout << "\t\t  Credit" << endl;
                 cout << "\t\t  Quit      " << endl;
             }
             else if (Choice == 2)
             {
-                cout << "\t\t Play" << endl;
-                cout << "\t\t<<Credit>>" << endl;
-                cout << "\t\t Quit        " << endl;
+                cout << "\t\t  Play" << endl;
+                cout << "\t\t<<LeaderBoard>>" << endl;
+                cout << "\t\t  Credit" << endl;
+                cout << "\t\t  Quit      " << endl;
             }
             else if (Choice == 3)
             {
-                cout << "\t\t Play" << endl;
-                cout << "\t\t Credit" << endl;
+                cout << "\t\t  Play" << endl;
+                cout << "\t\t  LeaderBoard" << endl;
+                cout << "\t\t<<Credit>>" << endl;
+                cout << "\t\t  Quit        " << endl;
+            }
+            else if (Choice == 4)
+            {
+                cout << "\t\t  Play" << endl;
+                cout << "\t\t  LeaderBoard" << endl;
+                cout << "\t\t  Credit" << endl;
                 cout << "\t\t<<Quit>>      " << endl;
             }
             break;
@@ -203,6 +220,11 @@ void printMenu(int roundSelect, int Choice)
             printCredit();
             break;
         }
+        case 4:
+        {
+            cout << "Leader Board"; // Sẽ viết sau
+            break;
+        }
     }
 
 }
@@ -225,5 +247,6 @@ void printCredit()
     SET_COLOR(3);
     cout << "\t\t This is our first game. Hope you have good experience\n";
     cout << "\t\t\t\t\t Thank you!!";
+
+    SET_COLOR(7);
 }
-  
