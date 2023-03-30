@@ -17,7 +17,11 @@ struct Player
     unsigned int record;             //score  (4bytes)
     State savedStage;       //about saveBoard (108bytes)
 };
-
-bool isExistAcc(string FileName, char username[17]); //Check if account exists
+//Small Function
+bool isExistAcc(string FileName, char username[17], unsigned int &index); //Check if account exists
+bool isPasswordCorrect(string FileName, char password[15], unsigned int index);     //Check Password
+void getInfo(string FileName, Player &oldMan, unsigned int index);
+//Big Function
 void signUp (string FileName);  // sign up new account
-void signIn (string FileName);  //  log in game
+void signIn(string FileName, Player &oldMan);  //  log in game
+
