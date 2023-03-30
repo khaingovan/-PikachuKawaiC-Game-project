@@ -1,5 +1,6 @@
 #include "showing.h"
 
+//http://mycodecollection.blogspot.com/2015/01/c-console-change-font-size.html
 void fontsize(int a, int b){  
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
     PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX();
@@ -10,7 +11,7 @@ void fontsize(int a, int b){
     SetCurrentConsoleFontEx(out, 0, lpConsoleCurrentFontEx);  
 }
 
- //https://cplusplus.com/forum/articles/10515/
+//https://cplusplus.com/forum/articles/10515/
 void clearScreen(){
     HANDLE                     hStdOut;
     CONSOLE_SCREEN_BUFFER_INFO csbi;
