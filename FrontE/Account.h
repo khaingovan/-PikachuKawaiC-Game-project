@@ -1,7 +1,8 @@
 #pragma once
+#pragma pack(1)
 #include <fstream>
 #include <string>
-using namespace std;
+
 #define BOARDSIZE 100
 
 struct State
@@ -11,14 +12,12 @@ struct State
 };
 struct Player
 {
-    char username[16];      //16bytes
-    char password[10];      //10bytes
+    char username[17];      //17bytes
+    char password[15];      //15bytes
     unsigned int record;             //score  (4bytes)
     State savedStage;       //about saveBoard (108bytes)
 };
 
-string FileName = "FileSave.bin";
-bool isValidAcc(string FileName, char username[16]);
-void signUp(string FileName);
-void signin(string FileName);
-
+bool isExistAcc(string FileName, char username[17]); //Check if account exists
+void signUp (string FileName);  // sign up new account
+void signIn (string FileName);  //  log in game
