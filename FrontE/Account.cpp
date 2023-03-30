@@ -15,7 +15,7 @@ void signUp(string FileName)
     newguy.savedStage.numCol = 0;
     newguy.savedStage.numRow = 0;
     newguy.savedStage.Board[0] = {NULL};
-    
+    unsigned index = 0;
     //get Username and Password
     cout << "Please input Username (less than 16 characters): ";
     cin.getline (newguy.username, 17);
@@ -23,7 +23,7 @@ void signUp(string FileName)
     cin.getline (newguy.password, 15);
 
     //check if the username exists,
-    bool valid = isExistAcc(FileName, newguy.username);
+    bool valid = isExistAcc(FileName, newguy.username, index);
     if (valid)
     {
         cout << "Existed Username!!";
@@ -40,9 +40,28 @@ void signUp(string FileName)
 
     fout.close();
 }
-void signIn(string FileName);
+void signIn(string FileName, Player &oldMan)
+{
+    unsigned int index = 0;  // index of account to search for password quickly
+    Player oldMan;
+    cout << "Username ";
+    cin.getline(oldMan.username, sizeof(oldMan.username));
+    if(isExistAcc(FileName, oldMan.username, index))        //Check username if it is signed up then Check password is correct (similar to storing in file)
+    {  
+        cout << "Password: ";
+        cin.getline(oldMan.password, sizeof(oldMan.password));
+        if(isPasswordCorrect(FileName, oldMan.password, index))
+        {
+            cout << "Dang nhap thanh cong";
+            getInfo(FileName, oldMan, index);
+        }
+        else cout << "Mat Khau Sai";
+    }    
+    else cout << "Tai Khoan khong ton tai";
+    
+}
 
-bool isExistAcc(string FileName, char username[17])
+bool isExistAcc(string FileName, char username[17], unsigned int &index)
 {
     ifstream fin(FileName, ios::binary);
     if (!fin.is_open())
@@ -81,4 +100,41 @@ bool isExistAcc(string FileName, char username[17])
     
     return false;
 
+}
+bool isPasswordCorrect(string FileName, char password[15], unsigned int index)
+{
+    char passTemp[15];
+    bool Correct = false;
+    ifstream fin(FileName, ios::binary);
+    if (!fin.is_open())
+    {
+        cout << "Error While Opening";
+        exit(0);
+    }
+    
+    fin.seekg(17 + (sizeof(struct Player) * index) ,ios::beg);  //point to the first element of the password
+    fin.read(passTemp, 15);         //read password (15 is size of password)
+    
+    if (strcmp(password, passTemp) == 0) 
+    {
+        Correct = true;
+        cout << "true";
+    }
+
+    fin.close();
+    return Correct;
+}
+
+void getInfo (string FileName, Player &oldMan, unsigned int index)
+{
+    fstream fin(FileName, ios::binary);
+    if (!fin.is_open())
+    {
+        cout << "Error While Opening";
+        exit(0);
+    }
+
+    fin.seekg((sizeof(oldMan.username) + sizeof(oldMan.password)) + sizeof(Player)*index, ios::beg);
+    fin.read((char*) &oldMan.record, sizeof(int));
+    fin.read((char*) &oldMan.savedStage, sizeof(oldMan.savedStage));
 }
