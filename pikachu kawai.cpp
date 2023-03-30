@@ -2,6 +2,26 @@
 #include "board.cpp"
 #include "showing.cpp"
 
+//https://www.codeincodeblock.com/2011/03/move-console-windows-using-codeblock.html
+HWND WINAPI GetConsoleWindowNT(void)
+{
+    //declare function pointer type
+    typedef HWND WINAPI(*GetConsoleWindowT)(void);
+    //declare one such function pointer
+    GetConsoleWindowT GetConsoleWindow;
+    //get a handle on kernel32.dll
+    HMODULE hk32Lib = GetModuleHandle(TEXT("KERNEL32.DLL"));
+    //assign procedure address to function pointer
+    GetConsoleWindow = (GetConsoleWindowT)GetProcAddress(hk32Lib, TEXT("GetConsoleWindow"));
+    //check if the function pointer is valid
+    //since the function is undocumented
+    if(GetConsoleWindow == NULL){
+        return NULL;
+    }
+    //call the undocumented function
+    return GetConsoleWindow();
+}
+
 void createBoard(int **board, int row, int col, int characterBlock[],int &totalCharacter, int totalDifferentCharacter){
 	//so luong ky tu con lai trong mang, sau khi noi dung 2 ky tu thi bien nay tu giam di 2
 	//len 1 level, mang khoi phuc lai thi totalCharacter cung khoi phuc lai
@@ -27,30 +47,39 @@ void createBoard(int **board, int row, int col, int characterBlock[],int &totalC
 }
 
 int main(){
-	//https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
+	//resize font
+	fontsize(28, 28);
+	//resize console window
+    HWND hWnd=GetConsoleWindowNT();
+    MoveWindow(hWnd, 0, 0, 1500, 800,TRUE);
+
 	int row, col;
 	
-	//chu va nen mau mac dinh
-    cout << "\033[0m" << "Input number of rows (even number, 3<x<11): ";
+	//15 = 0*16 + 15 chu trang nen den
+	setColor(15);
+    cout << "Input number of rows (even number, 3<x<11): ";
 	while(true){
 		cin >> row;
 		if( row > 3 && row < 11 && row%2 == 0 )
 			break;
 		else{
-			//[31m la chu do nen den
-			cout << "\033[31m" << "Invalid value, please try again: ";
+			//4 = 0*16 + 4 chu do nen den
+			setColor(4);
+    		cout << "Invalid value, please try again: ";
 		}
 	}
 	
-	//chu va nen mau mac dinh
-    cout << "\033[0m" << "Input number of columns (even number, 3<x<15): ";
+	//15 = 0*16 + 15 chu trang nen den
+	setColor(15);
+    cout << "Input number of columns (even number, 3<x<15): ";
 	while(true){
 		cin >> col;
 		if( col > 3 && col < 15 && col%2 == 0 )
 			break;
 		else{
-			//[31m la chu do nen den
-			cout << "\033[31m" << "Invalid value, please try again: ";
+			//4 = 0*16 + 4 chu do nen den
+			setColor(4);
+    		cout << "Invalid value, please try again: ";
 		}
 	}
 
@@ -97,8 +126,9 @@ int main(){
 		if(totalCharacter == 0){
 			drawingBoard(board, row, col, level);
 
-			//chu va nen mau mac dinh
-    		cout << "\033[0m" << "Congratulate!" << endl;
+			//15 = 0*16 + 15 chu trang nen den
+			setColor(15);
+    		cout << "Congratulate!" << endl;
 
 			if(level < 5){
 				cout << "Play level " << level + 1 << " ? (Y/N) ";
@@ -113,8 +143,9 @@ int main(){
 						break;
 					}
 					else{
-						//[31m la chu do nen den
-						cout << "\033[31m" << "Invalid value, please try again: ";
+						//4 = 0*16 + 4 chu do nen den
+						setColor(4);
+    					cout << "Invalid value, please try again: ";
 					}
 				}
 			}
@@ -123,8 +154,9 @@ int main(){
 			break;
 	}
 
-	//chu va nen mau mac dinh
-    cout << "\033[0m" << "Game ended!";
+	//15 = 0*16 + 15 chu trang nen den
+	setColor(15);
+    cout << "Game ended!";
 	
 	deleteBoard(board, col);
 	

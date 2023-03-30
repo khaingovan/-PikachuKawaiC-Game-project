@@ -355,15 +355,21 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 			board[iU][x1] = board[iU][x2];
 			board[iU][x2] = swap;
 		}
-		else if(x1 > x2){
-			if(board[iU][x1] == (int)'7'){
-				board[iU][x1] = (int)'6';
-				board[iU][x2] = (int)'9';
-			}
-			else{
-				board[iU][x1] = (int)'7';
-				board[iU][x2] = (int)'8';
-			}
+		else if(x1 > x2 && y1 < y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+			board[iU][x1] = (int)'9';
+			board[iU][x2] = (int)'6';
+		}
+		else if(x1 < x2 && y1 < y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+			board[iU][x1] = (int)'8';
+			board[iU][x2] = (int)'7';
+		}
+		else if(x1 > x2 && y1 > y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+			board[iU][x1] = (int)'7';
+			board[iU][x2] = (int)'8';
+		}
+		else if(x1 < x2 && y1 > y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+			board[iU][x1] = (int)'6';
+			board[iU][x2] = (int)'9';
 		}
 	}
 	else if(matchShape == 5 && !testing){
@@ -406,15 +412,21 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 			board[y1][iZ] = board[y2][iZ];
 			board[y2][iZ] = swap;
 		}
-		else if(y1 > y2){
-			if(board[y1][iZ] == (int)'7'){
-				board[y1][iZ] = (int)'6';
-				board[y2][iZ] = (int)'9';
-			}
-			else{
-				board[y1][iZ] = (int)'7';
-				board[y2][iZ] = (int)'8';
-			}
+		else if(y1 > y2 && x1 < x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+			board[y1][iZ] = (int)'9';
+			board[y2][iZ] = (int)'6';
+		}
+		else if(y1 < y2 && x1 < x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+			board[y1][iZ] = (int)'7';
+			board[y2][iZ] = (int)'8';
+		}
+		else if(y1 > y2 && x1 > x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+			board[y1][iZ] = (int)'8';
+			board[y2][iZ] = (int)'7';
+		}
+		else if(y1 < y2 && x1 > x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+			board[y1][iZ] = (int)'6';
+			board[y2][iZ] = (int)'9';
 		}
 	}
 	else
@@ -489,8 +501,8 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 	int *pcharacterLost;
 	pcharacterLost = &characterLost;
 
-	//chu va nen mau mac dinh
-    cout << "\033[0m";
+	//15 = 0*16 + 15 chu trang nen den
+	setColor(15);
 	cout << endl << "Input for matching: ";
 	cin >> y1 >> x1 >> y2 >> x2;
 

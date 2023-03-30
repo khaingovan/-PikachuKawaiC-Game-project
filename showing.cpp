@@ -1,6 +1,17 @@
 #include "showing.h"
 
-void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515/
+void fontsize(int a, int b){  
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+    PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX();
+    lpConsoleCurrentFontEx->cbSize = sizeof(CONSOLE_FONT_INFOEX);  
+    GetCurrentConsoleFontEx(out, 0, lpConsoleCurrentFontEx);  
+    lpConsoleCurrentFontEx->dwFontSize.X = a;  
+    lpConsoleCurrentFontEx->dwFontSize.Y = b;  
+    SetCurrentConsoleFontEx(out, 0, lpConsoleCurrentFontEx);  
+}
+
+ //https://cplusplus.com/forum/articles/10515/
+void clearScreen(){
     HANDLE                     hStdOut;
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     DWORD                      count;
@@ -34,6 +45,35 @@ void clearScreen(){ //using code from https://cplusplus.com/forum/articles/10515
 
     /* Move the cursor home */
     SetConsoleCursorPosition( hStdOut, homeCoords );
+}
+
+//https://www.codespeedy.com/color-text-output-in-console-in-cpp/
+/*
+number =
+0  : Black
+1  : Blue
+2  : Green
+3  : Cyan
+4  : Red
+5  : Purple
+6  : Yellow(dark)
+7  : Default white
+8  : Grey
+9  : Bright blue
+10 : Bright green
+11 : Bright cyan
+12 : Bright red
+13 : Pink
+14 : yellow
+15 : Bright white
+
+int color = number*16                  +       number
+            (this is background color)       (and this is test color)
+*/
+void setColor(int color){
+    HANDLE col;
+    col =  GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(col, color);
 }
 
 //https://ss64.com/nt/syntax-ansi.html
@@ -242,54 +282,54 @@ void drawingBoard(int **board, int row, int col, int &level, bool draw){
     clearScreen();
 
     if(level == 1){
-        //chu trang sang nen xanh duong
-        cout << "\033[97;44m";
+        //31 = 1*16 + 15 chu trang sang nen xanh duong
+        setColor(31);
     }
     else if(level == 2){
-        //chu trang sang nen do
-        cout << "\033[97;41m";
+        //79 = 4*16 + 15 chu trang sang nen do
+        setColor(79);
 
         if(draw)
             level2(board, row, col);
     }
     else if(level == 3){
-        //chu trang sang nen do
-        cout << "\033[97;41m";
+        //79 = 4*16 + 15 chu trang sang nen do
+        setColor(79);
         
         if(draw)
             level3(board, row, col);
     }
     else if(level == 4){
-        //chu trang sang nen do
-        cout << "\033[97;41m";
+        //79 = 4*16 + 15 chu trang sang nen do
+        setColor(79);
         
         if(draw)
             level4(board, row, col);
     }
     else if(level == 5){
-        //chu trang sang nen do
-        cout << "\033[97;41m";
+        //79 = 4*16 + 15 chu trang sang nen do
+        setColor(79);
         
         if(draw)
             level2(board, row, col);
     }
     cout << "Level " << level;
     
-    //chu va nen mau mac dinh
-    cout << "\033[0m";
+    //15 = 0*16 + 15 chu trang nen den
+	setColor(15);
 
     cout << "\t\t\tScore:" << endl;
 
 	for(int i = 0; i < (row + 2)*3; i++){
 		for(int j = 0; j < col + 2; j++){
             if(board[i/3][j] >= (int)'0' && board[i/3][j] <= (int)'9'){
-                //chu xanh la nen den
-                cout << "\033[92m";
+                //10 = 0*16 + 10 chu xanh la nen den
+	            setColor(10);
                 drawingLine(board, i, j);
             }
             else{
-                //chu va nen mau mac dinh
-                cout << "\033[0m";
+                //15 = 0*16 + 15 chu trang nen den
+	            setColor(15);
                 if(board[i/3][j] == -1)
                     cout << "#####";
                 else if(i%3 == 0)
@@ -305,6 +345,7 @@ void drawingBoard(int **board, int row, int col, int &level, bool draw){
 		cout << endl;
 	}
 
-    //chu xanh la nen den
-    cout << endl << "\033[92m" << "Using arrow key.";
+    //10 = 0*16 + 10 chu xanh la nen den
+	setColor(10);
+    cout << endl << "Using arrow key.";
 }
