@@ -2,67 +2,83 @@
 
 void signUp(string FileName)
 {
-    fstream fout(FileName, ios::binary|ios::app);
-
+    ofstream fout(FileName, ios::binary|ios::app);
     if (!fout.is_open())
     {
         cout << "Error While Opening";
         exit(0);
     }
 
+    //New Account store nothing exept username and password
     Player newguy;
+    newguy.record = 0;
+    newguy.savedStage.numCol = 0;
+    newguy.savedStage.numRow = 0;
+    newguy.savedStage.Board[0] = {NULL};
+    
+    //get Username and Password
     cout << "Please input Username (less than 16 characters): ";
-    cin.getline (newguy.username, 16);
-    bool valid = isValidAcc(FileName, newguy.username);
+    cin.getline (newguy.username, 17);
+    cout << "Please input Password (no more than 14 characters): ";
+    cin.getline (newguy.password, 15);
 
-    if (sizeof(newguy.username) > 17 || valid)
-        signUp(FileName);
-    
-    cout << "Please input Password (only 8 characters): ";
-    cin.getline (newguy.password, 8);
-    if (sizeof(newguy.username) > 9)
-        signUp(FileName);
-
-    int zero = 0;
-    while (!fout.eof())
+    //check if the username exists,
+    bool valid = isExistAcc(FileName, newguy.username);
+    if (valid)
     {
-        fout.seekp(ios::end);
-        fout.write((char*)&newguy.username, 16);
-        fout.write((char*)&newguy.password, 8);
-        fout.write((char*)&zero,4);
-        fout.write((char*)&newguy.savedStage, 108);
+        cout << "Existed Username!!";
+        signUp(FileName);           //username is used then user need to type new username
     }
-    
+    else cout << "Welcom New Player";
+
+    // Storing info in binary file
+    fout.seekp(0, ios::end);
+    fout.write(newguy.username, 17);
+    fout.write(newguy.password, 15);
+    fout.write((char*) &newguy.record, sizeof(unsigned int));
+    fout.write((char*) &newguy.savedStage, sizeof(State));
+
+    fout.close();
 }
 void signIn(string FileName);
 
-bool isValidAcc(string FileName, char username[16])
+bool isExistAcc(string FileName, char username[17])
 {
-    fstream fout(FileName, ios::binary|ios::in);
-    if (!fout.is_open())
+    ifstream fin(FileName, ios::binary);
+    if (!fin.is_open())
     {
         cout << "Error While Opening";
         exit(0);
     }
-    bool valid = false;
-    string *name = new string[100];
-    int i = 0;
+    
+    fin.seekg(0, ios::end);     //point to the end of file
+    int file_size = fin.tellg();    //size of file in bytes
+    int numAcc = file_size/sizeof(struct Player);   //count a number of account signed up
 
-    while (!fout.eof())
+    vector <string> name;   //Storing the signed Account
+    char nameTemp[17];
+    
+    //if there is no acc signed up before, test will be skipped
+    if (file_size == 0)
+        return false;
+    else
     {
-        fout.read((char*)&name[i], 16);
-        i++;
-        fout.seekg(144, ios::cur);
+        for (int i = 0; i < numAcc; i++)
+        {
+            fin.seekg(sizeof(struct Player) * i,ios::beg);  //point to the first element of the username
+            fin.read(nameTemp, 17);         //read username
+            name.push_back((string)nameTemp);
+        }
     }
+    fin.close();
 
-    int size = i; //number of account in File
-
-    for (int i = 0; i < size; i++)
+    //check if a new username is similar with the valid username
+    for (int i = 0; i < numAcc; i++)
     {
-        if (strcmp(username, name[i].c_str()) == 0)
-            valid = true;
+        if (strcmp(username, name[i].c_str()) == 0) 
+            return true;
     }
+    
+    return false;
 
-    delete[] name;
-    return valid;
 }

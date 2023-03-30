@@ -8,7 +8,8 @@
 #include <conio.h>
 #include <vector>
 
+using namespace std;
+
 #include "FormatScreens.cpp"
 #include "Menu.cpp"
 #include "Account.cpp"
-using namespace std;
