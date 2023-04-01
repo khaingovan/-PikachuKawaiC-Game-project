@@ -72,34 +72,12 @@ int color = number*16                  +       number
             (this is background color)       (and this is test color)
 */
 void setColor(int color){
-    HANDLE col;
-    col =  GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(col, color);
+    HANDLE colo;
+    colo =  GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(colo, color);
 }
 
-//https://ss64.com/nt/syntax-ansi.html
-/*  Color	                        Foreground	   Background	COLOR equivalent
-    Default	                        Esc[0m	 	 
-    Black BLACK	                    Esc[30m	       Esc[40m	    0
-    Red DARK_RED	                Esc[31m        Esc[41m	    4
-    Green DARK_GREEN	            Esc[32m        Esc[42m	    2
-    Yellow DARK_YELLOW	            Esc[33m        Esc[43m	    6
-    Blue DARK_BLUE	                Esc[34m	       Esc[44m	    1
-    Magenta DARK_MAGENTA	        Esc[35m	       Esc[45m	    5
-    Cyan DARK_CYAN	                Esc[36m	       Esc[46m	    3
-    Light gray DARK_WHITE	        Esc[37m	       Esc[47m	    7
-    Dark gray BRIGHT_BLACK	        Esc[90m	       Esc[100m	    8
-    Light red BRIGHT_RED	        Esc[91m	       Esc[101m	    C
-    Light green BRIGHT_GREEN	    Esc[92m	       Esc[102m	    A
-    Light yellow BRIGHT_YELLOW	    Esc[93m	       Esc[103m	    E
-    Light blue BRIGHT_BLUE	        Esc[94m	       Esc[104m	    9
-    Light magenta BRIGHT_MAGENTA	Esc[95m	       Esc[105m	    D
-    Light cyan BRIGHT_CYAN	        Esc[96m	       Esc[106m	    B
-    White WHITE	                    Esc[97m	       Esc[107m	    F
-*/
-
-
-void level2(int **board, int row, int col){ //cac toa do chuyen dong xuong
+void level2(int **board, int row, int col){ //blocks moving down
     for(int j = 1; j <= col; j++)
         for(int i = row; i >= 1; i--){
             if(board[i][j] == -1)
@@ -111,7 +89,7 @@ void level2(int **board, int row, int col){ //cac toa do chuyen dong xuong
         }
 }
 
-void level3(int **board, int row, int col){ //cac toa do chuyen qua trai
+void level3(int **board, int row, int col){ //blocks moving left
     for(int i = 1; i <= row; i++)
         for(int j = 1; j <= col; j++){
             if(board[i][j] == -1)
@@ -123,7 +101,7 @@ void level3(int **board, int row, int col){ //cac toa do chuyen qua trai
         }
 }
 
-void level4(int **board, int row, int col){ //cac toa do chuyen dong len
+void level4(int **board, int row, int col){ //blocks moving up
     for(int j = 1; j <= col; j++)
         for(int i = 1; i <= row; i++){
             if(board[i][j] == -1)
@@ -135,7 +113,7 @@ void level4(int **board, int row, int col){ //cac toa do chuyen dong len
         }
 }
 
-void level5(int **board, int row, int col){ //cac toa do chuyen qua phai
+void level5(int **board, int row, int col){ //blocks moving right
     for(int i = 1; i <= row; i++)
         for(int j = col; j >= 1; j--){
             if(board[i][j] == -1)
@@ -283,32 +261,32 @@ void drawingBoard(int **board, int row, int col, int &level, bool draw){
     clearScreen();
 
     if(level == 1){
-        //31 = 1*16 + 15 chu trang sang nen xanh duong
+        //31 = 1*16 + 15 white text blue background
         setColor(31);
     }
     else if(level == 2){
-        //79 = 4*16 + 15 chu trang sang nen do
+        //79 = 4*16 + 15 white text red background
         setColor(79);
 
         if(draw)
             level2(board, row, col);
     }
     else if(level == 3){
-        //79 = 4*16 + 15 chu trang sang nen do
+        //79 = 4*16 + 15 white text red background
         setColor(79);
         
         if(draw)
             level3(board, row, col);
     }
     else if(level == 4){
-        //79 = 4*16 + 15 chu trang sang nen do
+        //79 = 4*16 + 15 white text red background
         setColor(79);
         
         if(draw)
             level4(board, row, col);
     }
     else if(level == 5){
-        //79 = 4*16 + 15 chu trang sang nen do
+        //79 = 4*16 + 15 white text red background
         setColor(79);
         
         if(draw)
@@ -316,7 +294,7 @@ void drawingBoard(int **board, int row, int col, int &level, bool draw){
     }
     cout << "Level " << level;
     
-    //15 = 0*16 + 15 chu trang nen den
+    //15 = 0*16 + 15 white text black background
 	setColor(15);
 
     cout << "\t\t\tScore:" << endl;
@@ -324,12 +302,12 @@ void drawingBoard(int **board, int row, int col, int &level, bool draw){
 	for(int i = 0; i < (row + 2)*3; i++){
 		for(int j = 0; j < col + 2; j++){
             if(board[i/3][j] >= (int)'0' && board[i/3][j] <= (int)'9'){
-                //10 = 0*16 + 10 chu xanh la nen den
+                //10 = 0*16 + 10 bright green text black background
 	            setColor(10);
                 drawingLine(board, i, j);
             }
             else{
-                //15 = 0*16 + 15 chu trang nen den
+                //15 = 0*16 + 15 white text black background
 	            setColor(15);
                 if(board[i/3][j] == -1)
                     cout << "#####";
@@ -346,7 +324,7 @@ void drawingBoard(int **board, int row, int col, int &level, bool draw){
 		cout << endl;
 	}
 
-    //10 = 0*16 + 10 chu xanh la nen den
+    //10 = 0*16 + 10 bright green text black background
 	setColor(10);
     cout << endl << "Using arrow key.";
 }

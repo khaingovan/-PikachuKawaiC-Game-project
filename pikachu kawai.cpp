@@ -1,6 +1,7 @@
 #include "header.h"
 #include "board.cpp"
 #include "showing.cpp"
+#include "addingArt.cpp"
 
 //https://www.codeincodeblock.com/2011/03/move-console-windows-using-codeblock.html
 HWND WINAPI GetConsoleWindowNT(void)
@@ -22,7 +23,7 @@ HWND WINAPI GetConsoleWindowNT(void)
     return GetConsoleWindow();
 }
 
-void createBoard(int **board, int row, int col, int characterBlock[],int &totalCharacter, int totalDifferentCharacter){
+void createBoard(int **board, int &row, int &col, int characterBlock[], int &totalCharacter, int &totalDifferentCharacter){
 	//so luong ky tu con lai trong mang, sau khi noi dung 2 ky tu thi bien nay tu giam di 2
 	//len 1 level, mang khoi phuc lai thi totalCharacter cung khoi phuc lai
 	totalCharacter = row*col;
@@ -48,14 +49,16 @@ void createBoard(int **board, int row, int col, int characterBlock[],int &totalC
 
 int main(){
 	//resize font
-	fontsize(28, 28);
+	//fontsize(22, 22);
 	//resize console window
     HWND hWnd=GetConsoleWindowNT();
     MoveWindow(hWnd, 0, 0, 1500, 800,TRUE);
 
+	showTitleArt();
+
 	int row, col;
 	
-	//15 = 0*16 + 15 chu trang nen den
+	//15 = 0*16 + 15 white text black background
 	setColor(15);
     cout << "Input number of rows (even number, 3<x<11): ";
 	while(true){
@@ -63,21 +66,21 @@ int main(){
 		if( row > 3 && row < 11 && row%2 == 0 )
 			break;
 		else{
-			//4 = 0*16 + 4 chu do nen den
+			//4 = 0*16 + 4 red text black background
 			setColor(4);
     		cout << "Invalid value, please try again: ";
 		}
 	}
 	
-	//15 = 0*16 + 15 chu trang nen den
+	//15 = 0*16 + 15 white text black background
 	setColor(15);
-    cout << "Input number of columns (even number, 3<x<15): ";
+    cout << "Input number of columns (even number, 3<x<11): ";
 	while(true){
 		cin >> col;
-		if( col > 3 && col < 15 && col%2 == 0 )
+		if( col > 3 && col < 11 && col%2 == 0 )
 			break;
 		else{
-			//4 = 0*16 + 4 chu do nen den
+			//4 = 0*16 + 4 red text black background
 			setColor(4);
     		cout << "Invalid value, please try again: ";
 		}
@@ -94,6 +97,7 @@ int main(){
 			board[i][j] = -1;
 	
 	int level = 1;
+
 	srand(time(0));
 	//mang cang nho thi cang can it ky tu, cu the mang 4x4 co toi da 6 ky tu khac nhau
 	int totalDifferentCharacter = 4 + min((row*col)/2 - 6, 22);
@@ -106,6 +110,8 @@ int main(){
 	while(true){
 		int *pcharacterLost, characterLost = -3;
 		pcharacterLost = &characterLost;
+
+		//
 		drawingBoard(board, row, col, level, 1);
 		while( !testingBoard(board, row, col, totalCharacter, pcharacterLost) ){
 			shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
@@ -116,9 +122,7 @@ int main(){
 				if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
 					board[i][j] = -1;
 		cout << endl;
-		for(int i = 0; i < totalDifferentCharacter; i++)
-			cout << characterBlock[i] << " ";
-		cout << endl << totalCharacter << endl;
+		
 		matching(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter, level);
 
 		if(totalCharacter == 0 && level == 5)
@@ -126,7 +130,7 @@ int main(){
 		if(totalCharacter == 0){
 			drawingBoard(board, row, col, level);
 
-			//15 = 0*16 + 15 chu trang nen den
+			//15 = 0*16 + 15 white text black background
 			setColor(15);
     		cout << "Congratulate!" << endl;
 
@@ -139,11 +143,10 @@ int main(){
 						createBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
 						break;
 					}
-					else if(yn == 'N' || yn == 'n'){
+					else if(yn == 'N' || yn == 'n')
 						break;
-					}
 					else{
-						//4 = 0*16 + 4 chu do nen den
+						//4 = 0*16 + 4 red text black background
 						setColor(4);
     					cout << "Invalid value, please try again: ";
 					}
@@ -154,7 +157,7 @@ int main(){
 			break;
 	}
 
-	//15 = 0*16 + 15 chu trang nen den
+	//15 = 0*16 + 15 white text black background
 	setColor(15);
     cout << "Game ended!";
 	

@@ -501,31 +501,55 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 	int *pcharacterLost;
 	pcharacterLost = &characterLost;
 
-	//15 = 0*16 + 15 chu trang nen den
+	//15 = 0*16 + 15 white text black background
 	setColor(15);
 	cout << endl << "Input for matching: ";
 	cin >> y1 >> x1 >> y2 >> x2;
 
-	//cai nay chi de kiem tra chuc nang shuffle
+	//shuffle
 	if(y1 == 1 && x1 == 1 && y2 == 1 && x2 == 1)
 		shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+	//auto play
+	else if(y1 == 2 && x1 == 2 && y2 == 2 && x2 == 2){
+		for(int i = 1; i <= row; i++){
+			for(int j = 1; j <= col; j++){
+				for(int m = 1; m <= row; m++){
+					for(int n = 1; n <= col; n++){
+						//i, j la toa do diem thu nhat board [i][j]
+						//m, n la toa do diem thu hai  board [m][n]
+
+						isLegalMatch(board, row, col, i, j, m, n, 0, legalMatch, pcharacterLost);
+						if(legalMatch){
+							drawingBoard(board, row, col, level);
+							characterBlock[ characterLost ]--;
+							totalCharacter-=2;
+							for(int u = 0; u < row + 2; u++)
+								for(int v = 0; v < col + 2; v++)
+									if(board[u][v] >= (int)'0' && board[u][v] <= (int)'9')
+										board[u][v] = -1;
+							i = row + 1;
+							j = col + 1;
+							m = row + 1;
+							n = col + 1;
+						}
+					}
+				}
+			}
+		}
+	}
 	else if(board[y1][x1] == board[y2][x2]){
 		isLegalMatch(board, row, col, y1, x1, y2, x2, 0, legalMatch, pcharacterLost);
 		
 		if( legalMatch ){
 			drawingBoard(board, row, col, level);
-			cout << endl << *pcharacterLost << endl;
-			board[y1][x1] = -1;
-			board[y2][x2] = -1;
 			characterBlock[ characterLost ]--;
 			totalCharacter-=2;
 			for(int i = 0; i < row + 2; i++)
 				for(int j = 0; j < col + 2; j++)
-					if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')// && !(board[i][j] >= 0 && board[i][j] <= totalDifferentCharacter))
+					if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
 						board[i][j] = -1;
 		}
 	}
-	cout << endl << *pcharacterLost << endl;
 	Sleep(500);
 }
 
@@ -569,8 +593,8 @@ void shuffleBoard(int **board, int row, int col, int characterBlock[], int total
 }
 
 void deleteBoard(int **board, int col){
-	delete [] board;
 	for(int i = 0; i < col + 2; i++){
 		delete [] board[i];
 	}
+	delete [] board;
 }
