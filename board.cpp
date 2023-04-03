@@ -1,18 +1,6 @@
 #include "board.h"
 #include "showing.h"
 
-/*void drawingBoard(int **board, int row, int col){
-	for(int i = 0; i <= row + 1; i++){
-		for(int j = 0; j <= col + 1; j++){
-			if(board[i][j] == -1)
-				cout << "  ";
-			else
-				cout << (char)(board[i][j] + (int)'A')<< " ";
-		}
-		cout << endl;
-	}
-}*/
-
 void checkLineX(int **board, int x1, int x2, int y, bool testing, int &matchShape, int *pcharacterLost){ //check theo hang ngang
 	matchShape = 1;
 
@@ -218,7 +206,11 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 	int iU = 0, iZ = 0;
 	while(iU < row + 2){ // check dang U, ^, N
 		if(board[iU][colL] == -1 && board[iU][colR] == -1){
+			//if(iU < min(y1, y2) || iU > max(y1, y2))
 			matchShape = 4;
+			/*else
+				matchShape = 6;
+			*/
 			
 			//check canh day chu U 
 			for(int j = colL + 1; j <= colR - 1; j++)
@@ -412,19 +404,19 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 			board[y1][iZ] = board[y2][iZ];
 			board[y2][iZ] = swap;
 		}
-		else if(y1 > y2 && x1 < x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+		else if(y1 > y2 && x1 < x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
 			board[y1][iZ] = (int)'9';
 			board[y2][iZ] = (int)'6';
 		}
-		else if(y1 < y2 && x1 < x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+		else if(y1 < y2 && x1 < x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
 			board[y1][iZ] = (int)'7';
 			board[y2][iZ] = (int)'8';
 		}
-		else if(y1 > y2 && x1 > x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+		else if(y1 > y2 && x1 > x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
 			board[y1][iZ] = (int)'8';
 			board[y2][iZ] = (int)'7';
 		}
-		else if(y1 < y2 && x1 > x2 && (iZ > min(y1, y2) && iZ < max(y1, y2)) ){
+		else if(y1 < y2 && x1 > x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
 			board[y1][iZ] = (int)'6';
 			board[y2][iZ] = (int)'9';
 		}
@@ -433,10 +425,12 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 		*pcharacterLost = -3;
 }
 
-void isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2, bool testing, bool &legalMatch, int *pcharacterLost){
+void isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2, characterBlockInfor &CBI, bool testing, bool &legalMatch, int *pcharacterLost){
 	legalMatch = true;
 	int matchShape = 0;
 	if(y1 == y2 && x1 == x2)
+		legalMatch = false;
+	if(y1 > row || y2 > row || x1 > col || x2 > col || y1 < 1 || y2 < 1 || x1 < 1 || x2 < 1)
 		legalMatch = false;
 	if(board[y1][x1] == -1 || board[y2][x2] == -1) 
 		legalMatch = false;
@@ -465,11 +459,25 @@ void isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2,
 			legalMatch = matchShape;
 		}
 	}
+
+	if(!testing && legalMatch){
+		for(int i = 0; i < (row + 2)*3; i++)
+			for(int j = 0; j < col + 2; j++)
+				drawingLine(board, i, j);
+		//characterBlock[ *pcharacterLost ]--;
+		//totalCharacter-=2;
+		CBI.charBlock[ *pcharacterLost ]--;
+		CBI.TChar-=2;
+		for(int i = 0; i < row + 2; i++)
+			for(int j = 0; j < col + 2; j++)
+				if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
+					board[i][j] = -1;
+	}
 }
 
-bool testingBoard(int **board, int row, int col, int totalCharacter, int *pcharacterLost){
+bool testingBoard(int **board, int row, int col, characterBlockInfor CBI, int *pcharacterLost){
 	bool legalMatch;
-	if(totalCharacter == 0)
+	if(CBI.TChar == 0)
 		return true;
 
 	for(int i = 1; i <= row; i++){
@@ -479,7 +487,7 @@ bool testingBoard(int **board, int row, int col, int totalCharacter, int *pchara
 					//i, j la toa do diem thu nhat board [i][j]
 					//m, n la toa do diem thu hai  board [m][n]
 
-					isLegalMatch(board, row, col, i, j, m, n, 1, legalMatch, pcharacterLost);
+					isLegalMatch(board, row, col, i, j, m, n, CBI, 1, legalMatch, pcharacterLost);
 					if(legalMatch)
 						return true;
 				}
@@ -494,7 +502,7 @@ void drawingLine(int **board, int row, int col, int level){
 	drawingBoard(board, row, col, level);
 }
 
-void matching(int **board, int row, int col, int characterBlock[], int &totalCharacter, int totalDifferentCharacter, int &level){
+void matching(int **board, int row, int col, characterBlockInfor &CBI, int &level){
 	int y1, x1, y2, x2;
 	bool legalMatch = false;
 	int characterLost = -3;
@@ -508,7 +516,7 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 
 	//shuffle
 	if(y1 == 1 && x1 == 1 && y2 == 1 && x2 == 1)
-		shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+		shuffleBoard(board, row, col, CBI);
 	//auto play
 	else if(y1 == 2 && x1 == 2 && y2 == 2 && x2 == 2){
 		for(int i = 1; i <= row; i++){
@@ -518,15 +526,8 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 						//i, j la toa do diem thu nhat board [i][j]
 						//m, n la toa do diem thu hai  board [m][n]
 
-						isLegalMatch(board, row, col, i, j, m, n, 0, legalMatch, pcharacterLost);
+						isLegalMatch(board, row, col, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
 						if(legalMatch){
-							drawingBoard(board, row, col, level);
-							characterBlock[ characterLost ]--;
-							totalCharacter-=2;
-							for(int u = 0; u < row + 2; u++)
-								for(int v = 0; v < col + 2; v++)
-									if(board[u][v] >= (int)'0' && board[u][v] <= (int)'9')
-										board[u][v] = -1;
 							i = row + 1;
 							j = col + 1;
 							m = row + 1;
@@ -538,40 +539,31 @@ void matching(int **board, int row, int col, int characterBlock[], int &totalCha
 		}
 	}
 	else if(board[y1][x1] == board[y2][x2]){
-		isLegalMatch(board, row, col, y1, x1, y2, x2, 0, legalMatch, pcharacterLost);
-		
-		if( legalMatch ){
-			drawingBoard(board, row, col, level);
-			characterBlock[ characterLost ]--;
-			totalCharacter-=2;
-			for(int i = 0; i < row + 2; i++)
-				for(int j = 0; j < col + 2; j++)
-					if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
-						board[i][j] = -1;
-		}
+		isLegalMatch(board, row, col, y1, x1, y2, x2, CBI, 0, legalMatch, pcharacterLost);
 	}
 	Sleep(500);
 }
 
 //neu khong con nuoc di kha thi, bang se tu trao cac toa do
-void shuffleBoard(int **board, int row, int col, int characterBlock[], int totalCharacter, int totalDifferentCharacter){
+void shuffleBoard(int **board, int row, int col, characterBlockInfor CBI){
 	srand(time(0));
 
 	//replace la mang phu cua characterBlock, thon bao so luong ky tu khac nhau theo tung loai
 	int *replace;
-	replace = new int [totalDifferentCharacter];
-	for(int i = 0; i < totalDifferentCharacter; i++){
-		replace[i] = characterBlock[i];
+	replace = new int [CBI.TDiffer];
+	for(int i = 0; i < CBI.TDiffer; i++){
+		//replace[i] = characterBlock[i];
+		replace[i] = CBI.charBlock[i];
 	}
 
 	//nhung toa do truoc day co gia tri se bi thay the thanh -2
 	for(int i = 1; i <= row; i++)
 		for(int j = 1; j <= col; j++)
-			if( (board[i][j] >= 0 && board[i][j] <= totalDifferentCharacter) )
+			if( (board[i][j] >= 0 && board[i][j] <= CBI.TDiffer) )
 				board[i][j] = -2;
 
 	int value = 0;
-	for(int count = 0; count < totalCharacter/2;){
+	for(int count = 0; count < CBI.TChar/2;){
 		int y1 = rand()%row + 1;
 		int x1 = rand()%col + 1;
 		int y2 = rand()%row + 1;
@@ -592,7 +584,9 @@ void shuffleBoard(int **board, int row, int col, int characterBlock[], int total
 	delete [] replace;
 }
 
-void deleteBoard(int **board, int col){
+void deleteBoard(int **board, int col, characterBlockInfor CBI){
+	delete [] CBI.charBlock;
+
 	for(int i = 0; i < col + 2; i++){
 		delete [] board[i];
 	}

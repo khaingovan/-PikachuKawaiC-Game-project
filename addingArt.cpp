@@ -2,13 +2,12 @@
 #include "showing.h"
 
 void showTitleArt(){
-	ifstream fin("BackgroundArt/titleArt.txt");
-
+	ifstream fi("BackgroundArt/titleArt.txt");
     string titleArt[100];
     
     int count = 0;
-	while(!fin.eof()){
-		getline(fin, titleArt[count] );
+	while(!fi.eof()){
+		getline(fi, titleArt[count] );
 		count++;
 	}
 	
@@ -22,5 +21,5 @@ void showTitleArt(){
 		}
 		cout << endl;
 	}
-    fin.close();
+    fi.close();
 }

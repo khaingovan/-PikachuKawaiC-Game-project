@@ -2,6 +2,7 @@
 #include "board.cpp"
 #include "showing.cpp"
 #include "addingArt.cpp"
+#include "Menu.cpp"
 
 //https://www.codeincodeblock.com/2011/03/move-console-windows-using-codeblock.html
 HWND WINAPI GetConsoleWindowNT(void)
@@ -23,12 +24,15 @@ HWND WINAPI GetConsoleWindowNT(void)
     return GetConsoleWindow();
 }
 
-void createBoard(int **board, int &row, int &col, int characterBlock[], int &totalCharacter, int &totalDifferentCharacter){
+void createBoard(int **board, int &row, int &col, characterBlockInfor &CBI){
+	//mang cang nho thi cang can it ky tu, cu the mang 4x4 co toi da 6 ky tu khac nhau
+	CBI.TDiffer = 4 + min((row*col)/2 - 6, 22);
 	//so luong ky tu con lai trong mang, sau khi noi dung 2 ky tu thi bien nay tu giam di 2
-	//len 1 level, mang khoi phuc lai thi totalCharacter cung khoi phuc lai
-	totalCharacter = row*col;
-	for(int i = 0; i < totalDifferentCharacter; i++){
-		characterBlock[i] = 0;
+	CBI.TChar = row*col;
+	CBI.charBlock = new int [ CBI.TDiffer ];
+
+	for(int i = 0; i < CBI.TDiffer; i++){
+		CBI.charBlock[i] = 0;
 	}
 	for(int count = 0; count < row*col;){
 		//thuat toan tim ra 2 toa do bat ky, neu chung khac nhau va chua co gia tri thi se duoc them gia tri ngau nhien vao
@@ -37,8 +41,8 @@ void createBoard(int **board, int &row, int &col, int characterBlock[], int &tot
 		int y2 = rand()%row + 1;
 		int x2 = rand()%col + 1;
 		if( (y1 != y2 || x1 != x2) && board[y1][x1] == -1 && board[y2][x2] == -1){
-			int character = rand()%totalDifferentCharacter;
-			characterBlock[character]+=1;
+			int character = rand()%CBI.TDiffer;
+			CBI.charBlock[character]+=1;
 			board[y1][x1] = character;
 			board[y2][x2] = character;
 			//cu them duoc gia tri vao 2 toa do thi count tu +2, neu cham nguong so luong toa do cua bang choi thi vong for tu thoat ra
@@ -57,6 +61,8 @@ int main(){
 	showTitleArt();
 
 	int row, col;
+	characterBlockInfor CBI;
+	int level = 1;
 	
 	//15 = 0*16 + 15 white text black background
 	setColor(15);
@@ -74,10 +80,10 @@ int main(){
 	
 	//15 = 0*16 + 15 white text black background
 	setColor(15);
-    cout << "Input number of columns (even number, 3<x<11): ";
+    cout << "Input number of columns (even number, 3<x<21): ";
 	while(true){
 		cin >> col;
-		if( col > 3 && col < 11 && col%2 == 0 )
+		if( col > 3 && col < 21 && col%2 == 0 )
 			break;
 		else{
 			//4 = 0*16 + 4 red text black background
@@ -86,7 +92,7 @@ int main(){
 		}
 	}
 
-	//KHOI TAO MANG TOAN BO LA -1
+	//all blocks' value in board become -1
 	int **board;
 	board = new int *[row + 2];
 	for(int i = 0; i < row + 2; i++){
@@ -96,38 +102,33 @@ int main(){
 		for(int j = 0; j < col + 2; j++)
 			board[i][j] = -1;
 	
-	int level = 1;
-
 	srand(time(0));
-	//mang cang nho thi cang can it ky tu, cu the mang 4x4 co toi da 6 ky tu khac nhau
-	int totalDifferentCharacter = 4 + min((row*col)/2 - 6, 22);
-	int characterBlock[totalDifferentCharacter];
-	//so luong ky tu con lai trong mang, sau khi noi dung 2 ky tu thi bien nay tu giam di 2
-	int totalCharacter;
-	createBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+	createBoard(board, row, col, CBI);
 	
 	char yn;
 	while(true){
 		int *pcharacterLost, characterLost = -3;
 		pcharacterLost = &characterLost;
 
-		//
+		levelMove(board, row, col, level);
+		//15 = 0*16 + 15 white text black background
+		setColor(15);
 		drawingBoard(board, row, col, level, 1);
-		while( !testingBoard(board, row, col, totalCharacter, pcharacterLost) ){
-			shuffleBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+		while( !testingBoard(board, row, col, CBI, pcharacterLost) ){
+			shuffleBoard(board, row, col, CBI);
 			drawingBoard(board, row, col, level);
 		}
-		for(int i = 0; i < row + 2; i++)
-			for(int j = 0; j < col + 2; j++)
-				if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
-					board[i][j] = -1;
+		
+		cout << endl << CBI.TChar << endl;
+		for(int i = 0; i < CBI.TDiffer; i++)
+			cout << CBI.charBlock[i] << " ";
 		cout << endl;
 		
-		matching(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter, level);
+		matching(board, row, col, CBI, level);
 
-		if(totalCharacter == 0 && level == 5)
+		if(CBI.TChar == 0 && level == 5)
 			break;
-		if(totalCharacter == 0){
+		if(CBI.TChar == 0){
 			drawingBoard(board, row, col, level);
 
 			//15 = 0*16 + 15 white text black background
@@ -140,7 +141,7 @@ int main(){
 				while(cin >> yn){
 					if(yn == 'Y' || yn == 'y'){
 						level++;
-						createBoard(board, row, col, characterBlock, totalCharacter, totalDifferentCharacter);
+						createBoard(board, row, col, CBI);
 						break;
 					}
 					else if(yn == 'N' || yn == 'n')
@@ -148,12 +149,12 @@ int main(){
 					else{
 						//4 = 0*16 + 4 red text black background
 						setColor(4);
-    					cout << "Invalid value, please try again: ";
+    					cout << "Invalid character, please try again: ";
 					}
 				}
 			}
 		}
-		if(yn == 'N' || yn == 'n' || (totalCharacter == 0 && level == 5))
+		if(yn == 'N' || yn == 'n' || (CBI.TChar == 0 && level == 5))
 			break;
 	}
 
@@ -161,7 +162,11 @@ int main(){
 	setColor(15);
     cout << "Game ended!";
 	
-	deleteBoard(board, col);
+	deleteBoard(board, col, CBI);
+
+	/*int a=1,b=1,c=1,d=1;
+	generateMenu (a,b,c,d);*/
 	
 	return 0;
+
 }

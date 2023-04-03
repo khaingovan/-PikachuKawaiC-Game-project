@@ -48,6 +48,15 @@ void clearScreen(){
     SetConsoleCursorPosition( hStdOut, homeCoords );
 }
 
+//https://nguyenvanquan7826.wordpress.com/2013/08/22/cc-gotoxy-trong-dev-c-gotoxy-in-dev-c/
+void gotoxy(SHORT x, SHORT y){ //y: row, x: col
+    static HANDLE h = NULL;  
+    if(!h)
+        h = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD c = { x, y };
+    SetConsoleCursorPosition(h,c);
+}
+
 //https://www.codespeedy.com/color-text-output-in-console-in-cpp/
 /*
 number =
@@ -125,6 +134,33 @@ void level5(int **board, int row, int col){ //blocks moving right
         }
 }
 
+void levelMove(int **board, int row, int col, int level){
+    if(level == 1){
+        //31 = 1*16 + 15 white text blue background
+        setColor(31);
+    }
+    else if(level == 2){
+        //79 = 4*16 + 15 white text red background
+        setColor(79);
+        level2(board, row, col);
+    }
+    else if(level == 3){
+        //79 = 4*16 + 15 white text red background
+        setColor(79);
+        level3(board, row, col);
+    }
+    else if(level == 4){
+        //79 = 4*16 + 15 white text red background
+        setColor(79);
+        level4(board, row, col);
+    }
+    else if(level == 5){
+        //79 = 4*16 + 15 white text red background
+        setColor(79);
+        level5(board, row, col);
+    }
+}
+
 /*void drawingBackground(int **board, int row, int col, int i, int j){
     ofstream fout;
     ifstream fin;
@@ -163,6 +199,10 @@ void level5(int **board, int row, int col){ //blocks moving right
 */
 
 void drawingLine(int **board, int i, int j){
+    //10 = 0*16 + 10 bright green text black background
+    setColor(10);
+    gotoxy(j*5, i + 1);
+
     //i can phai *3 de ve board
 
     //line down
@@ -257,40 +297,16 @@ void drawingLine(int **board, int i, int j){
     }
 }
 
-void drawingBoard(int **board, int row, int col, int &level, bool draw){
+void drawingBoard(int **board, int row, int col, int &level, bool moveBlock, bool drawLine){
     clearScreen();
 
     if(level == 1){
         //31 = 1*16 + 15 white text blue background
         setColor(31);
     }
-    else if(level == 2){
+    else if(level >= 2 && level <= 5){
         //79 = 4*16 + 15 white text red background
         setColor(79);
-
-        if(draw)
-            level2(board, row, col);
-    }
-    else if(level == 3){
-        //79 = 4*16 + 15 white text red background
-        setColor(79);
-        
-        if(draw)
-            level3(board, row, col);
-    }
-    else if(level == 4){
-        //79 = 4*16 + 15 white text red background
-        setColor(79);
-        
-        if(draw)
-            level4(board, row, col);
-    }
-    else if(level == 5){
-        //79 = 4*16 + 15 white text red background
-        setColor(79);
-        
-        if(draw)
-            level2(board, row, col);
     }
     cout << "Level " << level;
     
@@ -302,8 +318,6 @@ void drawingBoard(int **board, int row, int col, int &level, bool draw){
 	for(int i = 0; i < (row + 2)*3; i++){
 		for(int j = 0; j < col + 2; j++){
             if(board[i/3][j] >= (int)'0' && board[i/3][j] <= (int)'9'){
-                //10 = 0*16 + 10 bright green text black background
-	            setColor(10);
                 drawingLine(board, i, j);
             }
             else{

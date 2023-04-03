@@ -1,0 +1,17 @@
+                                                                             ____                     _   _   _           
+                                                                            / ___|  _ __    ___    __| | (_) | |_         
+                                                                           | |     | '__|  / _ `  / _` | | | | __|        
+                                                                           | |___  | |    |  __/ | (_| | | | | |_ .       
+                                                                            `____| |_|     `___|  `__,_| |_| '__./        
+                                                                                                                          
+                                                                                       Pikachu Kawai Game                 
+                                                                            Programming Technique's Course Project        
+                                                                                                                          
+                                                                                  Programmed and Designed by              
+                                                                            Ngo Van Khai                22127174          
+                                                                            Nguyen Quoc Tin             22127416          
+                                                                                                                          
+                                                                    This is our first game. Hope you have good experience.
+                                                                                          Thank you!!!                    
+                                                                                                                          
+                                                                                (Press ESC to go back to menu)            
