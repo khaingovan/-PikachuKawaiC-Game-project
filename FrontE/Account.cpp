@@ -21,26 +21,26 @@ void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &o
     {
         
         clearScreen();
-        if (roundSelect == 0)
+        if (roundSelect == 0)           //Print Login menu to choose to play as guest or member
         {
-            gotoxy(0,10);
-            printAccChoice(Choice);
-            selectAccChoice(roundSelect, Choice);
+            gotoxy(0,10);                               
+            printAccChoice(Choice);                     //show user screen
+            selectAccChoice(roundSelect, Choice);       //get input from keyboard
         }
         
-        if (roundSelect == -1)
+        if (roundSelect == -1)          //out screen to Menu 
             break;
-        else if (roundSelect == 1)
+        else if (roundSelect == 1)      //player choose Login
         {
             clearScreen();
-            signIn(FileName, oldMan, index);
+            signIn(FileName, oldMan, index);    //login and get player info to Player oldMan
             break;
         }
-        else if (roundSelect == 2)
+        else if (roundSelect == 2)      //player choose Sign up
         {
             clearScreen();
-            signUp(FileName);
-            roundSelect = 0;
+            signUp(FileName);                   //new account
+            roundSelect = 0;                    //back to login menu for player to choose log in
         }
     }
 
@@ -100,7 +100,7 @@ void selectAccChoice(int &roundSelect, int &Choice)
             Choice = 1;
             break;
         }        
-        case Space:
+        case Space:     //accept choice
         {
             if (Choice == 1)
             {
@@ -116,7 +116,7 @@ void selectAccChoice(int &roundSelect, int &Choice)
             }
             break;
         }
-        case Esc:
+        case Esc:       //turn off console
         {
             exit(0);
         }
@@ -126,8 +126,8 @@ void signUp(string FileName)
 {
     Player newguy;
     unsigned index = 0;
-    // char *confirm = new char[sizeof(newguy.password)];      //check if user type wrong letter
-    char confirm[17];
+
+    char confirm[17];           //check if user type wrong letter
 
     cout << "\t\t\t\t\t\t\tSIGN UP" << endl;
     //get Username and Password
@@ -135,7 +135,7 @@ void signUp(string FileName)
     cin.getline (newguy.username, 17);
     cout << "\t\t\t\tPassword (no more than 14 characters): ";
     cin.getline (newguy.password, 15);
-    cout << "\t\t\t\t\tComfirm password: ";
+    cout << "\t\t\t\t\tConfirm password: ";
     cin.getline (confirm, 17);
 
     //check if the username exists,
@@ -146,16 +146,17 @@ void signUp(string FileName)
         clearScreen();
         signUp(FileName);           //username is used then user need to type new username
     }
-    else if (strcmp(confirm, newguy.password) != 0)
+    else if (strcmp(confirm, newguy.password) != 0)     // check if confirm password is different from password
     {
         cout << "\t\t\t\t\t\t\tPassword is incorrect!!";
-        clearScreen();
-        signUp(FileName);
+        Sleep(1000);
+        clearScreen();              
+        signUp(FileName);           //redo sign up if information provided is invalid
     }
     else
     {
         clearScreen();
-        cout << "\t\t\t\t\t\t\tWelcome New Player";
+        cout << "\t\t\t\t\t\t\tWelcome New Player";     // sign up successfully
     }
     
     // open file to store new user's account
@@ -170,7 +171,6 @@ void signUp(string FileName)
     newguy.record = 0;
     newguy.savedStage.numCol = 0;
     newguy.savedStage.numRow = 0;
-    newguy.savedStage.Board[0] = {NULL};
 
     // Storing info in binary file
     fout.seekp(0, ios::end);
@@ -179,7 +179,6 @@ void signUp(string FileName)
     fout.write((char*) &newguy.record, sizeof(unsigned int));
     fout.write((char*) &newguy.savedStage, sizeof(State));
 
-    // delete[] confirm;
     fout.close();
 }
 
@@ -194,28 +193,28 @@ void signIn(string FileName, Player &oldMan, unsigned int &index)
     {  
         cout << "\t\t\t\t\tPassword: ";
         cin.getline(oldMan.password, sizeof(oldMan.password));
-        if(isPasswordCorrect(FileName, oldMan.password, index))
+        if(isPasswordCorrect(FileName, oldMan.password, index))        //compare the password with the stored one in SaveFile.dat
         {
             cout << "\t\t\t\t\t\t\tSuccess!!";
-            getInfo(FileName, oldMan, index);
+            getInfo(FileName, oldMan, index);                   //store info from file to variable (oldMan
         }
         else
         {
             cout << "\t\t\t\t\t\t\tWrong Password";
             clearScreen();
-            signIn(FileName, oldMan, index);
+            signIn(FileName, oldMan, index);                    //sign in again
         }
     }    
-    else
+    else                                                         
     {
         cout << "\t\t\t\t\t\t\tInvalid Account" << endl;
         cout << "\t\t\t\t\t\t\tPlease Sign Up" << endl;
         cout << "\t\t\t\t\tPress Space to try Login again Or Esc to SignUp" << endl;
         char button = getch();
-        if (button == Esc)
+        if (button == Esc)                                      //if players type wrong account, they can choose to sig in again or make the new one
         {
             clearScreen();
-            signUp(FileName);
+            signUp(FileName);                                   
             signIn(FileName, oldMan, index);
         }
         else if (button == Space)
@@ -302,9 +301,9 @@ void getInfo (string FileName, Player &oldMan, unsigned int index)
         cout << "Error While Opening";
         exit(0);
     }
-
-    fin.seekg((sizeof(oldMan.username) + sizeof(oldMan.password)) + sizeof(Player)*index, ios::beg);
-    fin.read((char*) &oldMan.record, sizeof(int));
+    
+    fin.seekg((sizeof(oldMan.username) + sizeof(oldMan.password)) + sizeof(Player)*index, ios::beg);        //point to the record of the indexth player
+    fin.read((char*) &oldMan.record, sizeof(int));                                                      //read score and size of stage to Player oldMan
     fin.read((char*) &oldMan.savedStage, sizeof(oldMan.savedStage));
 }
 
@@ -321,19 +320,19 @@ void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned i
     
     fin.seekg(0, ios::end);     //point to the end of file
     int file_size = fin.tellg();    //size of file in bytes
-    int numAcc = file_size/sizeof(struct Player);   //count a number of account signed up
+    int numAcc = file_size/sizeof(struct Player);   //count the number of accounts signed up
 
     fin.seekg(0, ios::beg);
     for (int i = 0; i < numAcc; i++)
     {
-        fin.read((char*) &temp, sizeof(Player));
+        fin.read((char*) &temp, sizeof(Player));        //store all user's info to array List
         List.push_back(temp);
     }
 
     fin.close();
 
-    List[index].record = newscore;      //update a new score
-    oldMan.record = newscore;
+    List[index].record = newscore;      //update a new score , storing in file
+    oldMan.record = newscore;           //in play time
     ofstream fout(FileName, ios::binary);
     if (!fout.is_open())
     {
@@ -344,7 +343,7 @@ void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned i
     fout.seekp(0, ios::beg);
     for (int i = 0; i < numAcc; i++)
     {
-        fout.write((char*) &List[i], sizeof(Player));
+        fout.write((char*) &List[i], sizeof(Player));       //overwriting SaveFile
     }
 
     fout.close();
