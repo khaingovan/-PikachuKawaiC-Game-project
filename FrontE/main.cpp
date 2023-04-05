@@ -8,7 +8,7 @@ int main()
     Player user;
     string FileName = "SaveFile.dat";
     unsigned int index = 0;
-    // generateMenu(row, col, roundSelect, Choice );
+     generateMenu(row, col, roundSelect, Choice );
     
     // signUp(FileName);
     //signIn(FileName, user);

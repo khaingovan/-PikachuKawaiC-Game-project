@@ -43,7 +43,6 @@ void signUp(string FileName)
 void signIn(string FileName, Player &oldMan)
 {
     unsigned int index = 0;  // index of account to search for password quickly
-    Player oldMan;
     cout << "Username ";
     cin.getline(oldMan.username, sizeof(oldMan.username));
     if(isExistAcc(FileName, oldMan.username, index))        //Check username if it is signed up then Check password is correct (similar to storing in file)
