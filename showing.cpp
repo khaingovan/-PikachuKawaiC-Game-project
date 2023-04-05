@@ -414,5 +414,12 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
 
     //10 = 0*16 + 10 bright green text black background
 	setColor(10);
-    cout << endl << "Using arrow key.";
+    gotoxy(130, 0);
+    cout << "Using arrow key to move.";
+    gotoxy(130, 1);
+    cout << "Press SPACE for chosing 1 block.";
+    gotoxy(130, 2);
+    cout << "Press 'A' for auto playing (1 match).";
+    gotoxy(130, 3);
+    cout << "Press 'S' for shuffling the board.";
 }

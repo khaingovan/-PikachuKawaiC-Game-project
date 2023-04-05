@@ -162,6 +162,7 @@ int main(){
 
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
+			gotoxy(0, 42);
     		cout << "Congratulate!" << endl;
 
 			if(level < 5){
