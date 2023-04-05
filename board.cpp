@@ -203,8 +203,12 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 		rowB = y1;
 	}
 	
-	int iU = 0, iZ = 0;
-	while(iU < row + 2){ // check dang U, ^, N
+	int iUposible[row + 2], iZposible[col + 2];
+	fill_n(iUposible, row + 2, 0);
+	fill_n(iZposible, col + 2, 0);
+	int iU = row + 2, iZ = col + 2;
+	//while(iU < row + 2){ // check dang U, ^, N
+	for(iU = 0; iU < row + 2;){ // check dang U, ^, N
 		if(board[iU][colL] == -1 && board[iU][colR] == -1){
 			//if(iU < min(y1, y2) || iU > max(y1, y2))
 			matchShape = 4;
@@ -248,16 +252,37 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 						matchShape = 0;
 						j = 100;
 					}
-		}
+		//}
 
-		if(matchShape != 0)
-			break;
-		else
-			iU++;
+		if(matchShape != 0){
+			iUposible[iU]++;
+			/*break;*/
+		}
+		}
+		/*else
+			iU++;*/
+		matchShape = 0;
+		++iU;
+	}
+
+	for(int i = 0; i < row + 2; i++){
+		if(iUposible[i] == 1){
+			matchShape = 4;
+			if(iU == row + 2)
+				iU = i;
+			else if(i > rowT && i < rowB){
+				iU = i;
+				i = row + 5;
+			}
+			else if( (i < rowT || i > rowB) && 
+			min( abs(rowB - i) , abs(rowT - i) ) < min( abs(rowB - iU) , abs(rowT - iU) ) ){
+				iU = i;
+			}
+		}
 	}
 	
-	if(matchShape == 0){
-		while(iZ < col + 2){ //check dang [, ], Z
+	if(iU == row + 2){
+		for(iZ = 0; iZ < col + 2;){ //check dang [, ], Z
 			if(board[rowT][iZ] == -1 && board[rowB][iZ] == -1){
 				matchShape = 5;
 				
@@ -299,15 +324,36 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 						}
 			}
 
-			if(matchShape != 0)
-				break;
-			else
-				iZ++;
+			if(matchShape != 0){
+				iZposible[iZ]++;
+				//break;
+			}
+			/*else
+				iZ++;*/
+			matchShape = 0;
+			++iZ;
+		}
+	}
+
+	for(int i = 0; i < col + 2; i++){
+		if(iZposible[i] == 1){
+			matchShape = 5;
+			if(iZ == col + 2)
+				iZ = i;
+			else if(i > colL && i < colR){
+				iZ = i;
+				i = col + 5;
+			}
+			else if( (i < colL || i > colR) && 
+			min( abs(colL - i) , abs(colR - i) ) < min( abs(colL - iZ) , abs(colR - iZ) ) ){
+				iZ = i;
+			}
 		}
 	}
 
 	//drawing line
-	if(matchShape == 4 && !testing){
+	if(iU != row + 2 && !testing && !(iZ > colL && iZ < colR)){
+		matchShape = 4;
 		*pcharacterLost = board[y2][x2];
 
 		for(int j = colL + 1; j <= colR - 1; j++)
@@ -341,30 +387,31 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 			board[iU][x2] = (int)'9';
 		}
 		
-		if(x1 > x2 && (iU < min(y1, y2) || iU > max(y1, y2)) ){
+		if(x1 > x2 && (iU < rowT || iU > rowB) ){
 			int swap;
 			swap = board[iU][x1];
 			board[iU][x1] = board[iU][x2];
 			board[iU][x2] = swap;
 		}
-		else if(x1 > x2 && y1 < y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+		else if(x1 > x2 && y1 < y2 && (iU > rowT && iU < rowB) ){
 			board[iU][x1] = (int)'9';
 			board[iU][x2] = (int)'6';
 		}
-		else if(x1 < x2 && y1 < y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+		else if(x1 < x2 && y1 < y2 && (iU > rowT && iU < rowB) ){
 			board[iU][x1] = (int)'8';
 			board[iU][x2] = (int)'7';
 		}
-		else if(x1 > x2 && y1 > y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+		else if(x1 > x2 && y1 > y2 && (iU > rowT && iU < rowB) ){
 			board[iU][x1] = (int)'7';
 			board[iU][x2] = (int)'8';
 		}
-		else if(x1 < x2 && y1 > y2 && (iU > min(y1, y2) && iU < max(y1, y2)) ){
+		else if(x1 < x2 && y1 > y2 && (iU > rowT && iU < rowB) ){
 			board[iU][x1] = (int)'6';
 			board[iU][x2] = (int)'9';
 		}
 	}
-	else if(matchShape == 5 && !testing){
+	else if(iZ != col + 2 && !testing){
+		matchShape = 5;
 		*pcharacterLost = board[y2][x2];
 
 		for(int j = rowT + 1; j <= rowB - 1; j++)
@@ -398,31 +445,33 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 			board[y2][iZ] = (int)'9';
 		}
 		
-		if(y1 > y2 && (iZ < min(y1, y2) || iZ > max(y1, y2)) ){
+		if(y1 > y2 && (iZ < colL || iZ > colR) ){
 			int swap;
 			swap = board[y1][iZ];
 			board[y1][iZ] = board[y2][iZ];
 			board[y2][iZ] = swap;
 		}
-		else if(y1 > y2 && x1 < x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
+		else if(y1 > y2 && x1 < x2 && (iZ > colL && iZ < colR) ){
 			board[y1][iZ] = (int)'9';
 			board[y2][iZ] = (int)'6';
 		}
-		else if(y1 < y2 && x1 < x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
+		else if(y1 < y2 && x1 < x2 && (iZ > colL && iZ < colR) ){
 			board[y1][iZ] = (int)'7';
 			board[y2][iZ] = (int)'8';
 		}
-		else if(y1 > y2 && x1 > x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
+		else if(y1 > y2 && x1 > x2 && (iZ > colL && iZ < colR) ){
 			board[y1][iZ] = (int)'8';
 			board[y2][iZ] = (int)'7';
 		}
-		else if(y1 < y2 && x1 > x2 && (iZ > min(x1, x2) && iZ < max(x1, x2)) ){
+		else if(y1 < y2 && x1 > x2 && (iZ > colL && iZ < colR) ){
 			board[y1][iZ] = (int)'6';
 			board[y2][iZ] = (int)'9';
 		}
 	}
-	else
+	else{
 		*pcharacterLost = -3;
+		matchShape = 0;
+	}
 }
 
 void isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2, characterBlockInfor &CBI, bool testing, bool &legalMatch, int *pcharacterLost){
@@ -498,9 +547,9 @@ bool testingBoard(int **board, int row, int col, characterBlockInfor CBI, int *p
 	return false;
 }
 
-void drawingLine(int **board, int row, int col, int level){
+/*void drawingLine(int **board, int row, int col, int level){
 	drawingBoard(board, row, col, level);
-}
+}*/
 
 void matching(int **board, int row, int col, characterBlockInfor &CBI, int &level){
 	int y1, x1, y2, x2;
@@ -517,6 +566,10 @@ void matching(int **board, int row, int col, characterBlockInfor &CBI, int &leve
 	//shuffle
 	if(y1 == 1 && x1 == 1 && y2 == 1 && x2 == 1)
 		shuffleBoard(board, row, col, CBI);
+	//error
+	else if(y1 > row || x1 > col || y2 > row || x2 > col){
+		Sleep(1);
+	}
 	//auto play
 	else if(y1 == 2 && x1 == 2 && y2 == 2 && x2 == 2){
 		for(int i = 1; i <= row; i++){
@@ -563,7 +616,7 @@ void shuffleBoard(int **board, int row, int col, characterBlockInfor CBI){
 				board[i][j] = -2;
 
 	int value = 0;
-	for(int count = 0; count < CBI.TChar/2;){
+	for(int count = 0; count < CBI.TChar;){
 		int y1 = rand()%row + 1;
 		int x1 = rand()%col + 1;
 		int y2 = rand()%row + 1;
@@ -574,7 +627,7 @@ void shuffleBoard(int **board, int row, int col, characterBlockInfor CBI){
 			board[y1][x1] = value;
 			board[y2][x2] = value;
 			replace[value]--;
-			count++;
+			count+=2;
 		}
 		if(replace[value] == 0){
 			value++;
@@ -591,4 +644,9 @@ void deleteBoard(int **board, int col, characterBlockInfor CBI){
 		delete [] board[i];
 	}
 	delete [] board;
+
+	/*for(int i = 0; i < 40; i++){
+		delete [] bgArt[i];
+	}
+	delete [] bgArt;*/
 }

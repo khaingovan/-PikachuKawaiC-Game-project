@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <stdio.h>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
@@ -12,10 +13,12 @@
 
 using namespace std;
 
-#define KEY_UP 72
-#define KEY_DOWN 80
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
+#define KeyUp 72
+#define KeyDown 80
+#define KeyLeft 75
+#define KeyRight 77
+#define Space 32
+#define Esc 27
 
 struct characterBlockInfor{
     int TDiffer;    //totalDifferentCharacter
