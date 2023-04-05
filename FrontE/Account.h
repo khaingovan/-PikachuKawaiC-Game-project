@@ -4,7 +4,11 @@
 #include <string>
 
 #define BOARDSIZE 100
-
+//Mã ASCII các phím điều khiển từ bàn phím
+#define KeyUp 72
+#define KeyDown 80
+#define Space 32
+#define Esc 27
 struct State
 {
     int numRow, numCol;   // size of saved board (8bytes)
@@ -22,6 +26,10 @@ bool isExistAcc(string FileName, char username[17], unsigned int &index); //Chec
 bool isPasswordCorrect(string FileName, char password[15], unsigned int index);     //Check Password
 void getInfo(string FileName, Player &oldMan, unsigned int index);
 //Big Function
-void signUp (string FileName);  // sign up new account
-void signIn(string FileName, Player &oldMan);  //  log in game
-
+void signUp(string FileName);  // sign up new account
+void signIn(string FileName, Player& oldMan, unsigned int &index);  //  log in game
+//void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned int newscore);
+//Choice Sign in or Sign up
+void selectAccChoice(int &roundSelect, int &Choice);
+void printAccChoice(int Choice);
+void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &oldMan, unsigned int &index);
