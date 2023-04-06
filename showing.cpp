@@ -273,83 +273,47 @@ void drawingLine(int **board, int i, int j){
     }
     //line |
     else if(board[i/3][j] == (int)'4'){
-        /*if(i%3 == 0)
-            cout << " "         << " "         << (char)(179) << " "         << " "        ;
-        else if(i%3 == 1)
-            cout << " "         << " "         << (char)(179) << " "         << " "        ;
-        else if(i%3 == 2)
-            cout << " "         << " "         << (char)(179) << " "         << " "        ;*/
         gotoxy(j*5 + 2, i + 1);
-        cout << (char)(179);
+        cout                                   << (char)(179);
     }
     //line -
     else if(board[i/3][j] == (int)'5'){
-        /*if(i%3 == 0)
-            cout << " "         << " "         << " "         << " "         << " "        ;
-        else if(i%3 == 1)
-            cout << (char)(196) << (char)(196) << (char)(196) << (char)(196) << (char)(196);
-        else if(i%3 == 2)
-            cout << " "         << " "         << " "         << " "         << " "        ;*/
         gotoxy(j*5, i + 1);
         if(i%3 == 1)
             cout << (char)(196) << (char)(196) << (char)(196) << (char)(196) << (char)(196);
     }
     //line down-right
     else if(board[i/3][j] == (int)'6'){
-        /*if(i%3 == 0)
-            cout << " "         << " "         << " "         << " "         << " "        ;
-        else if(i%3 == 1)
-            cout << " "         << " "         << (char)(218) << (char)(196) << (char)(196);
-        else if(i%3 == 2)
-            cout << " "         << " "         << (char)(179) << " "         << " "        ;*/
         gotoxy(j*5 + 2, i + 1);
         if(i%3 == 1)
-            cout << (char)(218) << (char)(196) << (char)(196);
+            cout                               << (char)(218) << (char)(196) << (char)(196);
         else if(i%3 == 2)
-            cout << (char)(179);
+            cout                               << (char)(179);
     }
     //line down-left
     else if(board[i/3][j] == (int)'7'){
-        /*if(i%3 == 0)
-            cout << " "         << " "         << " "         << " "         << " "        ;
-        else if(i%3 == 1)
-            cout << (char)(196) << (char)(196) << (char)(191) << " "         << " "        ;
-        else if(i%3 == 2)
-            cout << " "         << " "         << (char)(179) << " "         << " "        ;*/
         if(i%3 == 1){
             gotoxy(j*5, i + 1);
             cout << (char)(196) << (char)(196) << (char)(191);
         }
         else if(i%3 == 2){
             gotoxy(j*5 + 2, i + 1);
-            cout << (char)(179);
+            cout                               << (char)(179);
         }
     }
     //line up-right
     else if(board[i/3][j] == (int)'8'){
-        /*if(i%3 == 0)
-            cout << " "         << " "         << (char)(179) << " "         << " "        ;
-        else if(i%3 == 1)
-            cout << " "         << " "         << (char)(192) << (char)(196) << (char)(196);
-        else if(i%3 == 2)
-            cout << " "         << " "         << " "         << " "         << " "        ;*/
         gotoxy(j*5 + 2, i + 1);
         if(i%3 == 0)
-            cout << (char)(179);
+            cout                               << (char)(179);
         else if(i%3 == 1)
-            cout << (char)(192) << (char)(196) << (char)(196);
+            cout                               << (char)(192) << (char)(196) << (char)(196);
     }
     //9: 217: line up-left
     else if(board[i/3][j] == (int)'9'){
-        /*if(i%3 == 0)
-            cout << " "         << " "         << (char)(179) << " "         << " "        ;
-        else if(i%3 == 1)
-            cout << (char)(196) << (char)(196) << (char)(217) << " "         << " "        ;
-        else if(i%3 == 2)
-            cout << " "         << " "         << " "         << " "         << " "        ;*/
         if(i%3 == 0){
             gotoxy(j*5 + 2, i + 1);
-            cout << (char)(179);
+            cout                               << (char)(179);
         }
         else if(i%3 == 1){
             gotoxy(j*5, i + 1);
@@ -375,6 +339,7 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
     //15 = 0*16 + 15 white text black background
 	setColor(15);
 
+    cout << "\t\t\tPlayer:";
     cout << "\t\t\tScore:" << endl;
 
     //gotoxy(0, 2);
@@ -386,27 +351,17 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
             else{
                 //15 = 0*16 + 15 white text black background
 	            setColor(15);
-                if(board[i/3][j] == -1){
-                    //cout << "     ";
-                    gotoxy(j*5, i + 1);
+                gotoxy(j*5, i + 1);
+                if(board[i/3][j] == -1)
                     cout << bgArt[i][j*5] << bgArt[i][j*5 + 1] << bgArt[i][j*5 + 2] << bgArt[i][j*5 + 3] << bgArt[i][j*5 + 4];
-                }
-                else if(i%3 == 0){
-                    gotoxy(j*5, i + 1);
+                else if(i%3 == 0)
                     cout << (char)(201) << (char)(205) << (char)(205)                           << (char)(205) << (char)(187);
-                }
-                else if(i%3 == 1 && board[i/3][j] < 26){
-                    gotoxy(j*5, i + 1);
+                else if(i%3 == 1 && board[i/3][j] < 26)
                     cout << (char)(186) << " "         << (char)(board[i/3][j] + (int)'A')      << " "         << (char)(186);
-                }
-                else if(i%3 == 1 && board[i/3][j] >= 26){
-                    gotoxy(j*5, i + 1);
+                else if(i%3 == 1 && board[i/3][j] >= 26)
                     cout << (char)(186) << " "         << (char)(board[i/3][j] + (int)'a' - 26) << " "         << (char)(186);
-                }
-                else if(i%3 == 2){
-                    gotoxy(j*5, i + 1);
+                else if(i%3 == 2)
                     cout << (char)(200) << (char)(205) << (char)(205)                           << (char)(205) << (char)(188);
-                }
             }
 		}
 		cout << endl;
@@ -414,12 +369,12 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
 
     //10 = 0*16 + 10 bright green text black background
 	setColor(10);
-    gotoxy(130, 0);
+    gotoxy(125, 1);
     cout << "Using arrow key to move.";
-    gotoxy(130, 1);
+    gotoxy(125, 2);
     cout << "Press SPACE for chosing 1 block.";
-    gotoxy(130, 2);
+    gotoxy(125, 3);
     cout << "Press 'A' for auto playing (1 match).";
-    gotoxy(130, 3);
+    gotoxy(125, 4);
     cout << "Press 'S' for shuffling the board.";
 }

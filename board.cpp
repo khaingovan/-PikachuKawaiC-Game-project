@@ -517,15 +517,15 @@ void isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2,
 		//totalCharacter-=2;
 		CBI.charBlock[ *pcharacterLost ]--;
 		CBI.TChar-=2;
-		for(int i = 0; i < row + 2; i++)
+		/*for(int i = 0; i < row + 2; i++)
 			for(int j = 0; j < col + 2; j++)
 				if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
-					board[i][j] = -1;
+					board[i][j] = -1;*/
 	}
 }
 
 bool testingBoard(int **board, int row, int col, characterBlockInfor CBI, int *pcharacterLost){
-	bool legalMatch;
+	bool legalMatch = false;
 	if(CBI.TChar == 0)
 		return true;
 

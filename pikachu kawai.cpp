@@ -51,23 +51,13 @@ void createBoard(int **board, int &row, int &col, characterBlockInfor &CBI){
 	}
 }
 
-/*char **creatBackground(){
-	ifstream fi("BackgroundArt/bg4.txt");
-	char bgArt[40][120];
-	int countLine = 0;
-	while(!fi.eof()){
-		fi.getline(bgArt[countLine], 120);
-		countLine++;
-	}
-	return bgArt[40][120];
-}*/
 
 int main(){
 	//resize font
 	//fontsize(22, 22);
 	//resize console window
     HWND hWnd=GetConsoleWindowNT();
-    MoveWindow(hWnd, 0, 0, 1500, 800,TRUE);
+    MoveWindow(hWnd, 0, 0, 1500, 760,TRUE);
 
 	showTitleArt();
 
@@ -77,10 +67,10 @@ int main(){
 	
 	//15 = 0*16 + 15 white text black background
 	setColor(15);
-    cout << "Input number of rows (even number, 3<x<11): ";
+    cout << "Input number of rows (even number, 3<x<9): ";
 	while(true){
 		cin >> row;
-		if( row > 3 && row < 11 && row%2 == 0 )
+		if( row > 3 && row < 9 && row%2 == 0 )
 			break;
 		else{
 			//4 = 0*16 + 4 red text black background
@@ -162,7 +152,7 @@ int main(){
 
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
-			gotoxy(0, 42);
+			gotoxy(0, 36);
     		cout << "Congratulate!" << endl;
 
 			if(level < 5){
@@ -231,18 +221,26 @@ int main(){
 
 								isLegalMatch(board, row, col, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
 								if(legalMatch){
-									i = row + 1;
-									j = col + 1;
-									m = row + 1;
-									n = col + 1;
+									Sleep(500);
+									for(int u = 0; u < row + 2; u++)
+										for(int v = 0; v < col + 2; v++)
+											if( !(board[u][v] >= 0 && board[u][v] <= CBI.TDiffer )){
+												board[u][v] = -1;
+												drawUnKey(board, u, v, bgArt, row + 2, col + 2);
+											}
+									levelMove(board, row, col, level);
+									i = row + 2;
+									j = col + 2;
+									m = row + 2;
+									n = col + 2;
 								}
 							}
 						}
 					}
 				}
 
-				Sleep(500);
-				levelMove(board, row, col, level);
+				//Sleep(500);
+				//levelMove(board, row, col, level);
 				drawingBoard(board, row, col, level, bgArt);
 				drawKey(board, yr, xr, y1, x1);
 				break;
@@ -259,6 +257,12 @@ int main(){
 					isLegalMatch(board, row, col, y1, x1, y2, x2, CBI, 0, legalMatch, pcharacterLost);
 					if(*pcharacterLost != -3){
 						Sleep(500);
+						for(int i = 0; i < row + 2; i++)
+							for(int j = 0; j < col + 2; j++)
+								if( !(board[i][j] >= 0 && board[i][j] <= CBI.TDiffer )){
+									board[i][j] = -1;
+									drawUnKey(board, i, j, bgArt, row + 2, col + 2);
+								}
 						levelMove(board, row, col, level);
 					}
 					drawingBoard(board, row, col, level, bgArt);
@@ -269,21 +273,6 @@ int main(){
 
 				break;
 			}
-			//continue playing or not
-			/*case 'y': {
-				if(CBI.TChar == 0 && level < 5){
-					level++;
-					createBoard(board, row, col, CBI);
-					drawingBoard(board, row, col, level, bgArt);
-				}
-				break;
-			}
-			case 'c': {
-				if(CBI.TChar == 0 && level < 5){
-					getButton = false;
-				}
-				break;
-			}*/
 			case Esc:
 				getButton = false;
 		}
@@ -344,7 +333,10 @@ int main(){
 
 	//15 = 0*16 + 15 white text black background
 	setColor(15);
-	gotoxy(0, 40);
+	gotoxy(0, 36);
+	cout << "\t\t\t\t \n \t\t\t\t \n \t\t\t\t \n \t\t\t\t \n \t\t\t\t \n \t\t\t\t";
+	setColor(15);
+	gotoxy(0, 36);
     cout << "Game ended!";
 	
 	deleteBoard(board, col, CBI);

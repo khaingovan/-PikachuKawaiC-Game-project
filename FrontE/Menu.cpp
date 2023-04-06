@@ -32,7 +32,7 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
 void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 {
     char button = getch();
-    // Beep (600, 50); //https://tuicocach.com/tao-am-thanh-bip-trong-c-c-voi-ham-beep/
+    Beep (450, 20);
     switch (roundSelect)
     {
         case 1: //first screen 
@@ -148,7 +148,6 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 
 void printMenu(int roundSelect, int Choice)
 {
-    // cout << "\n\n\n\n";
     gotoxy(0,9);
     SET_COLOR(6);
     cout << "\t\t\t\t  ____    _   _                     _             " << endl;
