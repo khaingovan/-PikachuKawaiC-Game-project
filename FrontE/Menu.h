@@ -2,7 +2,11 @@
 #include <iostream>
 #include <conio.h>
 #include <iomanip>
+#include <vector>
+#include <fstream>
+#include <windows.h>
 #include "FormatScreens.cpp"
+#include "LeaderBoard.cpp"
 using namespace std;
 
 //Mã ASCII các phím điều khiển từ bàn phím
@@ -20,7 +24,6 @@ void getEvents(int &row, int &col, int &roundSelect, int &Choice);
 void printCredit();
 // function show interactive screen 
 void printMenu(int roundSelect, int Choice);
-
     //Big Function
 // exact menu
 void generateMenu(int &row, int &col, int &roundSelect, int &Choice);

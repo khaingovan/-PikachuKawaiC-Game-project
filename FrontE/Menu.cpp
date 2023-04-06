@@ -32,6 +32,7 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
 void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 {
     char button = getch();
+    Beep (450, 20);
     switch (roundSelect)
     {
         case 1: //first screen 
