@@ -1,9 +1,9 @@
 #include "Menu.h"
-void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
+void generateMenu (int &line, int &col, int &roundSelect, int &Choice, string FileName)
 {
     roundSelect = 1;
     Choice = 1;
-    
+    backSound();
     SET_COLOR(6);
     gotoxy(0,10);
     
@@ -23,16 +23,15 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice)
     {  
         if (roundSelect == -1)   // out while loop
             break;  
-        printMenu(roundSelect, Choice);
+        printMenu(roundSelect, Choice, FileName);
         getEvents(line, col, roundSelect, Choice);
-        clearScreen();
     }
 }
 
 void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 {
     char button = getch();
-    Beep (450, 20);
+    moveSound();
     switch (roundSelect)
     {
         case 1: //first screen 
@@ -138,6 +137,7 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
         {
             if (button == Esc)
             {
+                clearScreen();
                 roundSelect = 1;
                 Choice = 1;
             }
@@ -146,7 +146,7 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
     }
 }
 
-void printMenu(int roundSelect, int Choice)
+void printMenu(int roundSelect, int Choice, string FileName)
 {
     gotoxy(0,9);
     SET_COLOR(6);
@@ -156,6 +156,7 @@ void printMenu(int roundSelect, int Choice)
     cout << "\t\t\t\t |  __/  | | |   <  | (_| | | (__  | | | | | |_| |" << endl;
     cout << "\t\t\t\t |_|     |_| |_|`.|  `__,_|  `___| |_| |_|  `__,_|" << "\n\n";
     SET_COLOR(7);
+
     switch (roundSelect)
     {
         case 1:
@@ -163,35 +164,35 @@ void printMenu(int roundSelect, int Choice)
             if (Choice == 1)
             {
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t   <<Play>>" << endl;
+                cout << "\t\t\t\t\t\t   <<Play>>    " << endl;
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t  LeaderBoard" << endl;
-                cout << "\t\t\t\t\t\t    Credit" << endl;
+                cout << "\t\t\t\t\t\t  LeaderBoard  " << endl;
+                cout << "\t\t\t\t\t\t    Credit     " << endl;
                 cout << "\t\t\t\t\t\t     Quit      " << endl;
             }
             else if (Choice == 2)
             {
-                cout << "\t\t\t\t\t\t     Play" << endl;
+                cout << "\t\t\t\t\t\t     Play       " << endl;
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t<<LeaderBoard>>" << endl;
+                cout << "\t\t\t\t\t\t<<LeaderBoard>> " << endl;
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t    Credit" << endl;
-                cout << "\t\t\t\t\t\t     Quit      "  << endl;
+                cout << "\t\t\t\t\t\t    Credit      " << endl;
+                cout << "\t\t\t\t\t\t     Quit       "  << endl;
             }
             else if (Choice == 3)
             {
-                cout << "\t\t\t\t\t\t     Play" << endl;
-                cout << "\t\t\t\t\t\t  LeaderBoard" << endl;
+                cout << "\t\t\t\t\t\t     Play       " << endl;
+                cout << "\t\t\t\t\t\t  LeaderBoard   " << endl;
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t  <<Credit>>" << endl;
+                cout << "\t\t\t\t\t\t  <<Credit>>    " << endl;
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t     Quit        " << endl;
+                cout << "\t\t\t\t\t\t     Quit       " << endl;
             }
             else if (Choice == 4)
             {
-                cout << "\t\t\t\t\t\t     Play" << endl;
-                cout << "\t\t\t\t\t\t  LeaderBoard" << endl;
-                cout << "\t\t\t\t\t\t    Credit" << endl;
+                cout << "\t\t\t\t\t\t     Play        " << endl;
+                cout << "\t\t\t\t\t\t  LeaderBoard    " << endl;
+                cout << "\t\t\t\t\t\t    Credit       " << endl;
                 SET_COLOR(11);
                 cout << "\t\t\t\t\t\t   <<Quit>>      " << endl;
                 SET_COLOR(7);
@@ -203,38 +204,38 @@ void printMenu(int roundSelect, int Choice)
             if (Choice == 1)
             {
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t <<Easy>>" << endl;
+                cout << "\t\t\t\t\t\t <<Easy>>    " << endl;
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t   Normal" << endl;
-                cout << "\t\t\t\t\t\t   Hard" << endl;
-                cout << "\t\t\t\t\t\t   Crazy" << endl;
+                cout << "\t\t\t\t\t\t   Normal    " << endl;
+                cout << "\t\t\t\t\t\t   Hard      " << endl;
+                cout << "\t\t\t\t\t\t   Crazy     " << endl;
                 
             }
             else if (Choice == 2)
             {
-                cout << "\t\t\t\t\t\t   Easy" << endl;
+                cout << "\t\t\t\t\t\t   Easy      " << endl;
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t <<Normal>>" << endl;
+                cout << "\t\t\t\t\t\t <<Normal>>  " << endl;
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t   Hard" << endl;
-                cout << "\t\t\t\t\t\t   Crazy" << endl;
+                cout << "\t\t\t\t\t\t   Hard      " << endl;
+                cout << "\t\t\t\t\t\t   Crazy     " << endl;
             }
             else if (Choice == 3)
             {
-                cout << "\t\t\t\t\t\t   Easy" << endl;
-                cout << "\t\t\t\t\t\t   Normal" << endl;
+                cout << "\t\t\t\t\t\t   Easy      " << endl;
+                cout << "\t\t\t\t\t\t   Normal    " << endl;
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t  <<Hard>>" << endl;
+                cout << "\t\t\t\t\t\t  <<Hard>>   " << endl;
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t   Crazy" << endl;
+                cout << "\t\t\t\t\t\t   Crazy     " << endl;
             }
             else if (Choice == 4)
             {
-                cout << "\t\t\t\t\t\t   Easy" << endl;
-                cout << "\t\t\t\t\t\t   Normal" << endl;
-                cout << "\t\t\t\t\t\t   Hard" << endl;
+                cout << "\t\t\t\t\t\t   Easy      " << endl;
+                cout << "\t\t\t\t\t\t   Normal    " << endl;
+                cout << "\t\t\t\t\t\t   Hard      " << endl;
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t  <<Crazy>>" << endl;
+                cout << "\t\t\t\t\t\t  <<Crazy>>  " << endl;
                 SET_COLOR(7);
             }
             break;
@@ -247,7 +248,9 @@ void printMenu(int roundSelect, int Choice)
         }
         case 4:
         {
-            cout << "Leader Board"; // Sẽ viết sau
+            clearScreen();
+            gotoxy(0, 6);
+            printLeaderBoard(FileName);
             break;
         }
     }
@@ -255,6 +258,7 @@ void printMenu(int roundSelect, int Choice)
 }
 void printCredit()
 {
+    backSound();
     gotoxy(0, 4);
     SET_COLOR(6);
     cout << "\t\t\t\t\t   ____                     _   _   _      \n"; 

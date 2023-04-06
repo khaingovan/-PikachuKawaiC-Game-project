@@ -8,7 +8,7 @@
 #include "Account.h"
 using namespace std;
 
-void swap(Player *a, Player *b);
-void selectionSort(vector <Player> Leader, int numAcc);
+void swap(Player &a, Player &b);
+void selectionSort(vector <Player> &Leader, int numAcc);
 // Higest Score Board
 void printLeaderBoard(string FileName);
