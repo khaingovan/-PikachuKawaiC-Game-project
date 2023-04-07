@@ -162,12 +162,10 @@ void levelMove(int **board, int row, int col, int level){
 }
 
 void drawUnKey(int **board, int yr, int xr, char art[50][120], int y1, int x1){
-    if(yr == y1 && xr == x1)
-	    setColor(240);
-    else
-	    setColor(15);
-    
     if(board[yr][xr] == -1){
+		//15 = 0*16 + 15 white text black background
+		setColor(15);
+
 	    gotoxy(xr*5, yr*3 + 1);
         cout << art[yr*3    ][xr*5] << art[yr*3    ][xr*5 + 1] << art[yr*3    ][xr*5 + 2] << art[yr*3    ][xr*5 + 3] << art[yr*3    ][xr*5 + 4];
         gotoxy(xr*5, yr*3 + 2);
@@ -176,6 +174,13 @@ void drawUnKey(int **board, int yr, int xr, char art[50][120], int y1, int x1){
         cout << art[yr*3 + 2][xr*5] << art[yr*3 + 2][xr*5 + 1] << art[yr*3 + 2][xr*5 + 2] << art[yr*3 + 2][xr*5 + 3] << art[yr*3 + 2][xr*5 + 4];
     }
     else{
+        if(yr == y1 && xr == x1)
+            //240 = 15*16 + 0 black text white background
+            setColor(240);
+        else
+            //showing color from 8 to 14
+            setColor(board[yr][xr]%6 + 9);
+        
         char show;
         if(board[yr][xr] >= 0 && board[yr][xr] < 26)
             show = (char)(board[yr][xr] + (int)'A');
@@ -192,18 +197,24 @@ void drawUnKey(int **board, int yr, int xr, char art[50][120], int y1, int x1){
 }
 
 void drawKey(int **board, int yr, int xr, int y1, int x1){
+    if(yr == y1 && xr == x1)
+        //241 = 15*16 + 1 blue text white background
+	    setColor(241);
+    else
+        //31 = 1*16 + 15 white text blue background
+        setColor(16 + board[yr][xr]%6 + 9);
+    
     char show;
     if(board[yr][xr] >= 0 && board[yr][xr] < 26)
         show = (char)(board[yr][xr] + (int)'A');
     else if(board[yr][xr] >= 26)
         show = (char)(board[yr][xr] + (int)'a' - 26);
-    else
+    else{
+        //31 = 1*16 + 15 white text blue background
+	    setColor(31);
         show = '_';
+    }
 
-    if(yr == y1 && xr == x1)
-	    setColor(241);
-    else
-        setColor(1);
 	gotoxy(xr*5, yr*3 + 1);
 	cout << (char)(201) << (char)(205) << (char)(205) << (char)(205) << (char)(187);
 	gotoxy(xr*5, yr*3 + 2);
@@ -229,11 +240,11 @@ void drawKey(int **board, int yr, int xr, int y1, int x1){
 */
 
 void drawingLine(int **board, int i, int j){
-    //10 = 0*16 + 10 bright green text black background
-    setColor(10);
+    //4 = 0*16 + 4 red text black background
+    setColor(4);
     gotoxy(j*5, i + 1);
 
-    //i can phai *3 de ve board
+    //mutiply i with 3 to draw the board
 
     //line down
     if(board[i/3][j] == (int)'0'){
@@ -342,7 +353,6 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
     cout << "\t\t\tPlayer:";
     cout << "\t\t\tScore:" << endl;
 
-    //gotoxy(0, 2);
 	for(int i = 0; i < (row + 2)*3; i++){
 		for(int j = 0; j < col + 2; j++){
             if(board[i/3][j] >= (int)'0' && board[i/3][j] <= (int)'9'){
@@ -350,10 +360,15 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
             }
             else{
                 //15 = 0*16 + 15 white text black background
-	            setColor(15);
+	            //setColor(15);
+                //showing color from 8 to 14
+                setColor(board[i/3][j]%6 + 9);
                 gotoxy(j*5, i + 1);
-                if(board[i/3][j] == -1)
+                if(board[i/3][j] == -1){
+                    //15 = 0*16 + 15 white text black background
+	                setColor(15);
                     cout << bgArt[i][j*5] << bgArt[i][j*5 + 1] << bgArt[i][j*5 + 2] << bgArt[i][j*5 + 3] << bgArt[i][j*5 + 4];
+                }
                 else if(i%3 == 0)
                     cout << (char)(201) << (char)(205) << (char)(205)                           << (char)(205) << (char)(187);
                 else if(i%3 == 1 && board[i/3][j] < 26)
@@ -367,6 +382,9 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
 		cout << endl;
 	}
 
+    //15 = 0*16 + 15 white text black background
+	setColor(15);
+
     //10 = 0*16 + 10 bright green text black background
 	setColor(10);
     gotoxy(125, 1);
@@ -377,4 +395,7 @@ void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]
     cout << "Press 'A' for auto playing (1 match).";
     gotoxy(125, 4);
     cout << "Press 'S' for shuffling the board.";
+
+    //15 = 0*16 + 15 white text black background
+	setColor(15);
 }

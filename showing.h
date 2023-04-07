@@ -21,3 +21,4 @@ void drawKey(int **board, int yr, int xr, int y1, int x1);
 //draw the board for playing
 void drawingLine(int **board, int i, int j);
 void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]);//, bool moveBlock = 0, bool drawLine = 0);
+

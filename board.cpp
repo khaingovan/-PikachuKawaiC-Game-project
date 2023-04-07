@@ -513,14 +513,12 @@ void isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2,
 		for(int i = 0; i < (row + 2)*3; i++)
 			for(int j = 0; j < col + 2; j++)
 				drawingLine(board, i, j);
-		//characterBlock[ *pcharacterLost ]--;
-		//totalCharacter-=2;
 		CBI.charBlock[ *pcharacterLost ]--;
 		CBI.TChar-=2;
-		/*for(int i = 0; i < row + 2; i++)
+		for(int i = 0; i < row + 2; i++)
 			for(int j = 0; j < col + 2; j++)
 				if(board[i][j] >= (int)'0' && board[i][j] <= (int)'9')
-					board[i][j] = -1;*/
+					board[i][j] = -1;
 	}
 }
 
@@ -594,7 +592,6 @@ void matching(int **board, int row, int col, characterBlockInfor &CBI, int &leve
 	else if(board[y1][x1] == board[y2][x2]){
 		isLegalMatch(board, row, col, y1, x1, y2, x2, CBI, 0, legalMatch, pcharacterLost);
 	}
-	Sleep(500);
 }
 
 //neu khong con nuoc di kha thi, bang se tu trao cac toa do

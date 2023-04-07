@@ -31,9 +31,10 @@ void createBoard(int **board, int &row, int &col, characterBlockInfor &CBI){
 	CBI.TChar = row*col;
 	CBI.charBlock = new int [ CBI.TDiffer ];
 
-	for(int i = 0; i < CBI.TDiffer; i++){
+	/*for(int i = 0; i < CBI.TDiffer; i++){
 		CBI.charBlock[i] = 0;
-	}
+	}*/
+	fill_n(CBI.charBlock, CBI.TDiffer, 0);
 	for(int count = 0; count < row*col;){
 		//thuat toan tim ra 2 toa do bat ky, neu chung khac nhau va chua co gia tri thi se duoc them gia tri ngau nhien vao
 		int y1 = rand()%row + 1;
@@ -42,6 +43,9 @@ void createBoard(int **board, int &row, int &col, characterBlockInfor &CBI){
 		int x2 = rand()%col + 1;
 		if( (y1 != y2 || x1 != x2) && board[y1][x1] == -1 && board[y2][x2] == -1){
 			int character = rand()%CBI.TDiffer;
+			while(CBI.charBlock[character] > 2){
+				character = rand()%CBI.TDiffer;
+			}
 			CBI.charBlock[character]++;
 			board[y1][x1] = character;
 			board[y2][x2] = character;
@@ -147,7 +151,12 @@ int main(){
 		if(CBI.TChar == 0 && level == 5)
 			break;
 		if(CBI.TChar == 0){
+			//15 = 0*16 + 15 white text black background
+			setColor(15);
 			clearScreen();
+			
+			//15 = 0*16 + 15 white text black background
+			setColor(15);
 			drawingBoard(board, row, col, level, bgArt);
 
 			//15 = 0*16 + 15 white text black background
@@ -164,6 +173,7 @@ int main(){
 						createBoard(board, row, col, CBI);
 						clearScreen();
 						drawingBoard(board, row, col, level, bgArt);
+						drawKey(board, 1, 1, row + 2, col + 2);
 
 						break;
 					}
@@ -221,14 +231,9 @@ int main(){
 
 								isLegalMatch(board, row, col, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
 								if(legalMatch){
-									Sleep(500);
-									for(int u = 0; u < row + 2; u++)
-										for(int v = 0; v < col + 2; v++)
-											if( !(board[u][v] >= 0 && board[u][v] <= CBI.TDiffer )){
-												board[u][v] = -1;
-												drawUnKey(board, u, v, bgArt, row + 2, col + 2);
-											}
+									Sleep(300);
 									levelMove(board, row, col, level);
+									drawingBoard(board, row, col, level, bgArt);
 									i = row + 2;
 									j = col + 2;
 									m = row + 2;
@@ -238,10 +243,6 @@ int main(){
 						}
 					}
 				}
-
-				//Sleep(500);
-				//levelMove(board, row, col, level);
-				drawingBoard(board, row, col, level, bgArt);
 				drawKey(board, yr, xr, y1, x1);
 				break;
 			}
@@ -256,13 +257,7 @@ int main(){
 					x2 = xr;
 					isLegalMatch(board, row, col, y1, x1, y2, x2, CBI, 0, legalMatch, pcharacterLost);
 					if(*pcharacterLost != -3){
-						Sleep(500);
-						for(int i = 0; i < row + 2; i++)
-							for(int j = 0; j < col + 2; j++)
-								if( !(board[i][j] >= 0 && board[i][j] <= CBI.TDiffer )){
-									board[i][j] = -1;
-									drawUnKey(board, i, j, bgArt, row + 2, col + 2);
-								}
+						Sleep(300);
 						levelMove(board, row, col, level);
 					}
 					drawingBoard(board, row, col, level, bgArt);
