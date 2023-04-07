@@ -24,12 +24,12 @@ void printLeaderBoard(string FileName)
     selectionSort(Leader, numAcc);
 
     SET_COLOR(6);
-    cout << "\t\t\t\t    __                   __             ____                       __ " << endl;
-    cout << "\t\t\t\t   / /   ___  ____  ____/ /__  _____   / __ )____  ____ __________/ / " << endl;
-    cout << "\t\t\t\t  / /   / _ `/ __ `/ __  / _ `/ ___/  / __  / __ `/ __ `/ ___/ __  /  " << endl;
-    cout << "\t\t\t\t / /___/  __/ /_/ / /_/ /  __/ /     / /_/ / /_/ / /_/ / /  / /_/ /   " << endl;
-    cout << "\t\t\t\t/_____/.___/.__,_/.__,_/.___/_/     /_____/.____/.__,_/_/   .__,_/    " << endl;
-
+    cout << "\t\t\t        __                   __             ____                       __ " << endl;
+    cout << "\t\t\t       / /   ___  ____  ____/ /__  _____   / __ )____  ____  _________/ / " << endl;
+    cout << "\t\t\t      / /   / _ `/ __ `/ __  / _ `/ ___/  / __  / __ `/ __ `/ ___/ __  /  " << endl;
+    cout << "\t\t\t     / /___/  __/ /_/ / /_/ /  __/ /     / /_/ / /_/ / /_/ / /  / /_/ /   " << endl;
+    cout << "\t\t\t    /_____/.___/.__,_/.__,_/.___/_/     /_____/.____/.__,_/_/   .__,_/    " << endl;
+    cout << endl << endl;
     SET_COLOR(12);
     cout << "\t\t\t\t\t" << left << setw(30) << Leader[0].username << setfill(' ')  << Leader[0].record << endl;
     SET_COLOR(9);
@@ -46,33 +46,44 @@ void printLeaderBoard(string FileName)
     fin.close();
 }
 
-void selectionSort(vector <Player> Leader, int numAcc)
+void selectionSort(vector <Player> &Leader, int numAcc)
 {
-    int max_idx;
+    int maxIndex;
     // One by one move boundary of
     // unsorted subarray
     for (int i = 0; i < 5; i++)     //find 5 highest score players
     {
         // Find the maximumelement in
         // unsorted array
-        max_idx = i;
-        for (int j = i+1; j < numAcc; j++)
+        maxIndex = i;
+        for (int j = i + 1; j < numAcc; j++)
         {
-            if (Leader[j].record > Leader[max_idx].record)
-                max_idx = j;
+            if (Leader[j].record > Leader[maxIndex].record)
+                maxIndex = j;
         }
         // Swap the found maximum element
         // with the first element
-        if (max_idx != i)
-        {
-            swap (Leader[i], Leader[max_idx]);
-        }
+        Player temp;
+        strcpy(temp.username, Leader[i].username);
+        temp.record = Leader[i].record;
+
+        strcpy(Leader[i].username, Leader[maxIndex].username);
+        Leader[i].record = Leader[maxIndex].record;
+
+        strcpy(Leader[maxIndex].username, temp.username);
+        Leader[maxIndex].record = temp.record;
     }
 }
 
-void swap(Player *a, Player *b)
+void swap(Player &a, Player &b)
 {   
-    Player *temp = a;
-    *a = *b;
-    b = temp;
+    Player temp;
+    strcpy(temp.username, a.username);
+    temp.record = a.record;
+
+    strcpy(a.username, b.username);
+    a.record = b.record;
+
+    strcpy(b.username, temp.username);
+    b.record = temp.record;
 }

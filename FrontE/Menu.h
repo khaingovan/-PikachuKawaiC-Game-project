@@ -7,6 +7,7 @@
 #include <windows.h>
 #include "FormatScreens.cpp"
 #include "LeaderBoard.cpp"
+#include "PlayMusic.cpp"
 using namespace std;
 
 //Mã ASCII các phím điều khiển từ bàn phím
@@ -23,8 +24,8 @@ void getEvents(int &row, int &col, int &roundSelect, int &Choice);
 // split up from printMenu, make it easy to change later
 void printCredit();
 // function show interactive screen 
-void printMenu(int roundSelect, int Choice);
+void printMenu(int roundSelect, int Choice, string FileName);
     //Big Function
 // exact menu
-void generateMenu(int &row, int &col, int &roundSelect, int &Choice);
+void generateMenu(int &row, int &col, int &roundSelect, int &Choice, string FileName);
 
