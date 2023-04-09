@@ -2,7 +2,7 @@
 #pragma pack(1)
 #include <fstream>
 #include <string>
-
+#include "PrintDesign.cpp"
 #define BOARDSIZE 100
 //Mã ASCII các phím điều khiển từ bàn phím
 #define KeyUp 72

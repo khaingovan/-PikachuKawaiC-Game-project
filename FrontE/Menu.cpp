@@ -3,6 +3,7 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice, string Fi
 {
     roundSelect = 1;
     Choice = 1;
+<<<<<<< HEAD
     backSound();
     SET_COLOR(6);
     gotoxy(0,10);
@@ -17,13 +18,17 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice, string Fi
     //if (button = Space)
     if (button == 32)
         clearScreen();
+=======
+    int directX = 85, directY = 19;
+>>>>>>> 990e24874e434fd09c7f6ab39c25d3e2b87d8682
 
-    Sleep(500); // menu screen will stop in 500 millisecond
-    SET_COLOR(7);
+    clearScreen();
+    backSound();
+    
     while (true)
     {  
         if (roundSelect == -1)   // out while loop
-            break;  
+            break;
         printMenu(roundSelect, Choice, FileName);
         getEvents(line, col, roundSelect, Choice);
     }
@@ -128,6 +133,7 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
                 }
                 case Esc:
                 {
+                    clearScreen();
                     roundSelect = 1;
                     Choice = 1;
                 }
@@ -149,13 +155,14 @@ void getEvents(int &line, int &col,int &roundSelect, int &Choice)
 
 void printMenu(int roundSelect, int Choice, string FileName)
 {
+    int directX = 85, directY = 19;
     gotoxy(0,9);
     SET_COLOR(6);
-    cout << "\t\t\t\t  ____    _   _                     _             " << endl;
-    cout << "\t\t\t\t |  _ `  (_) | | __   __ _    ___  | |__    _   _ " << endl;
-    cout << "\t\t\t\t | |_) | | | | |/ /  / _` |  / __| | '_ `. | | | |" << endl;
-    cout << "\t\t\t\t |  __/  | | |   <  | (_| | | (__  | | | | | |_| |" << endl;
-    cout << "\t\t\t\t |_|     |_| |_|`.|  `__,_|  `___| |_| |_|  `__,_|" << "\n\n";
+    cout << "\t\t\t\t\t\t\t\t  ____    _   _                     _             " << endl;
+    cout << "\t\t\t\t\t\t\t\t |  _ `  (_) | | __   __ _    ___  | |__    _   _ " << endl;
+    cout << "\t\t\t\t\t\t\t\t | |_) | | | | |/ /  / _` |  / __| | '_ `. | | | |" << endl;
+    cout << "\t\t\t\t\t\t\t\t |  __/  | | |   <  | (_| | | (__  | | | | | |_| |" << endl;
+    cout << "\t\t\t\t\t\t\t\t |_|     |_| |_|`.|  `__,_|  `___| |_| |_|  `__,_|" << "\n\n";
     SET_COLOR(7);
 
     switch (roundSelect)
@@ -164,38 +171,89 @@ void printMenu(int roundSelect, int Choice, string FileName)
         {
             if (Choice == 1)
             {
+                //delete old boxs
+                deleteMenuBox(directX - 2, directY + 2);
+                deleteMenuBox(directX - 2, directY + 6);
+                deleteMenuBox(directX - 2, directY + 10);
+
+                gotoxy(directX - 4, 18);
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t   <<Play>>    " << endl;
+                cout << "   << Play >>    " << endl;
+                printMenuBox (directX - 2, directY - 2);
+                gotoxy(directX - 4, 22);
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t  LeaderBoard  " << endl;
-                cout << "\t\t\t\t\t\t    Credit     " << endl;
-                cout << "\t\t\t\t\t\t     Quit      " << endl;
+                cout << "   LeaderBoard   " << endl;
+
+                gotoxy(directX - 4, 26);
+                cout << "     Credit     " << endl;
+
+                gotoxy(directX - 4, 30);
+                cout << "      Quit      " << endl;
             }
             else if (Choice == 2)
             {
-                cout << "\t\t\t\t\t\t     Play       " << endl;
+                //delete old boxs
+                deleteMenuBox(directX - 2, directY - 2);
+                deleteMenuBox(directX - 2, directY + 6);
+                deleteMenuBox(directX - 2, directY + 8);
+
+                gotoxy(directX - 4, 18);
+                cout << "      Play       " << endl;
+
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t<<LeaderBoard>> " << endl;
+                printMenuBox (directX - 2, directY + 2);
+                gotoxy(directX - 4, 22);
+                cout << "<< LeaderBoard >>  " << endl;
+
+                gotoxy(directX - 4, 26);
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t    Credit      " << endl;
-                cout << "\t\t\t\t\t\t     Quit       "  << endl;
+                cout << "     Credit      " << endl;
+
+                gotoxy(directX - 4, 30);
+                cout << "      Quit       "  << endl;
             }
             else if (Choice == 3)
             {
-                cout << "\t\t\t\t\t\t     Play       " << endl;
-                cout << "\t\t\t\t\t\t  LeaderBoard   " << endl;
+                //delete old boxs
+                deleteMenuBox(directX - 2, directY - 2);
+                deleteMenuBox(directX - 2, directY + 2);
+                deleteMenuBox(directX - 2, directY + 10);
+
+                gotoxy(directX - 4, 18);
+                cout << "      Play       " << endl;
+
+                gotoxy(directX - 4, 22);
+                cout << "   LeaderBoard   " << endl;
+
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t  <<Credit>>    " << endl;
+                printMenuBox (directX - 2, directY + 6);
+                gotoxy(directX - 4, 26);
+                
+                cout << "  << Credit >>    " << endl;
+
+                gotoxy(directX - 4, 30);
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t     Quit       " << endl;
+                cout << "      Quit       " << endl;
             }
             else if (Choice == 4)
             {
-                cout << "\t\t\t\t\t\t     Play        " << endl;
-                cout << "\t\t\t\t\t\t  LeaderBoard    " << endl;
-                cout << "\t\t\t\t\t\t    Credit       " << endl;
+                //delete old boxs
+                for (int i = 0; i < 4; i++)
+                    deleteMenuBox(directX - 2, directY - 2 + i*4);
+                gotoxy(directX - 4, 18);
+                cout << "      Play        " << endl;
+
+                gotoxy(directX - 4, 22);
+                cout << "   LeaderBoard    " << endl;
+
+                gotoxy(directX - 4, 26);
+                cout << "     Credit       " << endl;
+
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t   <<Quit>>      " << endl;
+                printMenuBox (directX - 2, directY + 10);
+                gotoxy(directX - 4, 30);
+                cout << "   << Quit >>      " << endl;
+
                 SET_COLOR(7);
             }
             break;
@@ -204,39 +262,87 @@ void printMenu(int roundSelect, int Choice, string FileName)
         {
             if (Choice == 1)
             {
+                //clear old boxs
+                // deleteMenuBox(directX - 2, directY - 2);
+                deleteMenuBox(directX - 2, directY + 2);
+                deleteMenuBox(directX - 2, directY + 6);
+                deleteMenuBox(directX - 2, directY + 10);
+                // gotoxy(directX - 7, 18);
+                // cout <<"                    ";
+                // gotoxy(directX - 7, 22);
+                // cout <<"                    ";
+
+                gotoxy(directX - 2, 18);
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t <<Easy>>    " << endl;
+                cout << " << Easy >>    " << endl;
+                printMenuBox(directX - 2, directY - 2);        
+
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t   Normal    " << endl;
-                cout << "\t\t\t\t\t\t   Hard      " << endl;
-                cout << "\t\t\t\t\t\t   Crazy     " << endl;
+                gotoxy(directX - 2, 22);
+                cout << "    Normal    " << endl;
+                gotoxy(directX - 2, 26);
+                cout << "    Hard      " << endl;
+                gotoxy(directX - 2, 30);
+                cout << "    Crazy     " << endl;
                 
             }
             else if (Choice == 2)
             {
-                cout << "\t\t\t\t\t\t   Easy      " << endl;
+                //clear old boxs
+                deleteMenuBox(directX - 2, directY - 2);
+                deleteMenuBox(directX - 2, directY + 6);
+                deleteMenuBox(directX - 2, directY + 10);
+                gotoxy(directX - 2, 18);
+                cout << "    Easy      " << endl;
+
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t <<Normal>>  " << endl;
+                gotoxy(directX - 2, 22);
+                cout << " << Normal >>  " << endl;
+                printMenuBox(directX - 2, directY + 2);
+
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t   Hard      " << endl;
-                cout << "\t\t\t\t\t\t   Crazy     " << endl;
-            }
+                gotoxy(directX - 2, 26);
+                cout << "    Hard      " << endl;
+                gotoxy(directX - 2, 30);
+                cout << "    Crazy     " << endl;
+            } 
             else if (Choice == 3)
             {
-                cout << "\t\t\t\t\t\t   Easy      " << endl;
-                cout << "\t\t\t\t\t\t   Normal    " << endl;
+                //clear old boxs
+                deleteMenuBox(directX - 2, directY - 2);
+                deleteMenuBox(directX - 2, directY + 2);
+                deleteMenuBox(directX - 2, directY + 10);
+                gotoxy(directX - 2, 18);
+                cout << "    Easy      " << endl;
+                gotoxy(directX - 2, 22);
+                cout << "    Normal    " << endl;
+
+                gotoxy(directX - 2, 26);
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t  <<Hard>>   " << endl;
+                cout << " << Hard >>   " << endl;
+                printMenuBox(directX - 2, directY + 6);
+
                 SET_COLOR(7);
-                cout << "\t\t\t\t\t\t   Crazy     " << endl;
+                gotoxy(directX - 2, 30);
+                cout << "    Crazy     " << endl;
             }
             else if (Choice == 4)
             {
-                cout << "\t\t\t\t\t\t   Easy      " << endl;
-                cout << "\t\t\t\t\t\t   Normal    " << endl;
-                cout << "\t\t\t\t\t\t   Hard      " << endl;
+                //clear old boxs
+                deleteMenuBox(directX - 2, directY - 2);
+                deleteMenuBox(directX - 2, directY + 2);
+                deleteMenuBox(directX - 2, directY + 6);
+                gotoxy(directX - 2, 18);
+                cout << "    Easy      " << endl;
+                gotoxy(directX - 2, 22);
+                cout << "    Normal    " << endl;
+                gotoxy(directX - 2, 26);
+                cout << "    Hard      " << endl;
+
                 SET_COLOR(11);
-                cout << "\t\t\t\t\t\t  <<Crazy>>  " << endl;
+                gotoxy(directX - 2, 30);
+                cout << " << Crazy >>  " << endl;
+                printMenuBox(directX - 2, directY + 10);
                 SET_COLOR(7);
             }
             break;
@@ -259,26 +365,27 @@ void printMenu(int roundSelect, int Choice, string FileName)
 }
 void printCredit()
 {
+    int directX = 85, directY = 19;
     backSound();
-    gotoxy(0, 4);
+    gotoxy(0, 12);
     SET_COLOR(6);
-    cout << "\t\t\t\t\t   ____                     _   _   _      \n"; 
-    cout << "\t\t\t\t\t  / ___|  _ __    ___    __| | (_) | |_    \n"; 
-    cout << "\t\t\t\t\t | |     | '__|  / _ `  / _` | | | | __|   \n"; 
-    cout << "\t\t\t\t\t | |___  | |    |  __/ | (_| | | | | |_ .   \n"; 
-    cout << "\t\t\t\t\t  `____| |_|     `___|  `__,_| |_| '__./   \n\n"; 
+    cout << "\t\t\t\t\t\t\t\t   ____                     _   _   _      \n"; 
+    cout << "\t\t\t\t\t\t\t\t  / ___|  _ __    ___    __| | (_) | |_    \n"; 
+    cout << "\t\t\t\t\t\t\t\t | |     | '__|  / _ `  / _` | | | | __|   \n"; 
+    cout << "\t\t\t\t\t\t\t\t | |___  | |    |  __/ | (_| | | | | |_ .   \n"; 
+    cout << "\t\t\t\t\t\t\t\t  `____| |_|     `___|  `__,_| |_| '__./   \n\n"; 
 
-    cout << "\t\t\t\t\t\t\t Pikachu Game \n";
-    cout << "\t\t\t\t\t Programming Technique's Course Project \n";
+    cout << "\t\t\t\t\t\t\t\t\t\t Pikachu Game \n";
+    cout << "\t\t\t\t\t\t\t\t Programming Technique's Course Project \n";
     SET_COLOR(13);
-    cout << "\t\t\t\t\t Programmed and Designed by \n";
-    cout << "\t\t\t\t\t" << left << setw(30) << " Ngo Van Khai" << setfill(' ')  << "22127174 \n";
-    cout << "\t\t\t\t\t" << left << setw(30) << " Nguyen Quoc Tin" << setfill(' ')  << "22127416 \n";
+    cout << "\t\t\t\t\t\t\t\t Programmed and Designed by \n";
+    cout << "\t\t\t\t\t\t\t\t" << left << setw(30) << " Ngo Van Khai" << setfill(' ')  << "22127174 \n";
+    cout << "\t\t\t\t\t\t\t\t" << left << setw(30) << " Nguyen Quoc Tin" << setfill(' ')  << "22127416 \n";
     
     SET_COLOR(3);
-    cout << "\t\t\t\t This is our first game. Hope you have good experience\n";
-    cout << "\t\t\t\t\t\t\t Thank you!!";
-    gotoxy(53,25);
+    cout << "\t\t\t\t\t\t\t This is our first game. Hope you have good experience\n";
+    cout << "\t\t\t\t\t\t\t\t\t\t Thank you!!";
+    gotoxy(directX - 8, directY + 10);
     SET_COLOR(8);
     cout << " Press ESC to exit";
 

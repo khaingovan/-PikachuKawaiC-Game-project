@@ -2,16 +2,16 @@
 
 void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &oldMan, unsigned int &index)
 {
-    roundSelect = 0;
-
-    gotoxy(0,10);
+    roundSelect = 0;                                                                           
+    gotoxy(0,15);
     SET_COLOR(6);
-    cout << "\t\t\t\t _|_|_|    _|  _|                            _|                 "<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t _|    _|      _|  _|      _|_|_|    _|_|_|  _|_|_|    _|     _| "<< endl;
-    cout << "\t\t\t\t _|_|_|    _|  _|_|      _|    _|  _|        _|    _|  _|     _| "<< endl;
-    cout << "\t\t\t\t _|        _|  _|  _|    _|    _|  _|        _|    _|  _|     _| "<< endl;
-    cout << "\t\t\t\t _|        _|  _|    _|    _|_|_|    _|_|_|  _|    _|    _|_|_|  \n\n";
-    cout << "\t\t\t\t\t\t Press Space to continue!!" << endl;
+    cout << "\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t  |     ___/ |  | |  |/ / \\__  \\   _/ ___\\  |  |  \\  |  |  \\"<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t  |    |     |  | |    <   / __ \\_ \\  \\___  |   Y  \\ |  |  /"<< endl;
+    cout << "\t\t\t\t\t\t\t  |____|     |__| |__|_ \\ /____  /  \\___  > |___|  / |____/ "<< endl;
+    cout << "\t\t\t\t\t\t\t                       \\/      \\/       \\/       \\/        "<< endl;
+    cout << "\t\t\t\t\t\t\t\t\t Press Space to continue!!" << endl;
     char button = getch();
     if (button = Space)
         clearScreen();
@@ -19,8 +19,6 @@ void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &o
     SET_COLOR(7);
     while(true)
     {
-        
-        clearScreen();
         if (roundSelect == 0)           //Print Login menu to choose to play as guest or member
         {
             gotoxy(0,10);                               
@@ -48,33 +46,75 @@ void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &o
 
 void printAccChoice(int Choice)
 {
+    int directX = 85, directY = 19;
+    SET_COLOR(6);
+    cout << "\t\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t\t  |     ___/ |  | |  |/ / \\__  \\   _/ ___\\  |  |  \\  |  |  \\"<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t\t  |    |     |  | |    <   / __ \\_ \\  \\___  |   Y  \\ |  |  /"<< endl;
+    cout << "\t\t\t\t\t\t\t\t  |____|     |__| |__|_ \\ /____  /  \\___  > |___|  / |____/ "<< endl;
+    cout << "\t\t\t\t\t\t\t\t                       \\/      \\/       \\/       \\/        "<< endl;
+    
+    SET_COLOR(7);
     switch(Choice)
     {
         case 1:
         {
+            //clear old boxs
+            deleteChoiceBox(directX, directY + 4);
+            deleteChoiceBox(directX, directY + 8);
+
+            gotoxy(directX - 5, directY);
             SET_COLOR(11);
-            cout << "\t\t\t\t\t\t   <<Play as Guest>>  " << endl;
-            cout << "\t\t\t\t\t\t  (Data will be lost) " << endl;
+            cout << "  << Play as Guest >>  " << endl;
+            gotoxy(directX - 6, directY + 1);
+            cout << "   (Data will be lost) " << endl;
+            printChoiceBox(directX, directY);
+
             SET_COLOR(7);
-            cout << "\t\t\t\t\t\t        Log In        " << endl;
-            cout << "\t\t\t\t\t\t        Sign Up       " << endl;
+            gotoxy(directX, directY + 4);
+            cout << "   Log In        " << endl;
+            gotoxy(directX, directY + 8);
+            cout << "   Sign Up       " << endl;
             break;
         }
         case 2:
         {
-            cout << "\t\t\t\t\t\t     Play as Guest" << endl;
+            //clear old boxs
+            deleteChoiceBox(directX, directY);
+            deleteChoiceBox(directX, directY + 8);
+
+            gotoxy(directX - 3, directY);
+            cout << "   Play as Guest       " << endl;
+            gotoxy(directX - 6, directY + 1);
+            cout << "                      " << endl;
+            
+            gotoxy(directX - 2, directY + 4);
             SET_COLOR(11);
-            cout << "\t\t\t\t\t\t      <<Log In>>" << endl;
+            cout << "  << Log In >>        " << endl;
+            printChoiceBox(directX, directY + 4);
+
             SET_COLOR(7);
-            cout << "\t\t\t\t\t\t        Sign Up" << endl;
+            gotoxy(directX, directY + 8);
+            cout << "   Sign Up            " << endl;
             break;
         }
         case 3:
         {
-            cout << "\t\t\t\t\t\t     Play as Guest" << endl;
-            cout << "\t\t\t\t\t\t        Log In " << endl;
+            //clear old boxs
+            deleteChoiceBox(directX, directY);
+            deleteChoiceBox(directX, directY + 4);
+
+            gotoxy(directX - 3, directY);
+            cout << "   Play as Guest           "<< endl;
+
+            gotoxy(directX, directY + 4);
+            cout << "   Log In               " << endl;
+    
+            gotoxy(directX - 2, directY + 8);
             SET_COLOR(11);
-            cout << "\t\t\t\t\t\t      <<Sign Up>>" << endl;
+            cout << "  << Sign Up >>            " << endl;
+            printChoiceBox(directX, directY + 8);
             SET_COLOR(7);
             break;
         }
@@ -126,37 +166,71 @@ void signUp(string FileName)
 {
     Player newguy;
     unsigned index = 0;
-
+    int directX = 85, directY = 10;
     char confirm[17];           //check if user type wrong letter
+    SET_COLOR(11);
+    printSignUpBoard(directX, directY);
 
-    cout << "\t\t\t\t\t\t\tSIGN UP" << endl;
+    gotoxy(directX + 2, directY);
+    SET_COLOR(10);
+    cout << "SIGN UP" << endl;
+    
+    SET_COLOR(7);
+    gotoxy(directX - 8, directY + 3);
+    
+    cout << "Username " << endl;   //(less than 16 characters)
+
+    gotoxy(directX - 8, directY + 7);
+    cout << "Password " << endl;   //(no more than 14 characters)
+    
+    gotoxy(directX - 8, directY + 11);
+    cout << "Confirm ";
+
+    SET_COLOR(4);
+    gotoxy(directX - 8, directY + 15);
+    cout << "Username must be LESS than 16 characters";
+    gotoxy(directX - 8, directY + 16);
+    cout << "Password is NO MORE THAN 14 characters";
+
+    SET_COLOR(7);
     //get Username and Password
-    cout << "\t\t\t\tUsername (less than 16 characters): ";
+    gotoxy(directX + 10, directY + 3);
     cin.getline (newguy.username, 17);
-    cout << "\t\t\t\tPassword (no more than 14 characters): ";
+
+    gotoxy(directX + 10, directY + 7);
     cin.getline (newguy.password, 15);
-    cout << "\t\t\t\t\tConfirm password: ";
-    cin.getline (confirm, 17);
+
+    gotoxy(directX + 10,directY + 11);
+    cin.getline (confirm, 15);
 
     //check if the username exists,
     bool valid = isExistAcc(FileName, newguy.username, index);
     if (valid)
     {
-        cout << "\t\t\t\t\t\t\tExisted Username!!";
+        SET_COLOR(4);
+        gotoxy(directX, directY + 22);
+        cout << "Existed Username!!          ";
+        SET_COLOR(7);
+        Sleep(1000);
         clearScreen();
         signUp(FileName);           //username is used then user need to type new username
     }
     else if (strcmp(confirm, newguy.password) != 0)     // check if confirm password is different from password
     {
-        cout << "\t\t\t\t\t\t\tPassword is incorrect!!";
+        gotoxy(directX, directY + 22);
+        SET_COLOR(4);
+        cout << "Password is incorrect!!        ";
         Sleep(1000);
         clearScreen();              
         signUp(FileName);           //redo sign up if information provided is invalid
     }
     else
     {
+        SET_COLOR(6);
+        gotoxy(directX, directY + 22);
+        cout << "Welcome New Player             ";     // sign up successfully
+        Sleep(2000);
         clearScreen();
-        cout << "\t\t\t\t\t\t\tWelcome New Player";     // sign up successfully
     }
     
     // open file to store new user's account
@@ -187,31 +261,55 @@ void signUp(string FileName)
 void signIn(string FileName, Player &oldMan, unsigned int &index)
 {
     index = 0;  // index of account to search for password quickly
-    
-    cout << "\t\t\t\t\t\t\tLOGIN" << endl;
-    cout << "\t\t\t\t\tUsername: ";
+    int directX = 85, directY = 10;
+    printSignInBoard(directX, directY);
+    gotoxy(directX + 2, directY);
+    SET_COLOR(10);
+    cout << "LOGIN" << endl;
+
+    SET_COLOR(7);
+    gotoxy(directX - 8, directY + 3);
+    cout << "Username " << endl;   //(less than 16 characters)
+
+    gotoxy(directX - 8, directY + 7);
+    cout << "Password " << endl;   //(no more than 14 characters)
+
+    gotoxy(directX + 10, directY + 3);
     cin.getline(oldMan.username, sizeof(oldMan.username));
+
+    gotoxy(directX + 10, directY + 7);
+    cin.getline(oldMan.password, sizeof(oldMan.password));
+
     if(isExistAcc(FileName, oldMan.username, index))        //Check username if it is signed up then Check password is correct (similar to storing in file)
     {  
-        cout << "\t\t\t\t\tPassword: ";
-        cin.getline(oldMan.password, sizeof(oldMan.password));
         if(isPasswordCorrect(FileName, oldMan.password, index))        //compare the password with the stored one in SaveFile.dat
         {
-            cout << "\t\t\t\t\t\t\tSuccess!!";
+            SET_COLOR(6);
+            gotoxy(directX, directY + 22);
+            cout << "Success!!";
+            SET_COLOR(7);
             getInfo(FileName, oldMan, index);                   //store info from file to variable (oldMan
         }
         else
         {
-            cout << "\t\t\t\t\t\t\tWrong Password";
-            clearScreen();
+            SET_COLOR(4);
+            gotoxy(directX, directY + 22);
+            cout << "Wrong Password";
+            Sleep(1000);
+            SET_COLOR(7);
             signIn(FileName, oldMan, index);                    //sign in again
         }
     }    
     else                                                         
     {
-        cout << "\t\t\t\t\t\t\tInvalid Account" << endl;
-        cout << "\t\t\t\t\t\t\tPlease Sign Up" << endl;
-        cout << "\t\t\t\t\tPress Space to try Login again Or Esc to SignUp" << endl;
+        SET_COLOR(4);
+        gotoxy(directX, directY + 10);
+        cout << "Invalid Account" << endl;
+        gotoxy(directX, directY + 11);
+        cout << "Please Sign Up" << endl;
+        gotoxy(directX - 15, directY + 12);
+        cout << "Press Space to try Login again Or Esc to SignUp" << endl;
+        SET_COLOR(7);
         char button = getch();
         if (button == Esc)                                      //if players type wrong account, they can choose to sig in again or make the new one
         {

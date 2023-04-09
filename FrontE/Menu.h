@@ -8,6 +8,7 @@
 #include "FormatScreens.cpp"
 #include "LeaderBoard.cpp"
 #include "PlayMusic.cpp"
+#include "PrintDesign.cpp"
 using namespace std;
 
 //Mã ASCII các phím điều khiển từ bàn phím
