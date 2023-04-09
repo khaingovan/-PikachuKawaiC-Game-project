@@ -14,7 +14,8 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice, string Fi
     cout << "\t\t\t\t _|        _|  _|    _|    _|_|_|    _|_|_|  _|    _|    _|_|_|  \n\n";
     cout << "\t\t\t\t\t\t Press Space to continue!!" << endl;
     char button = getch();
-    if (button = Space)
+    //if (button = Space)
+    if (button == 32)
         clearScreen();
 
     Sleep(500); // menu screen will stop in 500 millisecond

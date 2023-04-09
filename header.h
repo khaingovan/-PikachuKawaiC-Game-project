@@ -21,7 +21,15 @@ using namespace std;
 #define Esc 27
 
 struct characterBlockInfor{
-    int TDiffer;    //totalDifferentCharacter
-    int *charBlock; //characterBlock
-    int TChar;      //totalCharacter
+    int TDiffer;        //totalDifferentCharacter
+    int *charBlock;     //characterBlock
+    int TChar;          //totalCharacter
+};
+
+struct Player
+{
+    char username[17];          //17bytes
+    char password[15];          //15bytes
+    int record;        //score(4bytes)
+    //State savedStage; 
 };

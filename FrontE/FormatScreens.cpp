@@ -7,7 +7,7 @@ void SET_COLOR(int color);// Source code from : https://www.phanxuanchanh.com/20
 //https://codelearn.io/sharing/windowsh-va-ham-dinh-dang-console-p1
 void SetWindowSize(SHORT width, SHORT height);
 void SetScreenBufferSize(SHORT width, SHORT height);
-void gotoxy(int x, int y);  //https://cachhoc.net/2013/08/22/cc-gotoxy-trong-dev-c-gotoxy-in-dev-c/
+void gotoxy(SHORT x, SHORT y);  //https://cachhoc.net/2013/08/22/cc-gotoxy-trong-dev-c-gotoxy-in-dev-c/
 
 void clearScreen()
 { 
@@ -91,7 +91,7 @@ void DisableResizeWindow()
     SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_SIZEBOX);
 }
 
-void gotoxy(int x, int y)
+void gotoxy(SHORT x, SHORT y)
 {
   static HANDLE h = NULL;  
   if(!h)

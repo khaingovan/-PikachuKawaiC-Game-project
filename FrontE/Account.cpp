@@ -160,7 +160,9 @@ void signUp(string FileName)
     }
     
     // open file to store new user's account
-    ofstream fout(FileName, ios::binary|ios::app);
+    //ofstream fout(FileName, ios::binary|ios::app);
+    ofstream fout("SaveFile.dat", ios::binary|ios::app);
+
     if (!fout.is_open())
     {
         cout << "Error While Opening";
@@ -230,7 +232,8 @@ void signIn(string FileName, Player &oldMan, unsigned int &index)
 
 bool isExistAcc(string FileName, char username[17], unsigned int &index)
 {
-    ifstream fin(FileName, ios::binary);
+    //ifstream fin (FileName, ios::binary);
+    ifstream fin ("SaveFile.dat", ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -276,7 +279,8 @@ bool isPasswordCorrect(string FileName, char password[15], unsigned int index)
 {
     char passTemp[15];
     bool Correct = false;
-    ifstream fin(FileName, ios::binary);
+    //ifstream fin (FileName, ios::binary);
+    ifstream fin ("SaveFile.dat", ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -295,7 +299,8 @@ bool isPasswordCorrect(string FileName, char password[15], unsigned int index)
 
 void getInfo (string FileName, Player &oldMan, unsigned int index)
 {
-    ifstream fin(FileName, ios::binary);
+    //ifstream fin (FileName, ios::binary);
+    ifstream fin ("SaveFile.dat", ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -311,7 +316,8 @@ void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned i
 {
     vector <Player> List;
     Player temp;
-    ifstream fin(FileName, ios::binary);
+    //ifstream fin (FileName, ios::binary);
+    ifstream fin ("SaveFile.dat", ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -333,7 +339,8 @@ void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned i
 
     List[index].record = newscore;      //update a new score , storing in file
     oldMan.record = newscore;           //in play time
-    ofstream fout(FileName, ios::binary);
+    //ofstream fout(FileName, ios::binary);
+    ofstream fout("SaveFile.dat", ios::binary);
     if (!fout.is_open())
     {
         cout << "Error While Opening";

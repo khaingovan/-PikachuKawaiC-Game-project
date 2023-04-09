@@ -19,6 +19,7 @@ void drawUnKey(int **board, int yr, int xr, char art[50][120], int y1, int x1);
 void drawKey(int **board, int yr, int xr, int y1, int x1);
 
 //draw the board for playing
+void drawBorder(int color);
 void drawingLine(int **board, int i, int j);
-void drawingBoard(int **board, int row, int col, int &level, char bgArt[40][120]);//, bool moveBlock = 0, bool drawLine = 0);
-
+void drawingBoard(int **board, int row, int col, char bgArt[40][120]);
+void drawOutsideBoard(int &level, Player &user);
