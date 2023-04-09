@@ -22,24 +22,39 @@ void printLeaderBoard(string FileName)
     }
 
     selectionSort(Leader, numAcc);
-
+    int directX = 85, directY = 15;
+    gotoxy(0, 10);
     SET_COLOR(6);
-    cout << "\t\t\t        __                   __             ____                       __ " << endl;
-    cout << "\t\t\t       / /   ___  ____  ____/ /__  _____   / __ )____  ____  _________/ / " << endl;
-    cout << "\t\t\t      / /   / _ `/ __ `/ __  / _ `/ ___/  / __  / __ `/ __ `/ ___/ __  /  " << endl;
-    cout << "\t\t\t     / /___/  __/ /_/ / /_/ /  __/ /     / /_/ / /_/ / /_/ / /  / /_/ /   " << endl;
-    cout << "\t\t\t    /_____/.___/.__,_/.__,_/.___/_/     /_____/.____/.__,_/_/   .__,_/    " << endl;
+    cout << "\t\t\t\t\t\t        __                   __             ____                       __ " << endl;
+    cout << "\t\t\t\t\t\t       / /   ___  ____  ____/ /__  _____   / __ )____  ____  _________/ / " << endl;
+    cout << "\t\t\t\t\t\t      / /   / _ `/ __ `/ __  / _ `/ ___/  / __  / __ `/ __ `/ ___/ __  /  " << endl;
+    cout << "\t\t\t\t\t\t     / /___/  __/ /_/ / /_/ /  __/ /     / /_/ / /_/ / /_/ / /  / /_/ /   " << endl;
+    cout << "\t\t\t\t\t\t    /_____/.___/.__,_/.__,_/.___/_/     /_____/.____/.__,_/_/   .__,_/    " << endl;
     cout << endl << endl;
+    gotoxy(directX - 20, directY + 3);
+    cout << "NAME";
+    gotoxy(directX + 10, directY + 3);
+    cout << "SCORE";
+
+    gotoxy(directX - 20, directY + 5);
     SET_COLOR(12);
-    cout << "\t\t\t\t\t" << left << setw(30) << Leader[0].username << setfill(' ')  << Leader[0].record << endl;
+    cout << left << setw(30) << Leader[0].username << setfill(' ')  << Leader[0].record << endl;
+   
+    gotoxy(directX - 20, directY + 8);
     SET_COLOR(9);
-    cout << "\t\t\t\t\t" << left << setw(30) << Leader[1].username << setfill(' ')  << Leader[1].record << endl;
+    cout << left << setw(30) << Leader[1].username << setfill(' ')  << Leader[1].record << endl;
+   
+    gotoxy(directX - 20, directY + 11);
     SET_COLOR(10);
-    cout << "\t\t\t\t\t" << left << setw(30) << Leader[2].username << setfill(' ')  << Leader[2].record << endl;
+    cout << left << setw(30) << Leader[2].username << setfill(' ')  << Leader[2].record << endl;
+   
+    gotoxy(directX - 20, directY + 14);
     SET_COLOR(15);
-    cout << "\t\t\t\t\t" << left << setw(30) << Leader[3].username << setfill(' ')  << Leader[3].record << endl;
+    cout << left << setw(30) << Leader[3].username << setfill(' ')  << Leader[3].record << endl;
+    
+    gotoxy(directX - 20, directY + 17);
     SET_COLOR(3);
-    cout << "\t\t\t\t\t" << left << setw(30) << Leader[4].username << setfill(' ')  << Leader[4].record << endl;
+    cout << left << setw(30) << Leader[4].username << setfill(' ')  << Leader[4].record << endl;
 
     SET_COLOR(7);
 

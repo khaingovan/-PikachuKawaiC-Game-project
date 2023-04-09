@@ -4,9 +4,8 @@
 void clearScreen();//using code from https://cplusplus.com/forum/articles/10515/
 void SET_COLOR(int color);// Source code from : https://www.phanxuanchanh.com/2021/01/08/lap-trinh-c-c-doi-mau-console/
 
-//https://codelearn.io/sharing/windowsh-va-ham-dinh-dang-console-p1
-void SetWindowSize(SHORT width, SHORT height);
-void SetScreenBufferSize(SHORT width, SHORT height);
+void ShowScrollbar(BOOL Show);//https://codelearn.io/sharing/windowsh-va-ham-dinh-dang-console-p1
+HWND WINAPI GetConsoleWindowNT(void);
 void gotoxy(int x, int y);  //https://cachhoc.net/2013/08/22/cc-gotoxy-trong-dev-c-gotoxy-in-dev-c/
 
 void clearScreen()
@@ -49,40 +48,38 @@ void clearScreen()
 void SET_COLOR(int color)
 {
 	WORD wColor;
-     
-
-     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-     CONSOLE_SCREEN_BUFFER_INFO csbi;
-     if(GetConsoleScreenBufferInfo(hStdOut, &csbi))
-     {
-          wColor = (csbi.wAttributes & 0xF0) + (color & 0x0F);
-          SetConsoleTextAttribute(hStdOut, wColor);
-     }
+    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if(GetConsoleScreenBufferInfo(hStdOut, &csbi))
+    {
+        wColor = (csbi.wAttributes & 0xF0) + (color & 0x0F);
+        SetConsoleTextAttribute(hStdOut, wColor);
+    }
 }
 
 // Function resize Window
-void SetWindowSize(SHORT width, SHORT height)
+HWND WINAPI GetConsoleWindowNT(void)
 {
-    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    SMALL_RECT WindowSize;
-    WindowSize.Top = 0;
-    WindowSize.Left = 0;
-    WindowSize.Right = width;
-    WindowSize.Bottom = height;
- 
-    SetConsoleWindowInfo(hStdout, 1, &WindowSize);
+    //declare function pointer type
+    typedef HWND WINAPI(*GetConsoleWindowT)(void);
+    //declare one such function pointer
+    GetConsoleWindowT GetConsoleWindow;
+    //get a handle on kernel32.dll
+    HMODULE hk32Lib = GetModuleHandle(TEXT("KERNEL32.DLL"));
+    //assign procedure address to function pointer
+    GetConsoleWindow = (GetConsoleWindowT)GetProcAddress(hk32Lib, LPCSTR("GetConsoleWindow"));
+    //check if the function pointer is valid
+    //since the function is undocumented
+    if(GetConsoleWindow == NULL){
+        return NULL;
+    }
+    //call the undocumented function
+    return GetConsoleWindow();
 }
-
-void SetScreenBufferSize(SHORT width, SHORT height)
+void ShowScrollbar(BOOL Show)
 {
-    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    COORD NewSize;
-    NewSize.X = width;
-    NewSize.Y = height;
-
-    SetConsoleScreenBufferSize(hStdout, NewSize);
+    HWND hWnd = GetConsoleWindow();
+    ShowScrollBar(hWnd, SB_BOTH, Show);
 }
 
 void DisableResizeWindow()
