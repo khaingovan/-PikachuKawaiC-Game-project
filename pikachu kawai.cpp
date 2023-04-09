@@ -26,7 +26,7 @@ HWND WINAPI GetConsoleWindowNT(void)
 
 void createBoard(int **board, int &row, int &col, characterBlockInfor &CBI){
 	//mang cang nho thi cang can it ky tu, cu the mang 4x4 co toi da 6 ky tu khac nhau
-	CBI.TDiffer = 4 + min((row*col)- 14, 30);
+	CBI.TDiffer = min((row*col)- 10, 40);
 	//so luong ky tu con lai trong mang, sau khi noi dung 2 ky tu thi bien nay tu giam di 2
 	CBI.TChar = row*col;
 	CBI.charBlock = new int [ CBI.TDiffer ];
@@ -61,13 +61,17 @@ int main(){
 	//fontsize(22, 22);
 	//resize console window
     HWND hWnd=GetConsoleWindowNT();
-    MoveWindow(hWnd, 0, 0, 1500, 760,TRUE);
+    MoveWindow(hWnd, 0, 0, 1450, 760,TRUE);
 
 	showTitleArt();
 
 	int row, col;
 	characterBlockInfor CBI;
 	int level = 1;
+	int roundSelect = 1, Choice = 1;
+    string FileName = "SaveFile.dat";
+	Player user;
+	user.record = 0;
 	
 	//15 = 0*16 + 15 white text black background
 	setColor(15);
@@ -119,16 +123,12 @@ int main(){
 		fi.getline(bgArt[countLine], 120);
 		countLine++;
 	}
-	/*char **bgArt;
-	bgArt = new char *[40];
-	for(int i = 0; i < 40; i++)
-		bgArt[i] = new char [120];
-	bgArt = creatBackground();*/
 
 
 	char yn;
 	clearScreen();
-	drawingBoard(board, row, col, level, bgArt);
+	drawOutsideBoard(level, user);
+	drawingBoard(board, row, col, bgArt);
 	int xr = 1, yr = 1;
 	drawKey(board, yr, xr, row + 2, col + 2);
 	
@@ -139,13 +139,9 @@ int main(){
 	while(getButton){
 		int *pcharacterLost, characterLost = -3;
 		pcharacterLost = &characterLost;
-		while( !testingBoard(board, row, col, CBI, pcharacterLost) ){
-			shuffleBoard(board, row, col, CBI);
-			drawingBoard(board, row, col, level, bgArt);
-		}
-		drawKey(board, yr, xr, y1, x1);
 		
 		bool legalMatch = false;
+		bool autoShuffle = false;
 
 		//when game end
 		if(CBI.TChar == 0 && level == 5)
@@ -157,7 +153,8 @@ int main(){
 			
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
-			drawingBoard(board, row, col, level, bgArt);
+			drawOutsideBoard(level, user);
+			drawingBoard(board, row, col, bgArt);
 
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
@@ -172,9 +169,9 @@ int main(){
 						level++;
 						createBoard(board, row, col, CBI);
 						clearScreen();
-						drawingBoard(board, row, col, level, bgArt);
-						drawKey(board, 1, 1, row + 2, col + 2);
-
+						drawOutsideBoard(level, user);
+						drawingBoard(board, row, col, bgArt);
+						yr = 1; xr = 1;
 						break;
 					}
 					else if(yn == 'N' || yn == 'n')
@@ -187,6 +184,35 @@ int main(){
 				}
 			}
 		}
+		
+		if( !testingBoard(board, row, col, CBI, pcharacterLost) ){
+			autoShuffle = true;
+    	    //79 = 4*16 + 15 white text red background
+        	setColor(79);
+			gotoxy( (col + 2)*5/2 - 8 , (row + 2)*3/2 - 1);
+			cout << (char)(201) << (char)(205) << (char)(205) << (char)(205) << (char)(205)
+			     << (char)(205) << (char)(205) << (char)(205) << (char)(205) << (char)(205)
+				 << (char)(205) << (char)(205) << (char)(205) << (char)(205) << (char)(205)
+				 << (char)(187);
+			gotoxy( (col + 2)*5/2 - 8 , (row + 2)*3/2 );
+			cout << (char)(186) << " Auto Shuffle "                          << (char)(186);
+			gotoxy( (col + 2)*5/2 - 8 , (row + 2)*3/2 + 1);
+			cout << (char)(200) << (char)(205) << (char)(205) << (char)(205) << (char)(205)
+			     << (char)(205) << (char)(205) << (char)(205) << (char)(205) << (char)(205)
+				 << (char)(205) << (char)(205) << (char)(205) << (char)(205) << (char)(205)
+				 << (char)(188);
+			Sleep(500);
+		}
+		while( !testingBoard(board, row, col, CBI, pcharacterLost) ){
+			shuffleBoard(board, row, col, CBI);
+		}
+		if(autoShuffle){
+			drawingBoard(board, row, col, bgArt);
+			autoShuffle = false;
+		}
+		drawKey(board, yr, xr, row + 2, col + 2);
+
+
 		if(yn == 'N' || yn == 'n' || (CBI.TChar == 0 && level == 5))
 			break;
 
@@ -194,34 +220,46 @@ int main(){
 		switch(button){
 			case KeyUp: {
 				drawUnKey(board, yr, xr, bgArt, y1, x1);
-				yr = max(yr - 1, 1);
+				yr--;
+				if(yr < 1)
+					yr = row;
+				//yr = max(yr - 1, 1);
 				drawKey(board, yr, xr, y1, x1);
 				break;
 			}
 			case KeyDown: {
 				drawUnKey(board, yr, xr, bgArt, y1, x1);
-				yr = min(yr + 1, row);
+				yr++;
+				if(yr > row)
+					yr = 1;
+				//yr = min(yr + 1, row);
 				drawKey(board, yr, xr, y1, x1);
 				break;
 			}
 			case KeyLeft: {
 				drawUnKey(board, yr, xr, bgArt, y1, x1);
-				xr = max(xr - 1, 1);
+				xr--;
+				if(xr < 1)
+					xr = col;
+				//xr = max(xr - 1, 1);
 				drawKey(board, yr, xr, y1, x1);
 				break;
 			}
 			case KeyRight: {
 				drawUnKey(board, yr, xr, bgArt, y1, x1);
-				xr = min(xr + 1, col);
+				xr++;
+				if(xr > col)
+					xr = 1;
+				//xr = min(xr + 1, col);
 				drawKey(board, yr, xr, y1, x1);
 				break;
 			}
-			case 's': {
+			case 's': {//Shuffle
 				shuffleBoard(board, row, col, CBI);
-				drawingBoard(board, row, col, level, bgArt);
+				drawingBoard(board, row, col, bgArt);
 				break;
 			}
-			case 'a': {
+			case 'a': {//Auto play
 				for(int i = 1; i <= row; i++){
 					for(int j = 1; j <= col; j++){
 						for(int m = 1; m <= row; m++){
@@ -233,7 +271,12 @@ int main(){
 								if(legalMatch){
 									Sleep(300);
 									levelMove(board, row, col, level);
-									drawingBoard(board, row, col, level, bgArt);
+									user.record-=50;
+									//15 = 0*16 + 15 white text black background
+									setColor(15);
+									gotoxy(47, 0);
+									cout << user.record;
+									drawingBoard(board, row, col, bgArt);
 									i = row + 2;
 									j = col + 2;
 									m = row + 2;
@@ -259,8 +302,17 @@ int main(){
 					if(*pcharacterLost != -3){
 						Sleep(300);
 						levelMove(board, row, col, level);
+						
+						if(level == 1)
+							user.record+=10;
+						else if(level >= 2 && level <= 5)
+							user.record+=20;
+						//15 = 0*16 + 15 white text black background
+						setColor(15);
+    					gotoxy(47, 0);
+						cout << user.record;
 					}
-					drawingBoard(board, row, col, level, bgArt);
+					drawingBoard(board, row, col, bgArt);
 					y1 = row + 2, x1 = col + 2;
 					y2 = row + 2, x2 = col + 2;
 					drawKey(board, yr, xr, y1, x1);

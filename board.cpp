@@ -351,8 +351,19 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 		}
 	}
 
+	if(testing){
+		if(iU != row + 2 || iZ != col + 2){
+			matchShape = 7;
+			return;
+		}
+		else{
+			matchShape = 0;
+			return;
+		}
+	}
+
 	//drawing line
-	if(iU != row + 2 && !testing && !(iZ > colL && iZ < colR)){
+	else if(iU != row + 2 && !(iZ > colL && iZ < colR)){
 		matchShape = 4;
 		*pcharacterLost = board[y2][x2];
 
@@ -410,7 +421,7 @@ void checkUAndZShape(int **board, int row, int col, int y1, int x1, int y2, int 
 			board[iU][x2] = (int)'9';
 		}
 	}
-	else if(iZ != col + 2 && !testing){
+	else if(iZ != col + 2){
 		matchShape = 5;
 		*pcharacterLost = board[y2][x2];
 
@@ -502,7 +513,7 @@ void isLegalMatch(int **board, int row, int col, int y1, int x1, int y2, int x2,
 			legalMatch = matchShape;
 		}
 		
-		// Xet U Shape va Z Shape sau khi nhung dang kia khong di dung
+		//Check U Shape and Z Shape after other Shapes are not correct 
 		if(legalMatch == false){
 			checkUAndZShape(board, row, col, y1, x1, y2, x2, testing, matchShape, pcharacterLost);
 			legalMatch = matchShape;
@@ -544,10 +555,6 @@ bool testingBoard(int **board, int row, int col, characterBlockInfor CBI, int *p
 
 	return false;
 }
-
-/*void drawingLine(int **board, int row, int col, int level){
-	drawingBoard(board, row, col, level);
-}*/
 
 void matching(int **board, int row, int col, characterBlockInfor &CBI, int &level){
 	int y1, x1, y2, x2;
@@ -594,7 +601,7 @@ void matching(int **board, int row, int col, characterBlockInfor &CBI, int &leve
 	}
 }
 
-//neu khong con nuoc di kha thi, bang se tu trao cac toa do
+//this function is used for shuffling the board by player and auto-shuffling because of unmatchable board
 void shuffleBoard(int **board, int row, int col, characterBlockInfor CBI){
 	srand(time(0));
 
