@@ -3,24 +3,7 @@ void generateMenu (int &line, int &col, int &roundSelect, int &Choice, string Fi
 {
     roundSelect = 1;
     Choice = 1;
-<<<<<<< HEAD
-    backSound();
-    SET_COLOR(6);
-    gotoxy(0,10);
-    
-    cout << "\t\t\t\t _|_|_|    _|  _|                            _|                 "<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t _|    _|      _|  _|      _|_|_|    _|_|_|  _|_|_|    _|     _| "<< endl;
-    cout << "\t\t\t\t _|_|_|    _|  _|_|      _|    _|  _|        _|    _|  _|     _| "<< endl;
-    cout << "\t\t\t\t _|        _|  _|  _|    _|    _|  _|        _|    _|  _|     _| "<< endl;
-    cout << "\t\t\t\t _|        _|  _|    _|    _|_|_|    _|_|_|  _|    _|    _|_|_|  \n\n";
-    cout << "\t\t\t\t\t\t Press Space to continue!!" << endl;
-    char button = getch();
-    //if (button = Space)
-    if (button == 32)
-        clearScreen();
-=======
     int directX = 85, directY = 19;
->>>>>>> 990e24874e434fd09c7f6ab39c25d3e2b87d8682
 
     clearScreen();
     backSound();

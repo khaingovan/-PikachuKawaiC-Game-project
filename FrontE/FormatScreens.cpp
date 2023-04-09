@@ -4,16 +4,9 @@
 void clearScreen();//using code from https://cplusplus.com/forum/articles/10515/
 void SET_COLOR(int color);// Source code from : https://www.phanxuanchanh.com/2021/01/08/lap-trinh-c-c-doi-mau-console/
 
-<<<<<<< HEAD
-//https://codelearn.io/sharing/windowsh-va-ham-dinh-dang-console-p1
-void SetWindowSize(SHORT width, SHORT height);
-void SetScreenBufferSize(SHORT width, SHORT height);
-void gotoxy(SHORT x, SHORT y);  //https://cachhoc.net/2013/08/22/cc-gotoxy-trong-dev-c-gotoxy-in-dev-c/
-=======
 void ShowScrollbar(BOOL Show);//https://codelearn.io/sharing/windowsh-va-ham-dinh-dang-console-p1
 HWND WINAPI GetConsoleWindowNT(void);
 void gotoxy(int x, int y);  //https://cachhoc.net/2013/08/22/cc-gotoxy-trong-dev-c-gotoxy-in-dev-c/
->>>>>>> 990e24874e434fd09c7f6ab39c25d3e2b87d8682
 
 void clearScreen()
 { 
