@@ -1,4 +1,6 @@
 #include "header.h"
+#include "Menu.cpp"
+#include "Account.cpp"
 
 //https://www.codeincodeblock.com/2011/03/move-console-windows-using-codeblock.html
 HWND WINAPI GetConsoleWindowNT(void)

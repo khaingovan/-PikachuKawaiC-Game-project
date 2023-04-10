@@ -1,3 +1,4 @@
+#pragma once
 #include "Account.h"
 
 void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &oldMan, unsigned int &index)

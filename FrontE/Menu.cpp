@@ -352,11 +352,11 @@ void printCredit()
     backSound();
     gotoxy(0, 12);
     SET_COLOR(6);
-    cout << "\t\t\t\t\t\t\t\t   ____                     _   _   _      \n"; 
-    cout << "\t\t\t\t\t\t\t\t  / ___|  _ __    ___    __| | (_) | |_    \n"; 
-    cout << "\t\t\t\t\t\t\t\t | |     | '__|  / _ `  / _` | | | | __|   \n"; 
-    cout << "\t\t\t\t\t\t\t\t | |___  | |    |  __/ | (_| | | | | |_ .   \n"; 
-    cout << "\t\t\t\t\t\t\t\t  `____| |_|     `___|  `__,_| |_| '__./   \n\n"; 
+    cout << "\t\t\t\t\t\t\t        ____                     _   _   _             \n"; 
+    cout << "\t\t\t\t\t\t\t       / ___|  _ __    ___    __| | (_) | |_   ___    \n"; 
+    cout << "\t\t\t\t\t\t\t      | |     | '__|  / _ `  / _` | | | | __| / __|   \n"; 
+    cout << "\t\t\t\t\t\t\t      | |___  | |    |  __/ | (_| | | | | |_ .\\__ \\   \n"; 
+    cout << "\t\t\t\t\t\t\t       `____| |_|     `___|  `__,_| |_| '__./ |___/   \n\n"; 
 
     cout << "\t\t\t\t\t\t\t\t\t\t Pikachu Game \n";
     cout << "\t\t\t\t\t\t\t\t Programming Technique's Course Project \n";
@@ -366,7 +366,7 @@ void printCredit()
     cout << "\t\t\t\t\t\t\t\t" << left << setw(30) << " Nguyen Quoc Tin" << setfill(' ')  << "22127416 \n";
     
     SET_COLOR(3);
-    cout << "\t\t\t\t\t\t\t This is our first game. Hope you have good experience\n";
+    cout << "\t\t\t\t\t\t\t   This is our first game. Hope you have good experience\n";
     cout << "\t\t\t\t\t\t\t\t\t\t Thank you!!";
     gotoxy(directX - 8, directY + 10);
     SET_COLOR(8);
