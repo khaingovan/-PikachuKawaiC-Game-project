@@ -1,25 +1,7 @@
 #pragma once
 #pragma pack(1)
-#include <fstream>
-#include <string>
-#include "PrintDesign.cpp"
-#define BOARDSIZE 100
-//Mã ASCII các phím điều khiển từ bàn phím
-#define KeyUp 72
-#define KeyDown 80
-#define Space 32
-#define Esc 27
-struct State
-{
-    int numRow, numCol;   // size of saved board (8bytes)
-};
-struct Player
-{
-    char username[17];      //17bytes
-    char password[15];      //15bytes
-    unsigned int record;             //score  (4bytes)
-    State savedStage; 
-};
+#include "header.h"
+
 //Small Function
 bool isExistAcc(string FileName, char username[17], unsigned int &index); //Check if account exists
 bool isPasswordCorrect(string FileName, char password[15], unsigned int index);     //Check Password

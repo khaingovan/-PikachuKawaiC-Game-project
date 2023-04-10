@@ -1,4 +1,6 @@
 #include "header.h"
+#include "Menu.cpp"
+#include "Account.cpp"
 
 int main()
 {
