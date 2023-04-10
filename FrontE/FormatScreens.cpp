@@ -88,7 +88,7 @@ void DisableResizeWindow()
     SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_SIZEBOX);
 }
 
-void gotoxy(SHORT x, SHORT y)
+void gotoxy(int x, int y)
 {
   static HANDLE h = NULL;  
   if(!h)

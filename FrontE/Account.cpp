@@ -3,7 +3,7 @@
 void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &oldMan, unsigned int &index)
 {
     roundSelect = 0;                                                                           
-    gotoxy(0,15);
+    /*gotoxy(0,15);
     SET_COLOR(6);
     cout << "\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
     cout << "\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
@@ -14,7 +14,7 @@ void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &o
     cout << "\t\t\t\t\t\t\t\t\t Press Space to continue!!" << endl;
     char button = getch();
     if (button = Space)
-        clearScreen();
+        clearScreen();*/
 
     SET_COLOR(7);
     while(true)
@@ -234,9 +234,7 @@ void signUp(string FileName)
     }
     
     // open file to store new user's account
-    //ofstream fout(FileName, ios::binary|ios::app);
-    ofstream fout("SaveFile.dat", ios::binary|ios::app);
-
+    ofstream fout(FileName, ios::binary|ios::app);
     if (!fout.is_open())
     {
         cout << "Error While Opening";
@@ -330,8 +328,7 @@ void signIn(string FileName, Player &oldMan, unsigned int &index)
 
 bool isExistAcc(string FileName, char username[17], unsigned int &index)
 {
-    //ifstream fin (FileName, ios::binary);
-    ifstream fin ("SaveFile.dat", ios::binary);
+    ifstream fin(FileName, ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -377,8 +374,7 @@ bool isPasswordCorrect(string FileName, char password[15], unsigned int index)
 {
     char passTemp[15];
     bool Correct = false;
-    //ifstream fin (FileName, ios::binary);
-    ifstream fin ("SaveFile.dat", ios::binary);
+    ifstream fin(FileName, ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -397,8 +393,7 @@ bool isPasswordCorrect(string FileName, char password[15], unsigned int index)
 
 void getInfo (string FileName, Player &oldMan, unsigned int index)
 {
-    //ifstream fin (FileName, ios::binary);
-    ifstream fin ("SaveFile.dat", ios::binary);
+    ifstream fin(FileName, ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -414,8 +409,7 @@ void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned i
 {
     vector <Player> List;
     Player temp;
-    //ifstream fin (FileName, ios::binary);
-    ifstream fin ("SaveFile.dat", ios::binary);
+    ifstream fin(FileName, ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";
@@ -437,8 +431,7 @@ void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned i
 
     List[index].record = newscore;      //update a new score , storing in file
     oldMan.record = newscore;           //in play time
-    //ofstream fout(FileName, ios::binary);
-    ofstream fout("SaveFile.dat", ios::binary);
+    ofstream fout(FileName, ios::binary);
     if (!fout.is_open())
     {
         cout << "Error While Opening";

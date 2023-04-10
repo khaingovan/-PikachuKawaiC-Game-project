@@ -4,8 +4,7 @@ void printLeaderBoard(string FileName)
 {
     vector <Player> Leader;
     Player temp;
-    //ifstream fin (FileName, ios::binary);
-    ifstream fin ("SaveFile.dat", ios::binary);
+    ifstream fin (FileName, ios::binary);
     if (!fin.is_open())
     {
         cout << "Error While Opening";

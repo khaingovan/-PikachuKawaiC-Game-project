@@ -1,16 +1,13 @@
 #pragma once
 #include <iostream>
 #include <Windows.h>
-#include <Mmsystem.h>
+#include <mmsystem.h>
 
 #pragma comment(lib, "winmm.lib")
-#pragma comment(lib, "-lwinmm")
-
 using namespace std;
 void backSound()    //Play in background
 {
     //PlaySound(TEXT("Sounds\\ES_Sunday_Coffee_Rebecca_Mardal.wav"), NULL, SND_FILENAME|SND_LOOP|SND_ASYNC);
-    //PlaySound(TEXT("Sounds\\ES_Sunday_Coffee_Rebecca_Mardal.wav"), 0, SND_FILENAME|SND_LOOP|SND_ASYNC);
 }
 
 void moveSound()     //Play while get control from keyboard
