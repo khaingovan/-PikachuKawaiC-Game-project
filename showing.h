@@ -1,8 +1,11 @@
 #pragma once
 #include "header.h"
 
-//ready to set gameplay
+//functions used to design screen
 void fontsize(int a, int b);
+HWND WINAPI GetConsoleWindowNT(void);
+void DisableResizeWindow();
+void ShowScrollbar(BOOL Show);
 void clearScreen();
 void gotoxy(SHORT x, SHORT y);
 void setColor(int color);

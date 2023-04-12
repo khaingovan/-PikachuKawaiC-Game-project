@@ -4,12 +4,15 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <vector>
 #include <conio.h>
 #include <iomanip>
 #include <new>
 #include <fstream>
 #include <windows.h>
-//#include <vector>
+#include <mmsystem.h>
+
+#pragma comment(lib, "winmm.lib")
 
 using namespace std;
 
@@ -21,15 +24,35 @@ using namespace std;
 #define Esc 27
 
 struct characterBlockInfor{
-    int TDiffer;        //totalDifferentCharacter
-    int *charBlock;     //characterBlock
-    int TChar;          //totalCharacter
+    int TDiffer;                //totalDifferentCharacter
+    int *charBlock;             //characterBlock
+    int TChar;                  //totalCharacter
+};
+
+struct State
+{
+    int numRow, numCol;         // size of saved board (8bytes)
 };
 
 struct Player
 {
     char username[17];          //17bytes
     char password[15];          //15bytes
-    int record;        //score(4bytes)
-    //State savedStage; 
+    int record;                 //score(4bytes)
+    State savedStage; 
 };
+
+struct mainScreen{
+    int r;
+    int c;
+    int **b;
+};
+
+#include "board.cpp"
+#include "showing.cpp"
+#include "account.cpp"
+#include "leaderBoard.cpp"
+#include "menu.cpp"
+#include "printDesign.cpp"
+#include "gamePlay.cpp"
+#include "playMusic.cpp"

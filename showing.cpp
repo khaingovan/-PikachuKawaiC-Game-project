@@ -11,6 +11,38 @@ void fontsize(int a, int b){
     SetCurrentConsoleFontEx(out, 0, lpConsoleCurrentFontEx);  
 }
 
+//https://www.codeincodeblock.com/2011/03/move-console-windows-using-codeblock.html
+HWND WINAPI GetConsoleWindowNT(void)
+{
+    //declare function pointer type
+    typedef HWND WINAPI(*GetConsoleWindowT)(void);
+    //declare one such function pointer
+    GetConsoleWindowT GetConsoleWindow;
+    //get a handle on kernel32.dll
+    HMODULE hk32Lib = GetModuleHandle(TEXT("KERNEL32.DLL"));
+    //assign procedure address to function pointer
+    GetConsoleWindow = (GetConsoleWindowT)GetProcAddress(hk32Lib, TEXT("GetConsoleWindow"));
+    //check if the function pointer is valid
+    //since the function is undocumented
+    if(GetConsoleWindow == NULL){
+        return NULL;
+    }
+    //call the undocumented function
+    return GetConsoleWindow();
+}
+
+void DisableResizeWindow()
+{
+    HWND hWnd = GetConsoleWindow();
+    SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_SIZEBOX);
+}
+
+//https://codelearn.io/sharing/windowsh-va-ham-dinh-dang-console-p1
+void ShowScrollbar(BOOL Show){
+    HWND hWnd = GetConsoleWindow();
+    ShowScrollBar(hWnd, SB_BOTH, Show);
+}
+
 //https://cplusplus.com/forum/articles/10515/
 void clearScreen(){
     HANDLE                     hStdOut;
@@ -49,7 +81,7 @@ void clearScreen(){
 }
 
 //https://nguyenvanquan7826.wordpress.com/2013/08/22/cc-gotoxy-trong-dev-c-gotoxy-in-dev-c/
-void gotoxy(SHORT x, SHORT y){ //y: row, x: col
+void gotoxy(SHORT x, SHORT y){//y: row, x: col
     static HANDLE h = NULL;  
     if(!h)
         h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -86,7 +118,7 @@ void setColor(int color){
     SetConsoleTextAttribute(colo, color);
 }
 
-void level2(int **board, int row, int col){ //blocks moving down
+void level2(int **board, int row, int col){//blocks moving down
     for(int j = 1; j <= col; j++)
         for(int i = row; i >= 1; i--){
             if(board[i][j] == -1)
@@ -98,7 +130,7 @@ void level2(int **board, int row, int col){ //blocks moving down
         }
 }
 
-void level3(int **board, int row, int col){ //blocks moving left
+void level3(int **board, int row, int col){//blocks moving left
     for(int i = 1; i <= row; i++)
         for(int j = 1; j <= col; j++){
             if(board[i][j] == -1)
@@ -110,7 +142,7 @@ void level3(int **board, int row, int col){ //blocks moving left
         }
 }
 
-void level4(int **board, int row, int col){ //blocks moving up
+void level4(int **board, int row, int col){//blocks moving up
     for(int j = 1; j <= col; j++)
         for(int i = 1; i <= row; i++){
             if(board[i][j] == -1)
@@ -122,7 +154,7 @@ void level4(int **board, int row, int col){ //blocks moving up
         }
 }
 
-void level5(int **board, int row, int col){ //blocks moving right
+void level5(int **board, int row, int col){//blocks moving right
     for(int i = 1; i <= row; i++)
         for(int j = col; j >= 1; j--){
             if(board[i][j] == -1)
@@ -355,16 +387,12 @@ void drawBorder(int color){
 }
 
 void drawingBoard(int **board, int row, int col, char bgArt[40][120]){
-    //clearScreen();
-
 	for(int i = 0; i < (row + 2)*3; i++){
 		for(int j = 0; j < col + 2; j++){
             if(board[i/3][j] >= (int)'0' && board[i/3][j] <= (int)'9'){
                 drawingLine(board, i, j);
             }
             else{
-                //15 = 0*16 + 15 white text black background
-	            //setColor(15);
                 //showing color from 8 to 14
                 setColor(board[i/3][j]%6 + 9);
                 gotoxy(j*5 + 1, i + 2);
