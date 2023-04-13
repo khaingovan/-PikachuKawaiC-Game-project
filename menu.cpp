@@ -90,13 +90,13 @@ void getEvents(mainScreen &game, int &roundSelect, int &Choice)
                 {
                     Choice--;
                     if (Choice == 0)
-                        Choice = 4;
+                        Choice = 3;
                     break;                  
                 }
                 case KeyDown:
                 {
                     Choice++;
-                    if (Choice == 5)
+                    if (Choice == 4)
                         Choice = 1;
                     break;
                 }
@@ -258,11 +258,15 @@ void printMenu(int roundSelect, int Choice, string FileName)
         }
         case 2:
         {
+            gotoxy(directX - 4, 30);
+            cout << "                   " << endl;
+
             if (Choice == 1)
             {
                 //clear old boxs
                 deleteMenuBox(directX - 2, directY + 2);
                 deleteMenuBox(directX - 2, directY + 6);
+                deleteMenuBox(directX - 2, directY + 10);
                 deleteMenuBox(directX - 2, directY + 10);
 
                 gotoxy(directX - 2, 18);
@@ -275,8 +279,6 @@ void printMenu(int roundSelect, int Choice, string FileName)
                 cout << "    Normal    " << endl;
                 gotoxy(directX - 2, 26);
                 cout << "    Hard      " << endl;
-                gotoxy(directX - 2, 30);
-                cout << "    Crazy     " << endl;
                 
             }
             else if (Choice == 2)
@@ -296,8 +298,6 @@ void printMenu(int roundSelect, int Choice, string FileName)
                 setColor(7);
                 gotoxy(directX - 2, 26);
                 cout << "    Hard      " << endl;
-                gotoxy(directX - 2, 30);
-                cout << "    Crazy     " << endl;
             } 
             else if (Choice == 3)
             {
@@ -314,29 +314,6 @@ void printMenu(int roundSelect, int Choice, string FileName)
                 setColor(11);
                 cout << " << Hard >>   " << endl;
                 printMenuBox(directX - 2, directY + 6);
-
-                setColor(7);
-                gotoxy(directX - 2, 30);
-                cout << "    Crazy     " << endl;
-            }
-            else if (Choice == 4)
-            {
-                //clear old boxs
-                deleteMenuBox(directX - 2, directY - 2);
-                deleteMenuBox(directX - 2, directY + 2);
-                deleteMenuBox(directX - 2, directY + 6);
-                gotoxy(directX - 2, 18);
-                cout << "    Easy      " << endl;
-                gotoxy(directX - 2, 22);
-                cout << "    Normal    " << endl;
-                gotoxy(directX - 2, 26);
-                cout << "    Hard      " << endl;
-
-                setColor(11);
-                gotoxy(directX - 2, 30);
-                cout << " << Crazy >>  " << endl;
-                printMenuBox(directX - 2, directY + 10);
-                setColor(7);
             }
             break;
         }
