@@ -2,9 +2,23 @@
 #include "account.h"
 #include "printDesign.h"
 
-void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &oldMan, unsigned int &index)
+void generateAccScreen(int &roundSelect, int Choice, string FileName, Player &oldMan, unsigned int &index)
 {
     roundSelect = 0;                                                                           
+    roundSelect = 0;                                                                           
+    /*gotoxy(0,15);
+    setColor(6);
+    cout << "\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t  |     ___/ |  | |  |/ / \\__  \\   _/ ___\\  |  |  \\  |  |  \\"<< endl;                                                                                                                                                                               
+    cout << "\t\t\t\t\t\t\t  |    |     |  | |    <   / __ \\_ \\  \\___  |   Y  \\ |  |  /"<< endl;
+    cout << "\t\t\t\t\t\t\t  |____|     |__| |__|_ \\ /____  /  \\___  > |___|  / |____/ "<< endl;
+    cout << "\t\t\t\t\t\t\t                       \\/      \\/       \\/       \\/        "<< endl;
+    cout << "\t\t\t\t\t\t\t\t\t Press Space to continue!!" << endl;
+    char button = getch();
+    if (button = Space)
+        clearScreen();*/
+    roundSelect = 0;
     /*gotoxy(0,15);
     setColor(6);
     cout << "\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               

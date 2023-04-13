@@ -9,12 +9,14 @@
 #include <iomanip>
 #include <new>
 #include <fstream>
+#include <chrono>
 #include <windows.h>
 #include <mmsystem.h>
 
 #pragma comment(lib, "winmm.lib")
 
 using namespace std;
+using namespace std::chrono;
 
 #define KeyUp 72
 #define KeyDown 80
@@ -43,9 +45,9 @@ struct Player
 };
 
 struct mainScreen{
-    int r;
-    int c;
-    int **b;
+    int row;
+    int col;
+    int **board;
 };
 
 #include "board.cpp"

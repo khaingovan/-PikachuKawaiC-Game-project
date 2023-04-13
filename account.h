@@ -13,4 +13,4 @@ void signIn(string FileName, Player& oldMan, unsigned int &index);  //  log in g
 //Choice Sign in or Sign up
 void selectAccChoice(int &roundSelect, int &Choice);
 void printAccChoice(int Choice);
-void generateAccScreen(int &roundSelect, int &Choice, string FileName, Player &oldMan, unsigned int &index);
+void generateAccScreen(int &roundSelect, int Choice, string FileName, Player &oldMan, unsigned int &index);

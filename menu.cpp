@@ -3,10 +3,9 @@
 #include "playMusic.h"
 
 
-void generateMenu (int &row, int &col, int &roundSelect, int &Choice, string FileName)
+void generateMenu (mainScreen &game, int &roundSelect, int Choice, string FileName)
 {
     roundSelect = 1;
-    Choice = 1;
     int directX = 85, directY = 19;
 
     clearScreen();
@@ -15,14 +14,14 @@ void generateMenu (int &row, int &col, int &roundSelect, int &Choice, string Fil
     while (true)
     {
         //out while loop
-        if (roundSelect == -1)
+        if (roundSelect < 0)
             break;
         printMenu(roundSelect, Choice, FileName);
-        getEvents(row, col, roundSelect, Choice);
+        getEvents(game, roundSelect, Choice);
     }
 }
 
-void getEvents(int &row, int &col,int &roundSelect, int &Choice)
+void getEvents(mainScreen &game, int &roundSelect, int &Choice)
 {
     char button = getch();
     moveSound();
@@ -107,23 +106,23 @@ void getEvents(int &row, int &col,int &roundSelect, int &Choice)
                     {
                         case (1):
                         {
-                            row = 6;
-                            col = 6;
+                            game.row = 8;
+                            game.col = 20;
                             roundSelect = -1;        
                             break;
                         }
                         case (2):
                         {
-                            row = 8;
-                            col = 10;
-                            roundSelect = -1;
+                            game.row = 8;
+                            game.col = 20;
+                            roundSelect = -2;
                             break;
                         }
                         case (3):
                         {
-                            row = 8;
-                            col = 20;
-                            roundSelect = -1;
+                            game.row = 8;
+                            game.col = 20;
+                            roundSelect = -3;
                             break;
                         }
                     }
@@ -156,13 +155,6 @@ void printMenu(int roundSelect, int Choice, string FileName)
     int directX = 85, directY = 19;
     gotoxy(0,9);
     setColor(6);
-    /*
-    cout << "\t\t\t\t\t\t\t\t  ____    _   _                     _             " << endl;
-    cout << "\t\t\t\t\t\t\t\t |  _ `  (_) | | __   __ _    ___  | |__    _   _ " << endl;
-    cout << "\t\t\t\t\t\t\t\t | |_) | | | | |/ /  / _` |  / __| | '_ `. | | | |" << endl;
-    cout << "\t\t\t\t\t\t\t\t |  __/  | | |   <  | (_| | | (__  | | | | | |_| |" << endl;
-    cout << "\t\t\t\t\t\t\t\t |_|     |_| |_|`.|  `__,_|  `___| |_| |_|  `__,_|" << "\n\n";
-    */
     cout << "\t\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
     cout << "\t\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
     cout << "\t\t\t\t\t\t\t\t  |     ___/ |  | |  |/ / \\__  \\   _/ ___\\  |  |  \\  |  |  \\"<< endl;                                                                                                                                                                               
