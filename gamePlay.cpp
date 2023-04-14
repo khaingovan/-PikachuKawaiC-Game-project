@@ -164,7 +164,7 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 
 		//time out
 		if(overTime){
-			scoreWhenOutGame+=score;
+			scoreWhenOutGame = score;
 			//4 = 0*16 + 4 red text black background
 			setColor(4);
 			gotoxy(0, 36);
@@ -175,14 +175,22 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 		}
 		
 		//when game end
-		if(CBI.TChar == 0 && level == 5)
+		if(CBI.TChar == 0 && level == 5){
+			scoreWhenOutGame = score;
+			//10 = 0*16 + 10 bright green text black background
+			setColor(10);
+			gotoxy(0, 36);
+    		cout << "You won! Press any key to go to back to menu.";
+			char ch = getch();
+			getButton = false;
 			break;
+		}
 		if(CBI.TChar == 0){
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
 			clearScreen();
 			
-			scoreWhenOutGame+=score;
+			scoreWhenOutGame = score;
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
 			drawOutsideBoard(level, user, accountLogedIn);

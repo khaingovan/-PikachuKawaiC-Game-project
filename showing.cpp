@@ -110,7 +110,7 @@ void setColor(int color){
 void level2(mainScreen &game){//blocks moving down
     int startCol = 1;
     if(game.col == 12)
-        startCol = 4;
+        startCol = 5;
     else if(game.col == 18)
         startCol = 2;
     
@@ -119,7 +119,7 @@ void level2(mainScreen &game){//blocks moving down
         endRow = 2;
 
     for(int j = startCol; j <= game.col + startCol; j++)
-        for(int i = game.row + endRow - 1; i >= endRow; i--){
+        for(int i = min(game.row + endRow - 1, 8); i >= endRow; i--){
             if(game.board[i][j] == -1)
                 for(int key = i; key >= endRow; key--)
                     game.board[key][j] = game.board[key - 1][j];
@@ -132,7 +132,7 @@ void level2(mainScreen &game){//blocks moving down
 void level3(mainScreen &game){//blocks moving left
     int startCol = 1;
     if(game.col == 12)
-        startCol = 4;
+        startCol = 5;
     else if(game.col == 18)
         startCol = 2;
     
@@ -154,7 +154,7 @@ void level3(mainScreen &game){//blocks moving left
 void level4(mainScreen &game){//blocks moving up
     int startCol = 1;
     if(game.col == 12)
-        startCol = 4;
+        startCol = 5;
     else if(game.col == 18)
         startCol = 2;
     
@@ -176,7 +176,7 @@ void level4(mainScreen &game){//blocks moving up
 void level5(mainScreen &game){//blocks moving right
     int endCol = 1;
     if(game.col == 12)
-        endCol = 4;
+        endCol = 5;
     else if(game.col == 18)
         endCol = 2;
     
@@ -185,7 +185,7 @@ void level5(mainScreen &game){//blocks moving right
         startRow = 2;
     
     for(int i = startRow; i <= game.row + startRow - 1; i++)
-        for(int j = game.col + endCol - 1; j >= endCol; j--){
+        for(int j = min(game.col + endCol - 1, 20); j >= endCol; j--){
             if(game.board[i][j] == -1)
                 for(int key = j; key >= endCol; key--)
                     game.board[i][key] = game.board[i][key - 1];
