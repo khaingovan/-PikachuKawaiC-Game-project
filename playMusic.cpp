@@ -7,7 +7,7 @@
 using namespace std;
 void backSound()    //Play in background
 {
-    PlaySound(TEXT("Sounds\\ES_Sunday_Coffee_Rebecca_Mardal.wav"), NULL, SND_FILENAME|SND_LOOP|SND_ASYNC);
+    //PlaySound(TEXT("Sounds\\ES_Sunday_Coffee_Rebecca_Mardal.wav"), NULL, SND_FILENAME|SND_LOOP|SND_ASYNC);
 }
 
 void moveSound()     //Play while get control from keyboard

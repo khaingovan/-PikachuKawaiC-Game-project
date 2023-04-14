@@ -140,13 +140,13 @@ void level3(mainScreen &game){//blocks moving left
     if(game.row == 6)
         startRow = 2;
     
-    for(int i = startRow; i <= game.row + startRow; i++)
-        for(int j = startCol; j <= game.col + startCol; j++){
+    for(int i = startRow; i <= game.row + startRow - 1; i++)
+        for(int j = startCol; j <= game.col + startCol - 1; j++){
             if(game.board[i][j] == -1)
-                for(int key = j; key <= game.col + startCol; key++)
+                for(int key = j; key <= game.col + startCol - 1; key++)
                     game.board[i][key] = game.board[i][key + 1];
             if(game.board[i][j] == -1)
-                for(int key = j; key <= game.col + startCol; key++)
+                for(int key = j; key <= game.col + startCol - 1; key++)
                     game.board[i][key] = game.board[i][key + 1];
         }
 }
@@ -162,13 +162,13 @@ void level4(mainScreen &game){//blocks moving up
     if(game.row == 6)
         startRow = 2;
     
-    for(int j = startCol; j <= game.col + startCol; j++)
-        for(int i = startRow; i <= game.row + startRow; i++){
+    for(int j = startCol; j <= game.col + startCol - 1; j++)
+        for(int i = startRow; i <= game.row + startRow - 1; i++){
             if(game.board[i][j] == -1)
-                for(int key = i; key <= game.row + startRow; key++)
+                for(int key = i; key <= game.row + startRow - 1; key++)
                     game.board[key][j] = game.board[key + 1][j];
             if(game.board[i][j] == -1)
-                for(int key = i; key <= game.row + startRow; key++)
+                for(int key = i; key <= game.row + startRow - 1; key++)
                     game.board[key][j] = game.board[key + 1][j];
         }
 }
@@ -184,7 +184,7 @@ void level5(mainScreen &game){//blocks moving right
     if(game.row == 6)
         startRow = 2;
     
-    for(int i = startRow; i <= game.row + startRow; i++)
+    for(int i = startRow; i <= game.row + startRow - 1; i++)
         for(int j = game.col + endCol - 1; j >= endCol; j--){
             if(game.board[i][j] == -1)
                 for(int key = j; key >= endCol; key--)

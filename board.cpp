@@ -1,5 +1,6 @@
 #include "board.h"
 #include "showing.h"
+#include "playMusic.h"
 
 void checkLineX(mainScreen &game, int x1, int x2, int y, bool testing, int &matchShape, int *pcharacterLost){//check horizontal I Shape
 	matchShape = 1;
@@ -548,6 +549,7 @@ bool testingBoard(mainScreen &game, characterBlockInfor CBI, int *pcharacterLost
 //this function is used for shuffling the board by player and auto-shuffling because of unmatchable board
 void shuffleBoard(mainScreen &game, characterBlockInfor CBI){
 	srand(time(0));
+	moveSound();
 
 	//replace is the clone-array of CBI.charBlock
 	int *replace;
