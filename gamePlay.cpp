@@ -164,6 +164,7 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 
 		//time out
 		if(overTime){
+			scoreWhenOutGame+=score;
 			//4 = 0*16 + 4 red text black background
 			setColor(4);
 			gotoxy(0, 36);
