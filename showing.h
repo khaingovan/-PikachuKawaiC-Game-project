@@ -19,6 +19,7 @@ void levelMove(mainScreen &game, int level, int roundSelect);
 //move the blue key
 void drawUnKey(mainScreen &game, int yr, int xr, char art[50][120], int y1, int x1);
 void drawKey(mainScreen &game, int yr, int xr, int y1, int x1);
+void drawHint(mainScreen &game, int y, int x);
 
 //draw the board for playing
 void drawBorder(int color);

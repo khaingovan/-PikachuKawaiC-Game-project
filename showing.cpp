@@ -302,6 +302,24 @@ void drawKey(mainScreen &game, int yr, int xr, int y1, int x1){
     cout << (char)(200) << (char)(205) << (char)(205) << (char)(205) << (char)(188);
 }
 
+void drawHint(mainScreen &game, int y, int x){
+    //175 = 10*16 + 15 white text bright green background
+    setColor(175);
+
+    char show;
+    if(game.board[y][x] >= 0 && game.board[y][x] < 26)
+        show = (char)(game.board[y][x] + (int)'A');
+    else if(game.board[y][x] >= 26)
+        show = (char)(game.board[y][x] + (int)'a' - 26);
+    
+    gotoxy(x*5 + 1, y*3 + 2);
+	cout << (char)(201) << (char)(205) << (char)(205) << (char)(205) << (char)(187);
+	gotoxy(x*5 + 1, y*3 + 3);
+    cout << (char)(186) << " "         << show        << " "         << (char)(186);
+	gotoxy(x*5 + 1, y*3 + 4);
+    cout << (char)(200) << (char)(205) << (char)(205) << (char)(205) << (char)(188);
+}
+
 /*
     Use for void drawingLine (block in board)
     0: line down
@@ -518,7 +536,7 @@ void drawOutsideBoard(int &level, Player &user, bool accountLogedIn){
     gotoxy(125, 2);
     cout << "Press SPACE for chosing 1 block.";
     gotoxy(125, 3);
-    cout << "Press 'A' for auto playing (1 match).";
+    cout << "Press 'A' for auto playing (1 hint lose 50 points). Then Press any key to match 2 hightlight cells";
     gotoxy(125, 4);
     cout << "Press 'S' for shuffling the board.";
     gotoxy(125, 5);

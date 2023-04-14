@@ -315,8 +315,12 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 										//i, j is coordinate of game.board[i][j]
 										//m, n is coordinate of game.board[m][n]
 
-										isLegalMatch(game, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
+										isLegalMatch(game, i, j, m, n, CBI, 1, legalMatch, pcharacterLost);
 										if(legalMatch){
+											drawHint(game, i, j);
+											drawHint(game, m, n);
+											char accpectHint = getch();
+											isLegalMatch(game, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
 											selectSound();
 											Sleep(200);
 											levelMove(game, level, roundSelect);
