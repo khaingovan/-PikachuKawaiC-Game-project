@@ -8,6 +8,7 @@ void generateAccScreen(int &roundSelect, int Choice, string FileName, Player &ol
 
     //7 = 0*16 + 7 default white text black background
     setColor(7);
+
     while(true)
     {
         //Print Login menu to choose to play as guest or member
@@ -41,7 +42,7 @@ void generateAccScreen(int &roundSelect, int Choice, string FileName, Player &ol
 
 void printAccChoice(int Choice)
 {
-    int directX = 85, directY = 19;
+    int directX = 83, directY = 19;
     //6 = 0*16 + 6 yellow text black background
     setColor(6);
     cout << "\t\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               

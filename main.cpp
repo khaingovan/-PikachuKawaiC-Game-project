@@ -16,6 +16,11 @@ int main()
     MoveWindow(hWnd, 0, 0, 1450, 760,TRUE);
     ShowScrollbar(0);
     DisableResizeWindow();
+    setColor(15);
+    gotoxy(79, 38);
+    cout << "Use arrow key to move.";
+    gotoxy(78, 39);
+    cout << "Press SPACE for choosing.";
     generateAccScreen(roundSelect, Choice, FileName, user, index);
     if(roundSelect == -1)
         accountLogedIn = false;

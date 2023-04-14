@@ -534,13 +534,14 @@ void drawOutsideBoard(int &level, Player &user, bool accountLogedIn){
     gotoxy(125, 1);
     cout << "Using arrow key to move.";
     gotoxy(125, 2);
-    cout << "Press SPACE for chosing 1 block.";
+    cout << "Press SPACE for choosing 1 block.";
     gotoxy(125, 3);
-    cout << "Press 'A' for auto playing (1 hint lose 50 points). Then Press any key to match 2 hightlight cells";
+    //cout << "Press 'A' for auto playing (1 hint lose 50 points). Then Press any key to match 2 hightlight cells";
+    cout << "Press 'A' for auto playing (1 hint lose 50 points).";
     gotoxy(125, 4);
     cout << "Press 'S' for shuffling the board.";
     gotoxy(125, 5);
-    cout << "Press ESC to exit the game(no saving).";
+    cout << "Press ESC to exit the game (no saving).";
 
     //15 = 0*16 + 15 white text black background
 	setColor(15);

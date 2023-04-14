@@ -144,7 +144,7 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 	drawOutsideBoard(level, user, accountLogedIn);
 	setColor(15);
 	gotoxy(67, 0);
-	cout << score << "     ";
+	cout << left << setw(10) << score;
 	drawingBoard(game, bgArt);
 	double numTime = 0;
 	//drawTimer(true, numTime);
@@ -200,7 +200,7 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
 			gotoxy(67, 0);
-			cout << score << "     ";
+			cout << left << setw(10) << score;
 
 			//15 = 0*16 + 15 white text black background
 			setColor(15);
@@ -220,6 +220,9 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 							timeLeft = 270;
 						else
 							timeLeft = 300;
+						originalTime = time(0);
+						nowTime = time(0);
+						countdown(originalTime, timeLeft, overTime);
 						createBoard(game, CBI, roundSelect);
 						clearScreen();
 						drawOutsideBoard(level, user, accountLogedIn);
@@ -319,7 +322,12 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 										if(legalMatch){
 											drawHint(game, i, j);
 											drawHint(game, m, n);
-											char accpectHint = getch();
+											score-=50;
+											//15 = 0*16 + 15 white text black background
+											setColor(15);
+											gotoxy(67, 0);
+											cout << left << setw(10) << score;
+											/*char accpectHint = getch();
 											isLegalMatch(game, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
 											selectSound();
 											Sleep(200);
@@ -328,8 +336,8 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 											//15 = 0*16 + 15 white text black background
 											setColor(15);
 											gotoxy(67, 0);
-											cout << score << "     ";
-											drawingBoard(game, bgArt);
+											cout << left << setw(10) << score;
+											drawingBoard(game, bgArt);*/
 											i = game.row + 2;
 											j = game.col + 2;
 											m = game.row + 2;
@@ -365,7 +373,7 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 								//15 = 0*16 + 15 white text black background
 								setColor(15);
 								gotoxy(67, 0);
-								cout << score << "     ";
+								cout << left << setw(10) << score;
 							}
 							drawingBoard(game, bgArt);
 							y1 = game.row + 2, x1 = game.col + 2;

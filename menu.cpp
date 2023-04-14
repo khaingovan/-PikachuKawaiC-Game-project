@@ -13,6 +13,13 @@ void generateMenu (mainScreen &game, int &roundSelect, int Choice, string FileNa
     
     while (true)
     {
+        //15 = 0*16 + 15 white text black background
+        setColor(15);
+        gotoxy(79, 38);
+        cout << "Use arrow key to move.";
+        gotoxy(78, 39);
+        cout << "Press SPACE for choosing.";
+
         //out while loop
         if (roundSelect < 0)
             break;
