@@ -126,6 +126,7 @@ void printAccChoice(int Choice)
 void selectAccChoice(int &roundSelect, int &Choice)
 {
     char button = getch();
+    moveSound();
     switch (button)
     {
         case KeyUp: //point to upper choice

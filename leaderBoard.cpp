@@ -36,27 +36,19 @@ void printLeaderBoard(string FileName)
     cout << "NAME";
     gotoxy(directX + 10, directY + 3);
     cout << "SCORE";
-
-    gotoxy(directX - 20, directY + 5);
-    setColor(12);
-    cout << left << setw(30) << Leader[0].username << setfill(' ')  << Leader[0].record << endl;
-   
-    gotoxy(directX - 20, directY + 8);
-    setColor(9);
-    cout << left << setw(30) << Leader[1].username << setfill(' ')  << Leader[1].record << endl;
-   
-    gotoxy(directX - 20, directY + 11);
-    setColor(10);
-    cout << left << setw(30) << Leader[2].username << setfill(' ')  << Leader[2].record << endl;
-   
-    gotoxy(directX - 20, directY + 14);
-    setColor(15);
-    cout << left << setw(30) << Leader[3].username << setfill(' ')  << Leader[3].record << endl;
     
-    gotoxy(directX - 20, directY + 17);
-    setColor(3);
-    cout << left << setw(30) << Leader[4].username << setfill(' ')  << Leader[4].record << endl;
-
+    int numOfLeader;
+    if(numAcc > 5)
+        numOfLeader = 5;
+    else numOfLeader = numAcc;
+    int color[5] = {12, 9, 10, 15, 3};
+    for(int i = 0; i < numOfLeader; i++)
+    {
+        gotoxy(directX - 20, directY + 5 + i*3);
+        setColor(color[i]);
+        cout << left << setw(30) << Leader[i].username << setfill(' ')  << Leader[i].record << endl;
+    }
+    
     setColor(7);
 
     fin.close();
