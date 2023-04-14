@@ -545,3 +545,4 @@ void drawOutsideBoard(int &level, Player &user, bool accountLogedIn){
     //15 = 0*16 + 15 white text black background
 	setColor(15);
 }
+
