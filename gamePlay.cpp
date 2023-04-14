@@ -308,6 +308,7 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 
 										isLegalMatch(game, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
 										if(legalMatch){
+											selectSound();
 											Sleep(200);
 											levelMove(game, level, roundSelect);
 											score-=50;
@@ -340,6 +341,7 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 							x2 = xr;
 							isLegalMatch(game, y1, x1, y2, x2, CBI, 0, legalMatch, pcharacterLost);
 							if(*pcharacterLost != -3){
+								selectSound();
 								Sleep(200);
 								levelMove(game, level, roundSelect);
 								
