@@ -4,12 +4,14 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <cstring>
 #include <vector>
 #include <conio.h>
 #include <iomanip>
 #include <new>
 #include <fstream>
 #include <chrono>
+#include <thread>
 #include <windows.h>
 #include <mmsystem.h>
 
@@ -28,7 +30,7 @@ using namespace std::chrono;
 struct characterBlockInfor{
     int TDiffer;                //totalDifferentCharacter
     int *charBlock;             //characterBlock
-    int TChar;                  //totalCharacter
+    int TChar;                  //totalCharacter - number of remaining blocks in game
 };
 
 struct State

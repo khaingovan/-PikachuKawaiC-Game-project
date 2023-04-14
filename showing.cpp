@@ -1,16 +1,5 @@
 #include "showing.h"
 
-//http://mycodecollection.blogspot.com/2015/01/c-console-change-font-size.html
-void fontsize(int a, int b){  
-    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-    PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX();
-    lpConsoleCurrentFontEx->cbSize = sizeof(CONSOLE_FONT_INFOEX);  
-    GetCurrentConsoleFontEx(out, 0, lpConsoleCurrentFontEx);  
-    lpConsoleCurrentFontEx->dwFontSize.X = a;  
-    lpConsoleCurrentFontEx->dwFontSize.Y = b;  
-    SetCurrentConsoleFontEx(out, 0, lpConsoleCurrentFontEx);  
-}
-
 //https://www.codeincodeblock.com/2011/03/move-console-windows-using-codeblock.html
 HWND WINAPI GetConsoleWindowNT(void)
 {
@@ -119,54 +108,103 @@ void setColor(int color){
 }
 
 void level2(mainScreen &game){//blocks moving down
-    for(int j = 1; j <= game.col; j++)
-        for(int i = game.row; i >= 1; i--){
+    int startCol = 1;
+    if(game.col == 12)
+        startCol = 4;
+    else if(game.col == 18)
+        startCol = 2;
+    
+    int endRow = 1;
+    if(game.row == 6)
+        endRow = 2;
+
+    for(int j = startCol; j <= game.col + startCol; j++)
+        for(int i = game.row + endRow - 1; i >= endRow; i--){
             if(game.board[i][j] == -1)
-                for(int key = i; key >= 1; key--)
+                for(int key = i; key >= endRow; key--)
                     game.board[key][j] = game.board[key - 1][j];
             if(game.board[i][j] == -1)
-                for(int key = i; key >= 1; key--)
+                for(int key = i; key >= endRow; key--)
                     game.board[key][j] = game.board[key - 1][j];
         }
 }
 
 void level3(mainScreen &game){//blocks moving left
-    for(int i = 1; i <= game.row; i++)
-        for(int j = 1; j <= game.col; j++){
+    int startCol = 1;
+    if(game.col == 12)
+        startCol = 4;
+    else if(game.col == 18)
+        startCol = 2;
+    
+    int startRow = 1;
+    if(game.row == 6)
+        startRow = 2;
+    
+    for(int i = startRow; i <= game.row + startRow; i++)
+        for(int j = startCol; j <= game.col + startCol; j++){
             if(game.board[i][j] == -1)
-                for(int key = j; key <= game.col; key++)
+                for(int key = j; key <= game.col + startCol; key++)
                     game.board[i][key] = game.board[i][key + 1];
             if(game.board[i][j] == -1)
-                for(int key = j; key <= game.col; key++)
+                for(int key = j; key <= game.col + startCol; key++)
                     game.board[i][key] = game.board[i][key + 1];
         }
 }
 
 void level4(mainScreen &game){//blocks moving up
-    for(int j = 1; j <= game.col; j++)
-        for(int i = 1; i <= game.row; i++){
+    int startCol = 1;
+    if(game.col == 12)
+        startCol = 4;
+    else if(game.col == 18)
+        startCol = 2;
+    
+    int startRow = 1;
+    if(game.row == 6)
+        startRow = 2;
+    
+    for(int j = startCol; j <= game.col + startCol; j++)
+        for(int i = startRow; i <= game.row + startRow; i++){
             if(game.board[i][j] == -1)
-                for(int key = i; key <= game.row; key++)
+                for(int key = i; key <= game.row + startRow; key++)
                     game.board[key][j] = game.board[key + 1][j];
             if(game.board[i][j] == -1)
-                for(int key = i; key <= game.row; key++)
+                for(int key = i; key <= game.row + startRow; key++)
                     game.board[key][j] = game.board[key + 1][j];
         }
 }
 
 void level5(mainScreen &game){//blocks moving right
-    for(int i = 1; i <= game.row; i++)
-        for(int j = game.col; j >= 1; j--){
+    int endCol = 1;
+    if(game.col == 12)
+        endCol = 4;
+    else if(game.col == 18)
+        endCol = 2;
+    
+    int startRow = 1;
+    if(game.row == 6)
+        startRow = 2;
+    
+    for(int i = startRow; i <= game.row + startRow; i++)
+        for(int j = game.col + endCol - 1; j >= endCol; j--){
             if(game.board[i][j] == -1)
-                for(int key = j; key >= 1; key--)
+                for(int key = j; key >= endCol; key--)
                     game.board[i][key] = game.board[i][key - 1];
             if(game.board[i][j] == -1)
-                for(int key = j; key >= 1; key--)
+                for(int key = j; key >= endCol; key--)
                     game.board[i][key] = game.board[i][key - 1];
         }
 }
 
-void levelMove(mainScreen &game, int level){
+void levelMove(mainScreen &game, int level, int roundSelect){
+    if(roundSelect == -1){
+        game.row-=2;
+        game.col-=8;
+    }
+    else if(roundSelect == -2){
+        game.row-=2;
+        game.col-=2;
+    }
+
     if(level == 1){
         //40 = 1*16 + 15 white text blue background
         setColor(40);
@@ -190,6 +228,15 @@ void levelMove(mainScreen &game, int level){
         //79 = 4*16 + 15 white text red background
         setColor(79);
         level5(game);
+    }
+    
+    if(roundSelect == -1){
+        game.row+=2;
+        game.col+=8;
+    }
+    else if(roundSelect == -2){
+        game.row+=2;
+        game.col+=2;
     }
 }
 
@@ -413,6 +460,7 @@ void drawingBoard(mainScreen &game, char bgArt[40][120]){
                 }
             }
             else{
+                //15 = 0*16 + 15 white text black background
                 setColor(15);
                 cout << bgArt[i][j*5] << bgArt[i][j*5 + 1] << bgArt[i][j*5 + 2] << bgArt[i][j*5 + 3] << bgArt[i][j*5 + 4];
             }
@@ -424,7 +472,7 @@ void drawingBoard(mainScreen &game, char bgArt[40][120]){
 	setColor(15);
 }
 
-void drawOutsideBoard(int &level, Player &user){
+void drawOutsideBoard(int &level, Player &user, bool accountLogedIn){
     if(level == 1){
         //1 draw blue border
         drawBorder(1);
@@ -449,16 +497,18 @@ void drawOutsideBoard(int &level, Player &user){
     //15 = 0*16 + 15 white text black background
 	setColor(15);
     gotoxy(30, 0);
-    cout << "Player: " << user.username;
+    cout << "Player: ";
+    if(accountLogedIn)
+        cout << user.username;
     gotoxy(60, 0);
-    cout << "Score: " << user.record;
+    cout << "Score: ";
     gotoxy(90, 0);
     cout << "Time: " << endl;
 
 
     //drawing turtorial
-    //10 = 0*16 + 10 bright green text black background
-	setColor(10);
+    //10 = 0*16 + 10 yellow text black background
+	setColor(6);
     for(int i = 0; i < 45; i++){
         gotoxy(120, i);
         cout << (char)(186);
@@ -476,24 +526,4 @@ void drawOutsideBoard(int &level, Player &user){
 
     //15 = 0*16 + 15 white text black background
 	setColor(15);
-}
-
-void drawTimer(bool startGame, int &numTime){
-    if(startGame){
-        high_resolution_clock::time_point t1 = high_resolution_clock::now();
-        high_resolution_clock::time_point t2 = high_resolution_clock::now();
-        duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-        //while(1){
-            {setColor(15);
-            gotoxy(96, 0);
-            cout << time_span.count() + numTime;
-            numTime++;
-            Sleep((1.0 - 4e-07)*1000);
-        }
-    }
-    else{
-        setColor(0);
-        gotoxy(96, 0);
-        cout << "xxxxx";
-    }
 }

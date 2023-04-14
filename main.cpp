@@ -5,6 +5,7 @@ int main()
     int roundSelect = 1, Choice = 1;
     int *pChoice = &Choice;
     Player user;
+    bool accountLogedIn = true;
     mainScreen game;
     game.col = 0;
     game.row = 0;
@@ -16,15 +17,15 @@ int main()
     ShowScrollbar(0);
     DisableResizeWindow();
     generateAccScreen(roundSelect, Choice, FileName, user, index);
+    if(roundSelect == -1)
+        accountLogedIn = false;
     while(1){
+        int scoreWhenOutGame = 0;
     	generateMenu(game, roundSelect, Choice, FileName);
     	if(game.row != 0 || game.col != 0)
-        	playPikachu(user, game, roundSelect);
+        	playPikachu(user, game, roundSelect, accountLogedIn, scoreWhenOutGame);
+        if(scoreWhenOutGame > user.record)
+            updateScore(FileName, user, index, scoreWhenOutGame);
 	}
-    /*generateMenu(row, col, roundSelect, Choice, FileName);
-    
-    if(row != 0 || col != 0){
-        playPikachu(user, row, col);
-    }*/
     return 0;
 }

@@ -4,34 +4,9 @@
 
 void generateAccScreen(int &roundSelect, int Choice, string FileName, Player &oldMan, unsigned int &index)
 {
-    roundSelect = 0;                                                                           
-    roundSelect = 0;                                                                           
-    /*gotoxy(0,15);
-    setColor(6);
-    cout << "\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t\t\t\t  |     ___/ |  | |  |/ / \\__  \\   _/ ___\\  |  |  \\  |  |  \\"<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t\t\t\t  |    |     |  | |    <   / __ \\_ \\  \\___  |   Y  \\ |  |  /"<< endl;
-    cout << "\t\t\t\t\t\t\t  |____|     |__| |__|_ \\ /____  /  \\___  > |___|  / |____/ "<< endl;
-    cout << "\t\t\t\t\t\t\t                       \\/      \\/       \\/       \\/        "<< endl;
-    cout << "\t\t\t\t\t\t\t\t\t Press Space to continue!!" << endl;
-    char button = getch();
-    if (button = Space)
-        clearScreen();*/
     roundSelect = 0;
-    /*gotoxy(0,15);
-    setColor(6);
-    cout << "\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t\t\t\t  |     ___/ |  | |  |/ / \\__  \\   _/ ___\\  |  |  \\  |  |  \\"<< endl;                                                                                                                                                                               
-    cout << "\t\t\t\t\t\t\t  |    |     |  | |    <   / __ \\_ \\  \\___  |   Y  \\ |  |  /"<< endl;
-    cout << "\t\t\t\t\t\t\t  |____|     |__| |__|_ \\ /____  /  \\___  > |___|  / |____/ "<< endl;
-    cout << "\t\t\t\t\t\t\t                       \\/      \\/       \\/       \\/        "<< endl;
-    cout << "\t\t\t\t\t\t\t\t\t Press Space to continue!!" << endl;
-    char button = getch();
-    if (button = Space)
-        clearScreen();*/
 
+    //7 = 0*16 + 7 default white text black background
     setColor(7);
     while(true)
     {
@@ -67,6 +42,7 @@ void generateAccScreen(int &roundSelect, int Choice, string FileName, Player &ol
 void printAccChoice(int Choice)
 {
     int directX = 85, directY = 19;
+    //6 = 0*16 + 6 yellow text black background
     setColor(6);
     cout << "\t\t\t\t\t\t\t\t __________  .__   __                       .__            "<< endl;                                                                                                                                                                               
     cout << "\t\t\t\t\t\t\t\t \\______   \\ |__| |  | __ _____      ____   |  |__    __ __ "<< endl;                                                                                                                                                                               
@@ -75,6 +51,7 @@ void printAccChoice(int Choice)
     cout << "\t\t\t\t\t\t\t\t  |____|     |__| |__|_ \\ /____  /  \\___  > |___|  / |____/ "<< endl;
     cout << "\t\t\t\t\t\t\t\t                       \\/      \\/       \\/       \\/        "<< endl;
     
+    //7 = 0*16 + 7 default white text black background
     setColor(7);
     switch(Choice)
     {
@@ -91,6 +68,7 @@ void printAccChoice(int Choice)
             cout << "   (Data will be lost) " << endl;
             printChoiceBox(directX, directY);
 
+            //7 = 0*16 + 7 default white text black background
             setColor(7);
             gotoxy(directX, directY + 4);
             cout << "   Log In        " << endl;
@@ -114,6 +92,7 @@ void printAccChoice(int Choice)
             cout << "  << Log In >>        " << endl;
             printChoiceBox(directX, directY + 4);
 
+            //7 = 0*16 + 7 default white text black background
             setColor(7);
             gotoxy(directX, directY + 8);
             cout << "   Sign Up            " << endl;
@@ -137,6 +116,7 @@ void printAccChoice(int Choice)
             setColor(11);
             cout << "  << Sign Up >>            " << endl;
             printChoiceBox(directX, directY + 8);
+            //7 = 0*16 + 7 default white text black background
             setColor(7);
             break;
         }
@@ -197,6 +177,7 @@ void signUp(string FileName)
     setColor(10);
     cout << "SIGN UP" << endl;
     
+    //7 = 0*16 + 7 default white text black background
     setColor(7);
     gotoxy(directX - 8, directY + 3);
     
@@ -208,12 +189,14 @@ void signUp(string FileName)
     gotoxy(directX - 8, directY + 11);
     cout << "Confirm ";
 
+    //4 = 0*16 + 4 red text black background
     setColor(4);
     gotoxy(directX - 8, directY + 15);
     cout << "Username must be LESS than 16 characters";
     gotoxy(directX - 8, directY + 16);
     cout << "Password is NO MORE THAN 14 characters";
 
+    //7 = 0*16 + 7 default white text black background
     setColor(7);
     //get Username and Password
     gotoxy(directX + 10, directY + 3);
@@ -229,9 +212,11 @@ void signUp(string FileName)
     bool valid = isExistAcc(FileName, newguy.username, index);
     if (valid)
     {
+        //4 = 0*16 + 4 red text black background
         setColor(4);
         gotoxy(directX, directY + 22);
         cout << "Existed Username!!          ";
+        //7 = 0*16 + 7 default white text black background
         setColor(7);
         Sleep(1000);
         clearScreen();
@@ -240,6 +225,7 @@ void signUp(string FileName)
     else if (strcmp(confirm, newguy.password) != 0)     // check if confirm password is different from password
     {
         gotoxy(directX, directY + 22);
+        //4 = 0*16 + 4 red text black background
         setColor(4);
         cout << "Password is incorrect!!        ";
         Sleep(1000);
@@ -248,6 +234,7 @@ void signUp(string FileName)
     }
     else
     {
+        //6 = 0*16 + 6 yellow text black background
         setColor(6);
         gotoxy(directX, directY + 22);
         cout << "Welcome New Player             ";     // sign up successfully
@@ -287,6 +274,7 @@ void signIn(string FileName, Player &oldMan, unsigned int &index)
     setColor(10);
     cout << "LOGIN" << endl;
 
+    //7 = 0*16 + 7 default white text black background
     setColor(7);
     gotoxy(directX - 8, directY + 3);
     cout << "Username " << endl;   //(less than 16 characters)
@@ -304,24 +292,29 @@ void signIn(string FileName, Player &oldMan, unsigned int &index)
     {  
         if(isPasswordCorrect(FileName, oldMan.password, index))        //compare the password with the stored one in SaveFile.dat
         {
+            //6 = 0*16 + 6 yellow text black background
             setColor(6);
             gotoxy(directX, directY + 22);
             cout << "Success!!";
+            //7 = 0*16 + 7 default white text black background
             setColor(7);
             getInfo(FileName, oldMan, index);                   //store info from file to variable (oldMan
         }
         else
         {
+            //4 = 0*16 + 4 red text black background
             setColor(4);
             gotoxy(directX, directY + 22);
             cout << "Wrong Password";
             Sleep(1000);
+            //7 = 0*16 + 7 default white text black background
             setColor(7);
             signIn(FileName, oldMan, index);                    //sign in again
         }
     }    
     else                                                         
     {
+        //4 = 0*16 + 4 red text black background
         setColor(4);
         gotoxy(directX, directY + 10);
         cout << "Invalid Account" << endl;
@@ -329,6 +322,7 @@ void signIn(string FileName, Player &oldMan, unsigned int &index)
         cout << "Please Sign Up" << endl;
         gotoxy(directX - 15, directY + 12);
         cout << "Press Space to try Login again Or Esc to SignUp" << endl;
+        //7 = 0*16 + 7 default white text black background
         setColor(7);
         char button = getch();
         if (button == Esc)                                      //if players type wrong account, they can choose to sig in again or make the new one
@@ -427,7 +421,7 @@ void getInfo (string FileName, Player &oldMan, unsigned int index)
     fin.read((char*) &oldMan.savedStage, sizeof(oldMan.savedStage));
 }
 
-void updateScore(string FileName, Player &oldMan, unsigned int index, unsigned int newscore)
+void updateScore(string FileName, Player &oldMan, unsigned int index, int newscore)
 {
     vector <Player> List;
     Player temp;
