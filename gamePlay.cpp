@@ -1,9 +1,5 @@
 #include "header.h"
 
-time_t nowTime = time(0);							// Put in function that call countdown function
-bool overTime = false;								// Remember to check if it true then game over
-int timeLeft = 300;									// It's up to you decide
-
 // This function should be put inside other function print in4 game
 void countdown(time_t originalTime, int timeLeft, bool &overTime){
 	time_t nowTime = time(0);
