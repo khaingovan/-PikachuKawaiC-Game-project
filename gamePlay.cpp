@@ -18,7 +18,6 @@ void countdown(time_t originalTime, int timeLeft, bool &overTime){
 void createBoard(mainScreen &game, characterBlockInfor &CBI, int roundSelect){
 	int maxSame;
 	//the larger the board is, the more different characters needed.
-	//for exmaple 4x4 board (hard mode) needs 6 different characters.
 	if(roundSelect == -1){
 		maxSame = 4;
 		CBI.TDiffer = min(( (game.row - 2)*(game.col - 8) ) - 12, 20);
@@ -143,7 +142,6 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 	cout << left << setw(10) << score;
 	drawingBoard(game, bgArt);
 	double numTime = 0;
-	//drawTimer(true, numTime);
 	int xr = 1, yr = 1;
 	drawKey(game, yr, xr, game.row + 2, game.col + 2);
 	
@@ -223,6 +221,11 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 						clearScreen();
 						drawOutsideBoard(level, user, accountLogedIn);
 						drawingBoard(game, bgArt);
+						//Output score
+						//15 = 0*16 + 15 white text black background
+						setColor(15);
+						gotoxy(67, 0);
+						cout << left << setw(10) << score;
 						yr = 1; xr = 1;
 						break;
 					}
@@ -323,17 +326,6 @@ void playPikachu(Player &user, mainScreen &game, int roundSelect, bool accountLo
 											setColor(15);
 											gotoxy(67, 0);
 											cout << left << setw(10) << score;
-											/*char accpectHint = getch();
-											isLegalMatch(game, i, j, m, n, CBI, 0, legalMatch, pcharacterLost);
-											selectSound();
-											Sleep(200);
-											levelMove(game, level, roundSelect);
-											score-=50;
-											//15 = 0*16 + 15 white text black background
-											setColor(15);
-											gotoxy(67, 0);
-											cout << left << setw(10) << score;
-											drawingBoard(game, bgArt);*/
 											i = game.row + 2;
 											j = game.col + 2;
 											m = game.row + 2;
